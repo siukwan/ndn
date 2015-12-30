@@ -51,10 +51,7 @@ At last you can enjoy the ns3,
 	NS_LOG="ndn.nrndn.tradConsumer=level_debug|prefix_time|prefix_node|prefix_func:ndn.nrndn.nrProducer=level_debug|prefix_time|prefix_node|prefix_func" ./waf --run="nrndn --accidentNum=10 --method=2"
 
 any questions,contact:
-	Yishun Chen
-	Phone: +86 15017537427
-	E-mail: 86388828@qq.com
-		eason1989@qq.com
-		chenysh35@mail2.sysu.edu.cn
+	siukwan lee
+	siukwan@foxmail.com
  
 Good luck!
