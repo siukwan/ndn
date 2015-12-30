@@ -1,5 +1,5 @@
 1.	Download
-
+git clone git@github.com:siukwan/ndn.git 
 
 2.	preparation
 gcc/g++ version should >= 4.8
@@ -21,6 +21,8 @@ For MacOS (macports):
 
 C++11 standard are required
 
+firstly,enter the ns-3:cd ndn/ns-3/
+
 To use the ns3,please configure first:
 	CXXFLAGS="-Wall -g -std=c++11" ./waf -d debug --enable-examples configure
 
@@ -33,6 +35,8 @@ Then build the ns3 project with
 
 At last you can enjoy the ns3,
 	./waf --run <your progremma>
+
+	example: ./waf --run nrndn_test
 
 4.	Notes for Commands
 4.1	To run scenario and see what is happening, use the following command:
