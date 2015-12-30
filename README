@@ -21,7 +21,7 @@ For MacOS (macports):
 
 C++11 standard are required
 
-firstly,enter the ns-3:cd ndn/ns-3/
+firstly,enter the ns-3 directory:cd ndn/ns-3/
 
 To use the ns3,please configure first:
 	CXXFLAGS="-Wall -g -std=c++11" ./waf -d debug --enable-examples configure
