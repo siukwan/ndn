@@ -79,9 +79,9 @@ void nrConsumer::StopApplication()
 void nrConsumer::ScheduleNextPacket()
 {
 	//1. refresh the Interest
-	 std::vector<std::string> interest=GetCurrentInterest();
-	 std::string prefix="";
-	 std::vector<std::string>::reverse_iterator it;
+	std::vector<std::string> interest=GetCurrentInterest();
+	std::string prefix="";
+	std::vector<std::string>::reverse_iterator it;
 	 for(it=interest.rbegin();it!=interest.rend();++it)
 	 {
 		 prefix+=*it;
