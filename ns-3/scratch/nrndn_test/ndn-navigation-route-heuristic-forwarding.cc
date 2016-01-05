@@ -264,7 +264,13 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		ProcessHello(interest);
 		return;
 	}
-
+	//If the interest packet has already been sent, do not proceed the packet
+	if(m_interestNonceSeen.Get(interest->GetNonce()))
+	{
+	//	cout<<"OnInterest重复包2......................."<<endl;
+		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
+		return;
+	}
 
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	uint32_t nodeId;
@@ -274,7 +280,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	nodeId=nrheader.getSourceId();
 	seq=interest->GetNonce();
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
-
+/*
 	if(isDuplicatedInterest(nodeId,seq))
 		cout<<"OnInterest重复包1"<<endl;
 	//If the interest packet has already been sent, do not proceed the packet
@@ -284,7 +290,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		return;
 	}
-
+*/
 	//Deal with the stop message first
 	if(Interest::NACK_LOOP==interest->GetNack())
 	{
