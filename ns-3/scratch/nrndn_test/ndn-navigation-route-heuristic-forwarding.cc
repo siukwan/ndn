@@ -276,11 +276,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
 	if(isDuplicatedInterest(nodeId,seq))
-		cout<<"重复包1"<<endl;
+		cout<<"OnInterest重复包1"<<endl;
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
-		cout<<"重复包2......................."<<endl;
+		cout<<"OnInterest重复包2......................."<<endl;
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		return;
 	}
@@ -394,11 +394,11 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	}
 
 	//If the data packet has already been sent, do not proceed the packet
-	if(m_dataSignatureSeen.Get(data->GetSignature()))
+	/*if(m_dataSignatureSeen.Get(data->GetSignature()))
 	{
 		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
 		return;
-	}
+	}*/
 
 	Ptr<const Packet> nrPayload	= data->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
@@ -408,6 +408,17 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	std::vector<uint32_t> newPriorityList;
 	bool IsClearhopCountTag=true;
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
+	if(isDuplicatedData(nodeId,signature))
+	{
+		cout<<"OnData重复包"<<endl;
+	}
+
+	if(m_dataSignatureSeen.Get(data->GetSignature()))
+	{
+		cout<<"OnData重复包2......................."<<endl;
+		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
+		return;
+	}
 
 	//Deal with the stop message first. Stop message contains an empty priority list
 	if(pri.empty())
