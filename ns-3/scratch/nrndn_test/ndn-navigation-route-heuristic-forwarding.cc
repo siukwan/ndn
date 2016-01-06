@@ -169,6 +169,7 @@ void NavigationRouteHeuristic::AddFace(Ptr<Face> face) {
 	{
 		NS_LOG_DEBUG("Node "<<m_node->GetId()<<" add application face "<<face->GetId());
 		m_inFaceList.push_back(face);
+
 	}
 	else
 	{
