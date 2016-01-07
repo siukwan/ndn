@@ -1,8 +1,8 @@
 /*
  * ndn-navigation-route-heuristic-forwarding.cc
  *
- *  Created on: Jan 14, 2015
- *      Author: chen
+ *  Created on: Jan 1, 2016
+ *      Author: siukwan
  */
 
 #include "ndn-navigation-route-heuristic-forwarding.h"
