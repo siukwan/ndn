@@ -1,8 +1,8 @@
 /*
  * simulation.cc
  *
- *  Created on: Dec 25, 2014
- *      Author: cys
+ *  Created on: Jan 8, 2016
+ *      Author: siukwan
  */
 
 #include "ns3/core-module.h"
