@@ -62,6 +62,7 @@ private:
 	void AddNeighborTimeoutEvent(uint32_t id);
 
 	//when the time expire, the incoming neighbor id will be removed automatically
+	//当时间超时，自动清除邻居
 	void CleanExpiredIncomingNeighbors(uint32_t id);
 private:
 	std::unordered_map< uint32_t,EventId> m_nbTimeoutEvent;///< @brief it is a hashmap that record the timeout event of each neighbor id

@@ -85,11 +85,13 @@ NrPitImpl::NotifyNewAggregate ()
   Pit::NotifyNewAggregate ();
 }
 
+//更新PIT表
 bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& id)
 {
 	std::ostringstream os;
 	std::vector<Ptr<Entry> >::iterator pit=m_pitContainer.begin();
 	Ptr<Entry> entry = *pit;
+	//获取兴趣
 	Name::const_iterator head=entry->GetInterest()->GetName().begin();
 	//Can name::Component use "=="?
 	std::vector<std::string>::const_iterator it=
