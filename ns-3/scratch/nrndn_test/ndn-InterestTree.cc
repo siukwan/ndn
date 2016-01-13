@@ -25,9 +25,7 @@ namespace nrndn
 /**
  * 兴趣树结构
  */
-class NrInterestTreeImpl
-{
-};
+
 
 } /* namespace nrndn */
 } /* namespace pit */

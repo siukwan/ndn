@@ -1,5 +1,5 @@
 /*
- * ndn-InterestTree.cc
+ * ndn-InterestTree.h
  *
  *  Created on: Jan 13, 2016
  *  Author       : siukwan
