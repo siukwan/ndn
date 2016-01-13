@@ -200,7 +200,7 @@ void NavigationRouteHeuristic::DidReceiveValidNack(
 	 NS_LOG_UNCOND(this <<" is in unused function");
 }
 
-
+//获取优先列表
 std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 		const vector<string>& route /* = m_sensor->getNavigationRoute()*/)
 {
@@ -260,11 +260,13 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
+	//如果它是个心跳包
 	if(HELLO_MESSAGE==interest->GetScope())
-	{
+	{//处理心跳
 		ProcessHello(interest);
 		return;
 	}
+	//如果兴趣包已经被发送了，不再处理兴趣包
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
@@ -273,14 +275,16 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
-
+	//Payload是什么
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	uint32_t nodeId;
 	uint32_t seq;
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader( nrheader);
 	nodeId=nrheader.getSourceId();
+	//这个是什么
 	seq=interest->GetNonce();
+	//获取优先列表
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 /*
 	if(isDuplicatedInterest(nodeId,seq))
@@ -325,6 +329,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 							ExtractRouteFromName(interest->GetName());
 
 		// Update the PIT here
+		//更新PIT表
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
 		// Update finish
 

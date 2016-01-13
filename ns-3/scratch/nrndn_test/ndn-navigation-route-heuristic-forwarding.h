@@ -442,7 +442,7 @@ private:
 	Ptr<UniformRandomVariable> m_uniformRandomVariable;
 
 	Ptr<ndn::nrndn::NodeSensor> m_sensor;
-
+	//PIT表在forwarding中
 	Ptr<pit::nrndn::NrPitImpl> m_nrpit; ///< \brief Reference to PIT to which this forwarding strategy is associated
 
 	uint32_t				m_CacheSize;

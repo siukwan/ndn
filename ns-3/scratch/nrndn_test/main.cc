@@ -611,10 +611,11 @@ nrndnExample::InstallNrndnApplications ()
 
 }
 
+//这个函数只是1秒执行一次
 void nrndnExample::Look_at_clock()
 {
 
-	cout<<"\nTime now: "<<Simulator::Now().GetSeconds()<<endl;
+	cout<<"\n(main.cc) Time now: "<<Simulator::Now().GetSeconds()<<endl;
 
 	Simulator::Schedule(Seconds(clockInterval),&nrndnExample::Look_at_clock,this);
 }

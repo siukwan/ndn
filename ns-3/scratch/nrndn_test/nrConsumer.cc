@@ -129,7 +129,6 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 	{
 		str=prefix+(*it);
 		result.push_back(str);
-		cout<<str<<" ";
 	//	++routeSum;
 	}
 	return result;
