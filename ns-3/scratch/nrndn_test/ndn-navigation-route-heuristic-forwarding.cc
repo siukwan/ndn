@@ -266,7 +266,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		ProcessHello(interest);
 		return;
 	}
-	//如果兴趣包已经被发送了，不再处理兴趣包
+	//如果兴趣包已经被发送了，不再处理兴趣包，使用LRUcache结构
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
@@ -281,23 +281,15 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	uint32_t seq;
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader( nrheader);
+	//获取发送兴趣包节点的ID
 	nodeId=nrheader.getSourceId();
-	//这个是什么
+	//获取兴趣的随机编码
 	seq=interest->GetNonce();
 	//获取优先列表
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
-/*
-	if(isDuplicatedInterest(nodeId,seq))
-		cout<<"OnInterest重复包1"<<endl;
-	//If the interest packet has already been sent, do not proceed the packet
-	if(m_interestNonceSeen.Get(interest->GetNonce()))
-	{
-		cout<<"OnInterest重复包2......................."<<endl;
-		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
-		return;
-	}
-*/
+
 	//Deal with the stop message first
+	//避免回环
 	if(Interest::NACK_LOOP==interest->GetNack())
 	{
 		ExpireInterestPacketTimer(nodeId,seq);
@@ -322,6 +314,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
 	}
+	//兴趣包来自后方
 	else// it is from nodes behind
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
@@ -331,6 +324,9 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		// Update the PIT here
 		//更新PIT表
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
+		cout<<"UpdatePit->NodeID:"<<nodeId<<endl;
+		//Update the Interest Tree
+
 		// Update finish
 
 		//evaluate whether receiver's id is in sender's priority list
