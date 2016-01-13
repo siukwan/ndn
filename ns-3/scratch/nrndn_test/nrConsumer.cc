@@ -76,6 +76,7 @@ void nrConsumer::StopApplication()
 	super::StopApplication();
 }
 
+//计划下一个包
 void nrConsumer::ScheduleNextPacket()
 {
 	//1. refresh the Interest
@@ -128,6 +129,7 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 	{
 		str=prefix+(*it);
 		result.push_back(str);
+		cout<<str<<" ";
 	//	++routeSum;
 	}
 	return result;

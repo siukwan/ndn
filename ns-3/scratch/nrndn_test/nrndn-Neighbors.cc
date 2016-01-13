@@ -39,6 +39,7 @@ Time Neighbors::GetExpireTime(uint32_t id)
 	  if(it!=m_nb.end())
 	  {
 		  //Found the neighbor
+		  //找到邻居
 		  return (it->second.m_expireTime - Simulator::Now ());
 	  }
 
@@ -106,8 +107,10 @@ void Neighbors::Purge()
 		std::unordered_map<uint32_t,Neighbor>::iterator j;
 		for ( j = m_nb.begin(); j != m_nb.end();)
 		{
+			//如果邻居的时间小于当前仿真器的时间，过时了，清除邻居
 			if (pred(j->second))
 			{
+				//断开连接
 				NS_LOG_LOGIC("Close link to " << j->first);
 				m_handleLinkFailure(j->first);
 				m_nb.erase(j++);//Remember to postincrement the iterator

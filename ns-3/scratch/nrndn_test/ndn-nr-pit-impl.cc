@@ -150,6 +150,7 @@ NrPitImpl::Find (const Name &prefix)
 	 NS_ASSERT_MSG(m_pitContainer.size()!=0,"Empty pit container. No initialization?");
 	 for(it=m_pitContainer.begin();it!=m_pitContainer.end();++it)
 	 {
+		 //如果找到兴趣，就返回入口
 		 if((*it)->GetPrefix()==prefix)
 			 return *it;
 	 }
@@ -172,8 +173,10 @@ bool
 NrPitImpl::InitializeNrPitEntry()
 {
 	NS_LOG_FUNCTION (this);
+	//获取所有的导航路线
 	const std::vector<std::string>& route =	m_sensor->getNavigationRoute();
 	std::vector<std::string>::const_iterator rit;
+	//每个路段配置一个兴趣
 	for(rit=route.begin();rit!=route.end();++rit)
 	{
 		Ptr<Name> name = ns3::Create<Name>('/'+*rit);
