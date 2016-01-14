@@ -45,8 +45,8 @@ public:
 		std::map<int,bool> NodeId;//感兴趣的节点
 		string lane;//当前节点的路段
 		//两个简单的构造函数
-		InterestTreeNode(std::string x) :lane(x),NodeId(-1){};
-		InterestTreeNode() :lane(""),NodeId(-1){};
+		InterestTreeNode(std::string x) :lane(x){};
+		InterestTreeNode() :lane(""){};
 	};
 	/*
 	void insertInterest(int&id,int pos,const std::vector<std::string>& route,InterestTreeNode* root)
