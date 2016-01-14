@@ -96,7 +96,9 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 	//Can name::Component use "=="?
 	std::vector<std::string>::const_iterator it=
 			std::find(route.begin(),route.end(),head->toUri());
-	std::cout<<"head->"<<head->toUri()<<std::endl;
+	std::cout<<"head->"<<uriConvertToString(head->toUri())<<std::endl;
+
+
 	//找不到
 	if(it==route.end())
 		return false;
