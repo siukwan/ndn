@@ -2,7 +2,7 @@
 
 Set up Git:http://siukwan.sinaapp.com/?p=563
 
-git clone git@github.com:siukwan/ndn.git 
+    git clone git@github.com:siukwan/ndn.git 
 
 #2.preparation
 
@@ -27,22 +27,32 @@ boost libraries should be installed on the system:
 C++11 standard are required
 
 firstly,enter the ns-3 directory:
-#####cd ndn/ns-3/
+
+
+    cd ndn/ns-3/
+
 
 To use the ns3,please configure first:
-#####CXXFLAGS="-Wall -g -std=c++11" ./waf -d debug --enable-examples configure
+
+    CXXFLAGS="-Wall -g -std=c++11" ./waf -d debug --enable-examples configure
 
 If boost library needs to specify, try:
-#####CXXFLAGS="-Wall -g -std=c++11" ./waf -d debug --enable-examples --boost-includes=/usr/local/include --boost-libs=/usr/local/lib configure
+
+    CXXFLAGS="-Wall -g -std=c++11" ./waf -d debug --enable-examples --boost-includes=/usr/local/include --boost-libs=/usr/local/lib configure
+
 (Refer to http://ndnsim.net/2.0/faq.html#boost-libraries)
 
 Then build the ns3 project with
-	./waf 
+
+    ./waf 
 
 At last you can enjoy the ns3,
-	./waf --run <your progremma>
+	
+    ./waf --run=<your progremma>
 
-	example: ./waf --run nrndn_test
+example: 
+    
+    ./waf --run=nrndn_test
 
 #4.Notes for Commands
 
@@ -52,13 +62,17 @@ At last you can enjoy the ns3,
 ##4.2	Useful prefix:
 	NS_LOG="ndn.nrndn.nrConsumer=level_debug|prefix_time|prefix_node|prefix_func:ndn.nrndn.nrProducer=level_debug|prefix_time|prefix_node|prefix_func" ./waf --run="nrndn --accidentNum=10"
 
-##4.3	To run the nrndn method, use
+##4.3
+To run the nrndn method, use
+
 	NS_LOG="ndn.nrndn.nrConsumer=level_debug|prefix_time|prefix_node|prefix_func:ndn.nrndn.nrProducer=level_debug|prefix_time|prefix_node|prefix_func" ./waf --run="nrndn --accidentNum=10"
 
-	To run the dist method, use
+To run the dist method, use
+
 	NS_LOG="ndn.nrndn.tradConsumer=level_debug|prefix_time|prefix_node|prefix_func:ndn.nrndn.nrProducer=level_debug|prefix_time|prefix_node|prefix_func" ./waf --run="nrndn --accidentNum=10 --method=1"
 
-	To run the CDS method, use
+To run the CDS method, use
+
 	NS_LOG="ndn.nrndn.tradConsumer=level_debug|prefix_time|prefix_node|prefix_func:ndn.nrndn.nrProducer=level_debug|prefix_time|prefix_node|prefix_func" ./waf --run="nrndn --accidentNum=10 --method=2"
 
 ####any questions,contact:
