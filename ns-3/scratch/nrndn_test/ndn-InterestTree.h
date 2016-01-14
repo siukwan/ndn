@@ -32,7 +32,7 @@ namespace pit
 {
 namespace nrndn
 {
-
+using namespace std;
 /**
  * 兴趣树结构
  */
@@ -48,8 +48,8 @@ public:
 		InterestTreeNode(std::string x) :lane(x){};
 		InterestTreeNode() :lane(""){};
 	};
-	/*
-	void insertInterest(int&id,int pos,const std::vector<std::string>& route,InterestTreeNode* root)
+
+	void insertInterest(int&id,unsigned int pos,const std::vector<std::string>& route,InterestTreeNode* root)
 	{
 		if(pos == route.size()) return;//已经遍历完毕
 		else
@@ -61,7 +61,7 @@ public:
 
 			pos++;
 			//递归地插入
-			insertInterest(id,pos,routeroot->child[route[pos]]);
+			insertInterest(id,pos,route,root->child[route[pos]]);
 		}
 	}
 
@@ -85,17 +85,17 @@ public:
 		//如果节点为空，则直接返回
 		if(deleteNode == NULL ) return;
 
-		std::map<string , InterestTreeNode*>::ite = deleteNode->child.begin();
+		std::map<string , InterestTreeNode*>::iterator ite = deleteNode->child.begin();
 		//先删除子节点
 		for(;ite!=deleteNode->child.end();ite++)
 		{//迭代删除
-			deleteTree(ite);
+			deleteTree(ite->second);
 		}
 		//在删除当前节点
 		free(deleteNode);
 
 	}
-*/
+
 private:
 	InterestTreeNode *root;
 	int NodeId;
