@@ -20,6 +20,7 @@
 #include "NodeSensor.h"
 #include "ndn-nr-pit-impl.h"
 #include "nrndn-Neighbors.h"
+#include "ndn-InterestTree.h"
 
 #include <vector>
 #include <map>
@@ -444,7 +445,7 @@ private:
 	Ptr<ndn::nrndn::NodeSensor> m_sensor;
 	//PIT表在forwarding中
 	Ptr<pit::nrndn::NrPitImpl> m_nrpit; ///< \brief Reference to PIT to which this forwarding strategy is associated
-
+	Ptr<pit::nrndn::NrInterestTreeImpl> m_nrtree;
 	uint32_t				m_CacheSize;
 
 	ndn::nrndn::cache::LRUCache<uint32_t,bool>

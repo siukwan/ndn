@@ -79,8 +79,8 @@ NrPitImpl::NotifyNewAggregate ()
 
 			//PIT需要m_sensor，所以在m_sensor初始化后，马上初始化PIT表
 			//NrPitEntry needs m_sensor. Initialize immediately after m_sensor is aggregated
-			std::cout<<"(ndn-nr-pit-impl)初始化PIT"<<std::endl;
-			getchar();
+			//std::cout<<"(ndn-nr-pit-impl)初始化PIT"<<std::endl;
+			//getchar();
 			InitializeNrPitEntry();
 		}
 	}

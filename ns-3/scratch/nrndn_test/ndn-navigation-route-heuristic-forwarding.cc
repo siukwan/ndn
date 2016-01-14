@@ -726,7 +726,14 @@ bool NavigationRouteHeuristic::PitCoverTheRestOfRoute(
 
 void NavigationRouteHeuristic::DoInitialize(void)
 {
+	std::cout<<"(NavigationRouteHeuristic):初始化"<<m_node->GetId()<<std::endl;
 	super::DoInitialize();
+	std::cout<<"(NavigationRouteHeuristic):初始化完成"<<std::endl;
+
+	m_nrtree = GetObject<pit::nrndn::NrInterestTreeImpl> ();
+	m_nrtree->NodeId=m_node->GetId();
+
+	getchar();
 }
 
 void NavigationRouteHeuristic::DropPacket()
@@ -774,23 +781,29 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 void NavigationRouteHeuristic::NotifyNewAggregate()
 {
 
-  if (m_sensor == 0)
-  {
-	  m_sensor = GetObject<ndn::nrndn::NodeSensor> ();
-   }
+	if (m_sensor == 0)
+	{
+		m_sensor = GetObject<ndn::nrndn::NodeSensor> ();
+	}
 
-  if (m_nrpit == 0)
-  {
-	  Ptr<Pit> pit=GetObject<Pit>();
-	  if(pit)
-		  m_nrpit = DynamicCast<pit::nrndn::NrPitImpl>(pit);
-  }
-  if(m_node==0)
-  {
-	  m_node=GetObject<Node>();
-  }
+	//getchar();
+	if (m_nrpit == 0)
+	{
+		//std::cout<<"新建PIT表"<<std::endl;
+		Ptr<Pit> pit=GetObject<Pit>();
+		if(pit)
+		{
+			m_nrpit = DynamicCast<pit::nrndn::NrPitImpl>(pit);
+		}
+		//std::cout<<"建立完毕"<<std::endl;
+	}
 
-  super::NotifyNewAggregate ();
+	if(m_node==0)
+	{
+		m_node=GetObject<Node>();
+	}
+	super::NotifyNewAggregate ();
+	//std::cout<<"(n..forwarding):"<<m_node->GetId()<<std::endl;
 }
 
 
