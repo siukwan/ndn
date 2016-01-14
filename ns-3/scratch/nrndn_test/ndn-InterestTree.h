@@ -37,7 +37,7 @@ namespace nrndn
  * 兴趣树结构
  */
 class NrInterestTreeImpl
-{/*
+{
 public:
 	//树节点
 	struct InterestTreeNode{
@@ -48,7 +48,7 @@ public:
 		InterestTreeNode(std::string x) :lane(x),NodeId(-1){};
 		InterestTreeNode() :lane(""),NodeId(-1){};
 	};
-
+	/*
 	void insertInterest(int&id,int pos,const std::vector<std::string>& route,InterestTreeNode* root)
 	{
 		if(pos == route.size()) return;//已经遍历完毕
