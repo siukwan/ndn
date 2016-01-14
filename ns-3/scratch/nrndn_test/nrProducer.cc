@@ -163,7 +163,7 @@ void nrProducer::StartApplication()
 	App::StartApplication();
 
 	NS_LOG_INFO("NodeID: " << GetNode ()->GetId ());
-	std::cout<<"siu:"<<"StartApplication: " << GetNode ()->GetId ()<<endl;
+	std::cout<<"siu:StartApplication: " << GetNode ()->GetId ()<<endl;
 
 	//if(GetNode()->GetId()==50)
 	//	Simulator::Schedule(Seconds(5.0), &nrProducer::OnSendingTrafficData,this);
@@ -189,7 +189,7 @@ void nrProducer::StopApplication()
 
 	if(m_DistanceForwarding)
 		m_DistanceForwarding->Stop();
-	std::cout<<"siu:"<<"Stop: " << GetNode ()->GetId ()<<endl;
+	std::cout<<"siu:Stop: " << GetNode ()->GetId ()<<endl;
 
 	App::StopApplication();
 }

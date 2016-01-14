@@ -77,7 +77,10 @@ NrPitImpl::NotifyNewAggregate ()
 			m_sensor->TraceConnectWithoutContext("LaneChange",
 					MakeCallback(&NrPitImpl::laneChange, this));
 
+			//PIT需要m_sensor，所以在m_sensor初始化后，马上初始化PIT表
 			//NrPitEntry needs m_sensor. Initialize immediately after m_sensor is aggregated
+			std::cout<<"(ndn-nr-pit-impl)初始化PIT"<<std::endl;
+			getchar();
 			InitializeNrPitEntry();
 		}
 	}
@@ -178,6 +181,8 @@ NrPitImpl::Create (Ptr<const Interest> header)
 	return 0;
 }
 
+
+//PIT表初始化
 bool
 NrPitImpl::InitializeNrPitEntry()
 {
