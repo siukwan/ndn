@@ -323,7 +323,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		// Update the PIT here
 		//更新PIT表
-		cout<<"节点："<<m_node->GetId();
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
 		//当前所在路段？
 		cout<<"UpdatePit->NodeID:"<<nodeId<<" "<<remoteRoute[0]<<endl;
