@@ -21,7 +21,8 @@
 #include "NodeSensor.h"
 
 #include <vector>
-
+#include <map>
+#include <string>
 
 namespace ns3
 {
@@ -64,6 +65,40 @@ public:
 		}
 	}
 
+	void updateNowRoot(string currentLane)
+	{
+		//遍历root的子节点，找到currentLane所在的节点，删除其他
+
+		InterestTreeNode *tmp=root->child[currentLane];
+		if( NULL ==tmp)
+		{
+			std::cout<<"车辆"<<NodeId<<"的兴趣树不存在子节点："<<currentLane<<endl;
+		}
+
+		//更新root节点
+		root=tmp;
+		//为了节约内存，需要删除其他不是currentLane的兄弟子树
+
+	}
+	void deleteTree(InterestTreeNode* deleteNode)
+	{
+		//如果节点为空，则直接返回
+		if(deleteNode == NULL ) return;
+
+		std::map<string , InterestTreeNode*>::ite = deleteNode->child.begin();
+		//先删除子节点
+		for(;ite!=deleteNode->child.end();ite++)
+		{//迭代删除
+			deleteTree(ite);
+		}
+		//在删除当前节点
+		free(deleteNode);
+
+	}
+
+private:
+	InterestTreeNode *root;
+	int NodeId;
 
 };
 
