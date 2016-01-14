@@ -114,7 +114,7 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 			pitEntry->AddIncomingNeighbors(id);
 			os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
-			std::cout<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
+			std::cout<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" ";
 		}
 		else
 			break;
