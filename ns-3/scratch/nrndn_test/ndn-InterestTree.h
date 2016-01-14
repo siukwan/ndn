@@ -37,7 +37,7 @@ namespace nrndn
  * 兴趣树结构
  */
 class NrInterestTreeImpl
-{
+{/*
 public:
 	//树节点
 	struct InterestTreeNode{
@@ -95,7 +95,7 @@ public:
 		free(deleteNode);
 
 	}
-
+*/
 private:
 	InterestTreeNode *root;
 	int NodeId;
