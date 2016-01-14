@@ -136,6 +136,7 @@ public:
    * Nonce carries a randomly-genenerated bytestring that is used to detect and discard duplicate Interest messages.
    * @param[in] nonce Unique packet identification number
    */
+  //Nonce是一个随机产生的字节string，用来检测重复的兴趣信息
   void
   SetNonce (uint32_t nonce);
 
