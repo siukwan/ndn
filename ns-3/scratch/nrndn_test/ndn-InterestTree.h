@@ -42,7 +42,7 @@ public:
 	//树节点
 	struct InterestTreeNode{
 		std::map<std::string, InterestTreeNode* > child;//孩子节点
-		map<int,bool> NodeId;//感兴趣的节点
+		std::map<int,bool> NodeId;//感兴趣的节点
 		string lane;//当前节点的路段
 		//两个简单的构造函数
 		InterestTreeNode(std::string x) :lane(x),NodeId(-1){};
