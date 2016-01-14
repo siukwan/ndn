@@ -92,7 +92,7 @@ public:
 			deleteTree(ite->second);
 		}
 		//在删除当前节点
-		free(deleteNode);
+		delete deleteNode;
 
 	}
 
