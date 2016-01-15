@@ -332,7 +332,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		m_nrtree->levelOrder();
 		getchar();
-		m_nrtree->insertInterest(m_nrtree->NodeId,0,remoteRoute,m_nrtree->root);
+		m_nrtree->MergeInterest(nodeId,0,remoteRoute,m_nrtree->root,m_nrtree->root->lane);
 		m_nrtree->levelOrder();
 		getchar();
 		// Update finish

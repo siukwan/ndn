@@ -47,7 +47,7 @@ NrInterestTreeImpl::~NrInterestTreeImpl ()
 {
 
 }
-void NrInterestTreeImpl::insertInterest(uint32_t&id,unsigned int pos,const std::vector<std::string>& route,InterestTreeNode* root)
+void NrInterestTreeImpl::insertInterest(uint32_t&id,unsigned int pos,const vector<string>& route,InterestTreeNode* root)
 {
 	if(pos >= route.size()) return;//已经遍历完毕
 	else if(pos == 0 && root->lane =="")
@@ -69,6 +69,30 @@ void NrInterestTreeImpl::insertInterest(uint32_t&id,unsigned int pos,const std::
 	}
 }
 
+void NrInterestTreeImpl::MergeInterest(uint32_t&id,unsigned int pos,const vector<string>& oldRoute,InterestTreeNode* root,string curLane)
+{
+	vector<string> route(oldRoute.size());
+	//把%5d等等转换成[]
+	for(unsigned int i=0;i<oldRoute.size();++i)
+	{
+		route[i]=uriConvertToString(oldRoute[i]);
+	}
+	unsigned int idx=0;
+	for(idx=0;idx<route.size();++idx)
+	{
+		//找出当前的路段
+		if(curLane == route[idx])
+			break;
+	}
+	//没有共同的路段
+	if(idx == route.size())
+		return;
+
+	//增加当前路段的兴趣节点
+	root->NodeId[id]=true;
+	insertInterest(id,idx+1,route,root);
+}
+
 void NrInterestTreeImpl::levelOrder()
 {
 	cout<<"(InterestTree)层序遍历"<<endl;
@@ -84,7 +108,10 @@ void NrInterestTreeImpl::levelOrder()
 		{
 			InterestTreeNode* head=q.front();
 			q.pop();
-			cout<<head->lane<<" ";
+			cout<<head->lane<<"( ";
+			for(map<int,bool>::iterator ite=head->NodeId.begin();ite!=head->NodeId.end();ite++)
+				cout<<ite->first<<" ";
+			cout<<")  ";
 			map<string, InterestTreeNode* >::iterator ite = head->child.begin();
 			for(;ite!=head->child.end();ite++)
 			{
@@ -128,6 +155,35 @@ void NrInterestTreeImpl::deleteTree(InterestTreeNode* deleteNode)
 	//在删除当前节点
 	delete deleteNode;
 
+}
+
+
+//小锟添加，2016-1-15
+string NrInterestTreeImpl::uriConvertToString(string str)
+{
+	//因为获取兴趣时使用toUri，避免出现类似[]的符号，进行编码转换
+	std::string ret="";
+	for(uint32_t i=0;i<str.size();i++)
+	{
+		if(i+2<str.size())
+		{
+			if(str[i]=='%'&&str[i+1]=='5'&&str[i+2]=='B')
+			{
+				ret+="[";
+				i=i+2;
+			}
+			else if(str[i]=='%'&&str[i+1]=='5'&&str[i+2]=='D')
+			{
+				ret+="]";
+				i=i+2;
+			}
+			else
+				ret+=str[i];
+		}
+		else
+			ret+=str[i];
+	}
+	return ret;
 }
 
 } /* namespace nrndn */
