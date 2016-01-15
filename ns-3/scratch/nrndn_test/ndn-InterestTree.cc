@@ -54,7 +54,7 @@ void NrInterestTreeImpl::insertInterest(uint32_t&id,unsigned int pos,const std::
 	{//初始化插入
 		root->lane = route[0];
 		root->NodeId[id]=true;
-		cout<<"(InterestTree)初始化插入"<<root->lane<<" ID"<<id<<endl;
+		//cout<<"(InterestTree)初始化插入"<<root->lane<<" ID"<<id<<endl;
 		insertInterest(id,pos+1,route,root);
 	}
 	else
@@ -63,9 +63,39 @@ void NrInterestTreeImpl::insertInterest(uint32_t&id,unsigned int pos,const std::
 		if( root->child.find( route[pos] ) ==root->child.end())
 			root->child[route[pos]]=new InterestTreeNode(route[pos]);
 		root->child[route[pos]]->NodeId[id]=true;
-		cout<<"(InterestTree)  递归插入"<<root->child[route[pos]]->lane<<" ID"<<id<<endl;
+		//cout<<"(InterestTree)  递归插入"<<root->child[route[pos]]->lane<<" ID"<<id<<endl;
 		//递归地插入
 		insertInterest(id,pos+1,route,root->child[route[pos]]);
+	}
+}
+
+void NrInterestTreeImpl::levelOrder()
+{
+	cout<<"(InterestTree)层序遍历"<<endl;
+	queue<InterestTreeNode*> q;
+	q.push(this->root);
+	int count1=1;
+	int count2=0;
+	int level=0;
+	while(!q.empty())
+	{
+		cout<<level<<":";
+		for(int i=0;i<count1;i++)
+		{
+			InterestTreeNode* head=q.front();
+			q.pop();
+			cout<<head->lane<<" ";
+			map<string, InterestTreeNode* >::iterator ite = head->child.begin();
+			for(;ite!=head->child.end();ite++)
+			{
+				count2++;
+				q.push(ite->second);
+			}
+		}
+		count1=count2;
+		count2=0;
+		level++;
+		cout<<endl;
 	}
 }
 

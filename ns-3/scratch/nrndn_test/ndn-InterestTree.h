@@ -25,6 +25,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <queue>
 namespace ns3
 {
 namespace ndn
@@ -58,7 +59,7 @@ public:
 	void insertInterest(uint32_t&id,unsigned int pos,const std::vector<string>& route,InterestTreeNode* root);
 	void updateNowRoot(string currentLane);
 	void deleteTree(InterestTreeNode* deleteNode);
-
+	void levelOrder();
 	uint32_t NodeId;
 	InterestTreeNode *root;
 

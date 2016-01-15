@@ -329,6 +329,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		cout<<"UpdatePit->NodeID:"<<nodeId<<" "<<remoteRoute[0]<<endl;
 		//Update the Interest Tree
 
+
+		m_nrtree->levelOrder();
+		getchar();
+		m_nrtree->insertInterest(m_nrtree->NodeId,0,remoteRoute,m_nrtree->root);
+		m_nrtree->levelOrder();
+		getchar();
 		// Update finish
 
 		//evaluate whether receiver's id is in sender's priority list
@@ -726,16 +732,16 @@ bool NavigationRouteHeuristic::PitCoverTheRestOfRoute(
 
 void NavigationRouteHeuristic::DoInitialize(void)
 {
-	std::cout<<"(NavigationRouteHeuristic):初始化"<<m_node->GetId()<<std::endl;
+	//std::cout<<"(NavigationRouteHeuristic):初始化"<<m_node->GetId()<<std::endl;
 	super::DoInitialize();
-	std::cout<<"(NavigationRouteHeuristic):初始化完成"<<std::endl;
+	//std::cout<<"(NavigationRouteHeuristic):初始化完成"<<std::endl;
 
 	m_nrtree->NodeId=m_node->GetId();
 	//获取所有的导航路线
 	const std::vector<std::string>& route =	m_sensor->getNavigationRoute();
 	m_nrtree->insertInterest(m_nrtree->NodeId,0,route,m_nrtree->root);
-	cout<<route[0]<<endl;
-	getchar();
+	//m_nrtree->levelOrder();
+	//getchar();
 }
 
 void NavigationRouteHeuristic::DropPacket()
