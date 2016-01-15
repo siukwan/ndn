@@ -730,9 +730,11 @@ void NavigationRouteHeuristic::DoInitialize(void)
 	super::DoInitialize();
 	std::cout<<"(NavigationRouteHeuristic):初始化完成"<<std::endl;
 
-	m_nrtree = GetObject<pit::nrndn::NrInterestTreeImpl> ();
 	m_nrtree->NodeId=m_node->GetId();
-
+	//获取所有的导航路线
+	const std::vector<std::string>& route =	m_sensor->getNavigationRoute();
+	m_nrtree->insertInterest(m_nrtree->NodeId,0,route,m_nrtree->root);
+	cout<<route[0]<<endl;
 	getchar();
 }
 
@@ -802,6 +804,10 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
 	{
 		m_node=GetObject<Node>();
 	}
+
+
+	//m_nrtree = GetObject<pit::nrndn::NrInterestTreeImpl> ();
+	m_nrtree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
 	super::NotifyNewAggregate ();
 	//std::cout<<"(n..forwarding):"<<m_node->GetId()<<std::endl;
 }

@@ -55,7 +55,7 @@ public:
 
 	NrInterestTreeImpl();
 	virtual ~NrInterestTreeImpl();
-	void insertInterest(int&id,unsigned int pos,const std::vector<std::string>& route,InterestTreeNode* root);
+	void insertInterest(uint32_t&id,unsigned int pos,const std::vector<std::string>& route,InterestTreeNode* root);
 	void updateNowRoot(string currentLane);
 	void deleteTree(InterestTreeNode* deleteNode);
 

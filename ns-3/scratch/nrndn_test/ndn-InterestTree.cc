@@ -47,19 +47,27 @@ NrInterestTreeImpl::~NrInterestTreeImpl ()
 {
 
 }
-void NrInterestTreeImpl::insertInterest(int&id,unsigned int pos,const std::vector<std::string>& route,InterestTreeNode* root)
+void NrInterestTreeImpl::insertInterest(uint32_t&id,unsigned int pos,const std::vector<std::string>& route,InterestTreeNode* root)
 {
 	if(pos == route.size()) return;//已经遍历完毕
 	else
 	{
 		//如果没有找到孩子
 		if( root->child.find( route[pos] ) ==root->child.end())
+		{
+			cout<<"找不到"<<route[pos]<<endl;
 			root->child[route[pos]]=new InterestTreeNode(route[pos]);
-		root->child[route[pos]]->NodeId[pos]=true;
+			root->child[route[pos]]->lane=route[pos];
+
+		}
+		cout<<"插入兴趣节点"<<id<<" "<<route[pos]<<endl;
+		root->child[route[pos]]->NodeId[id]=true;
 
 		pos++;
+		cout<<"递归地插入"<<pos<<endl;
+		cout<<root->child[route[pos]]->lane<<endl;
 		//递归地插入
-		insertInterest(id,pos,route,root->child[route[pos]]);
+		NrInterestTreeImpl::insertInterest(id,pos,route,root->child[route[pos]]);
 	}
 }
 
