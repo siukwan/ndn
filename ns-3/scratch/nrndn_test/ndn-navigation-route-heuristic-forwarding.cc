@@ -339,14 +339,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		//m_nrtree->levelOrder();
 		//getchar();
 		bool treeChangeFlag=false;
-		cout<<"原兴趣树："<<endl;
+		printf("原兴趣树：\n");
 		m_nrtree->levelOrder();
 		m_nrtree->MergeInterest(nodeId,0,remoteRoute,currentLane,treeChangeFlag);
-		cout<<"新兴趣树："<<endl;
-		m_nrtree->levelOrder();
 		if(treeChangeFlag)
 		{
-			cout<<"*******************************************************"<<endl;
+			printf("新兴趣树：\n");
+			m_nrtree->levelOrder();
+			printf("*****************************************************\n");
 			//getchar();
 		}
 		// Update finish

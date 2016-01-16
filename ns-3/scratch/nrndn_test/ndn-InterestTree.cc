@@ -158,43 +158,27 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 	q.push(root);
 	while(!q.empty())
 	{
-		if(curLane == "a211")
-			cout<<"开始删除"<<endl;
 		bool found=false;
 		for(int i=0;i<count1;++i)
 		{
 			InterestTreeNode* head=q.front();
 			q.pop();
-			if(curLane == "a211")
-				cout<<"开始删除2"<<endl;
 			if(head->lane == curLane)
 			{
 				result=head;
 				found =true;
-				if(curLane == "a211")
-					cout<<head->lane<<endl;
 				continue;
 			}
 			else
 			{
-				if(curLane == "a211")
-					cout<<"开始删除3"<<endl;
 				map<string, InterestTreeNode* >::iterator ite = head->child.begin();
 				for(;ite!=head->child.end();ite++)
 				{
 					if(ite->second==NULL) continue;
-					if(curLane == "a211")
-						cout<<"开始删除4"<<count2<<endl;
 					count2++;
 					q.push(ite->second);
-					if(curLane == "a211")
-						cout<<"开始删除5"<<count2<<endl;
-					if(curLane == "a211")
-						cout<<ite->second->lane<<endl;
 				}
 				delete head;//删除该结点
-				if(curLane == "a211")
-					cout<<"开始删除6"<<count2<<endl;
 			}
 		}
 		//找到就跳出
