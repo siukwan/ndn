@@ -339,10 +339,16 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		//m_nrtree->levelOrder();
 		//getchar();
 		bool treeChangeFlag=false;
+		cout<<"原兴趣树："<<endl;
+		m_nrtree->levelOrder();
 		m_nrtree->MergeInterest(nodeId,0,remoteRoute,currentLane,treeChangeFlag);
+		cout<<"新兴趣树："<<endl;
 		m_nrtree->levelOrder();
 		if(treeChangeFlag)
-			getchar();
+		{
+			cout<<"*******************************************************"<<endl;
+			//getchar();
+		}
 		// Update finish
 
 		//evaluate whether receiver's id is in sender's priority list

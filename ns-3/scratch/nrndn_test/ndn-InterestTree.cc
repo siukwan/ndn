@@ -74,6 +74,7 @@ void NrInterestTreeImpl::MergeInterest(uint32_t&id,unsigned int pos,const vector
 	//如果车辆当前所在的道路与兴趣树的root不相同
 	if(curLane!= root->lane)
 	{
+		cout<<endl<<"*******************************************************"<<endl;
 		updateNowRoot(curLane);
 		flag=true;
 	}vector<string> route(oldRoute.size());
@@ -142,25 +143,77 @@ void NrInterestTreeImpl::updateNowRoot(string currentLane)
 		std::cout<<"车辆"<<NodeId<<"的兴趣树不存在子节点："<<currentLane<<endl;
 	}
 	//删除root的其他孩子节点
-	map<string , InterestTreeNode*>::iterator ite = root->child.begin();
-	vector<InterestTreeNode*> deleteNodeContainer(0);
-	for(;ite!=root->child.end();ite++)
-	{
-		if(ite->first!=currentLane)
-			deleteNodeContainer.push_back(ite->second);
-	}
-	//更新root节点
-	delete root;
-	root=tmp;
+	root = levelOrderDelete(currentLane);
 	cout<<"更新当前节点，路段为："<<root->lane<<endl;
-	getchar();
-	//为了节约内存，需要删除其他不是currentLane的兄弟子树
-	for(unsigned int i=0;i<deleteNodeContainer.size();++i)
+	//getchar();
+}
+
+//层序删除，以找出在第三层或以上的路径，即当前路径不在root的孩子节点，在其更深层次的孩子节点中
+InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
+{
+	InterestTreeNode*result=NULL;
+	queue<InterestTreeNode*> q;
+	int count1=1;
+	int count2=0;
+	q.push(root);
+	while(!q.empty())
 	{
-		deleteTree(deleteNodeContainer[i]);
+		if(curLane == "a211")
+			cout<<"开始删除"<<endl;
+		bool found=false;
+		for(int i=0;i<count1;++i)
+		{
+			InterestTreeNode* head=q.front();
+			q.pop();
+			if(curLane == "a211")
+				cout<<"开始删除2"<<endl;
+			if(head->lane == curLane)
+			{
+				result=head;
+				found =true;
+				if(curLane == "a211")
+					cout<<head->lane<<endl;
+				continue;
+			}
+			else
+			{
+				if(curLane == "a211")
+					cout<<"开始删除3"<<endl;
+				map<string, InterestTreeNode* >::iterator ite = head->child.begin();
+				for(;ite!=head->child.end();ite++)
+				{
+					if(ite->second==NULL) continue;
+					if(curLane == "a211")
+						cout<<"开始删除4"<<count2<<endl;
+					count2++;
+					q.push(ite->second);
+					if(curLane == "a211")
+						cout<<"开始删除5"<<count2<<endl;
+					if(curLane == "a211")
+						cout<<ite->second->lane<<endl;
+				}
+				delete head;//删除该结点
+				if(curLane == "a211")
+					cout<<"开始删除6"<<count2<<endl;
+			}
+		}
+		//找到就跳出
+		if(found) break;
+
+		count1=count2;
+		count2=0;
 	}
 
+	//把队列中的节点递归删除
+	while(!q.empty())
+	{
+		InterestTreeNode* head=q.front();
+		q.pop();
+		deleteTree(head);
+	}
+	return result;
 }
+
 void NrInterestTreeImpl::deleteTree(InterestTreeNode* deleteNode)
 {
 	//如果节点为空，则直接返回
