@@ -914,10 +914,19 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//update neighbor list
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 
+	//判断兴趣包的方向
+	pair<bool, double> msgdirection =
+			packetFromDirection(interest);
 	//进行邻居变化的检测
-	if(m_preNB.getNb().size()!=m_nb.getNb().size())//数量不等，邻居发生变化
+	if(m_preNB.getNb().size()<m_nb.getNb().size())//数量不等，邻居发生变化
 	{//发送兴趣包
-			//cout<<"邻居数量变化，重发"<<endl;
+		//cout<<"邻居增加，重发"<<endl;
+		//getchar();
+	}
+	else if(m_preNB.getNb().size()<m_nb.getNb().size())//数量不等，邻居发生变化
+	{
+		cout<<"邻居减少，重发"<<endl;
+		getchar();
 	}
 	else
 	{
@@ -926,15 +935,31 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		std::unordered_map<uint32_t, Neighbors::Neighbor>::const_iterator nb=m_nb.getNb().begin();
 		for(;nb!=m_nb.getNb().end() && prenb!=m_preNB.getNb().end()  ;  ++prenb  , ++nb)//O(n) complexity
 		{
-			if(nb->first!=prenb->first)
-			{
+			if(m_nb.getNb().find(prenb->first)==m_nb.getNb().end())
+			{//寻找上次的邻居，看看能不能找到，找不到证明变化了
 				nbChange=true;
 				break;
 			}
+
 		}
 		if(nbChange)
 		{//邻居变化，发送兴趣包
-		//	cout<<"邻居变化，重发"<<endl;
+
+			cout<<"邻居变化，重发"<<endl;
+			prenb=m_preNB.getNb().begin();
+			nb=m_nb.getNb().begin();
+			cout<<"原来的邻居："<<endl;
+			for(; prenb!=m_preNB.getNb().end()  ;  ++prenb)//O(n) complexity
+			{
+				cout<<prenb->first<<" ";
+			}
+			cout<<"\n现在的邻居："<<endl;
+			for(;nb!=m_nb.getNb().end();  ++nb)//O(n) complexity
+			{
+				cout<<nb->first<<" ";
+			}
+
+			getchar();
 		}
 	}
 	m_preNB=m_nb;//更新把上一次的邻居表
