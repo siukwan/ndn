@@ -914,19 +914,19 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//update neighbor list
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 
-	//判断兴趣包的方向
-	pair<bool, double> msgdirection =
-			packetFromDirection(interest);
+	int nbChange_mode=0;
 	//进行邻居变化的检测
 	if(m_preNB.getNb().size()<m_nb.getNb().size())//数量不等，邻居发生变化
 	{//发送兴趣包
 		//cout<<"邻居增加，重发"<<endl;
 		//getchar();
+		nbChange_mode=1;//邻居增加
 	}
 	else if(m_preNB.getNb().size()<m_nb.getNb().size())//数量不等，邻居发生变化
 	{
-		cout<<"邻居减少，重发"<<endl;
-		getchar();
+		/*cout<<"邻居减少，重发"<<endl;
+		getchar();*/
+		nbChange_mode=2;//邻居减少
 	}
 	else
 	{
@@ -945,6 +945,8 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(nbChange)
 		{//邻居变化，发送兴趣包
 
+			nbChange_mode=3;//邻居变化
+			/*
 			cout<<"邻居变化，重发"<<endl;
 			prenb=m_preNB.getNb().begin();
 			nb=m_nb.getNb().begin();
@@ -960,8 +962,23 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			}
 
 			getchar();
+			*/
 		}
 	}
+
+
+	//判断兴趣包的方向
+		pair<bool, double> msgdirection =
+				packetFromDirection(interest);
+
+		//hello信息来自前方，且邻居变化
+		if(msgdirection.second > 0 && nbChange_mode>0)
+		{//
+			printf("hello信息来自前方，且邻居发生变化%d\n",nbChange_mode);
+			//getchar();
+		}
+
+
 	m_preNB=m_nb;//更新把上一次的邻居表
 }
 
