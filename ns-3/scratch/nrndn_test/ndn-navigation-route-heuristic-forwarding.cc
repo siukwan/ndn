@@ -326,21 +326,27 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
 		//当前所在路段？
 		string currentLane=m_nrpit->getCurrentLane();
-		cout<<endl;
-
-		for(unsigned int i=0;i<remoteRoute.size();++i)
-			cout<<m_nrtree->uriConvertToString(remoteRoute[i])<<" ";
-		cout<< endl;
-		cout<<"邻居节点："<<nodeId<<" 所在路段："<<m_nrtree->uriConvertToString(remoteRoute[1])<<endl;
-		cout<<"当前节点："<<m_node->GetId()<<" 所在路段："<<currentLane<<endl;
 		//Update the Interest Tree
 
 
 		//m_nrtree->levelOrder();
 		//getchar();
 		bool treeChangeFlag=false;
-		printf("原兴趣树：\n");
-		m_nrtree->levelOrder();
+
+		if(currentLane!=m_nrtree->root->lane)
+		{
+
+			printf("*****************************************************\n");
+			for(unsigned int i=0;i<remoteRoute.size();++i)
+				cout<<m_nrtree->uriConvertToString(remoteRoute[i])<<" ";
+			cout<< endl;
+			cout<<"邻居节点："<<nodeId<<" 所在路段："<<m_nrtree->uriConvertToString(remoteRoute[1])<<endl;
+			cout<<"当前节点："<<m_node->GetId()<<" 所在路段："<<currentLane<<endl;
+
+			printf("原兴趣树：\n");
+			m_nrtree->levelOrder();
+		}
+
 		m_nrtree->MergeInterest(nodeId,0,remoteRoute,currentLane,treeChangeFlag);
 		if(treeChangeFlag)
 		{

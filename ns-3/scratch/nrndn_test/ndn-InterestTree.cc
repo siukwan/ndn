@@ -74,10 +74,10 @@ void NrInterestTreeImpl::MergeInterest(uint32_t&id,unsigned int pos,const vector
 	//如果车辆当前所在的道路与兴趣树的root不相同
 	if(curLane!= root->lane)
 	{
-		cout<<endl<<"*******************************************************"<<endl;
 		updateNowRoot(curLane);
 		flag=true;
-	}vector<string> route(oldRoute.size());
+	}
+	vector<string> route(oldRoute.size());
 	//把%5d等等转换成[]
 	for(unsigned int i=0;i<oldRoute.size();++i)
 	{
@@ -135,13 +135,6 @@ void NrInterestTreeImpl::levelOrder()
 
 void NrInterestTreeImpl::updateNowRoot(string currentLane)
 {
-	//遍历root的子节点，找到currentLane所在的节点，删除其他
-
-	InterestTreeNode *tmp=root->child[currentLane];
-	if( NULL ==tmp)
-	{
-		std::cout<<"车辆"<<NodeId<<"的兴趣树不存在子节点："<<currentLane<<endl;
-	}
 	//删除root的其他孩子节点
 	root = levelOrderDelete(currentLane);
 	cout<<"更新当前节点，路段为："<<root->lane<<endl;

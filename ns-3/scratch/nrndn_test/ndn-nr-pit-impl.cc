@@ -111,7 +111,7 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 
 	//当前路段为：uriConvertToString(head->toUri())
 
-	std::cout<<"当前路段"<<uriConvertToString(head->toUri())<<std::endl;
+	//std::cout<<"当前路段"<<uriConvertToString(head->toUri())<<std::endl;
 
 
 	//找不到
@@ -126,7 +126,7 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 			pitEntry->AddIncomingNeighbors(id);
 			os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
-			std::cout<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" ";
+			//std::cout<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" ";
 		}
 		else
 			break;
