@@ -97,7 +97,8 @@ public:
 
   virtual Ptr<Entry>
   Next (Ptr<Entry>);
-
+  //获取车辆当前所在的路段
+  std::string getCurrentLane();
   /**
    * This function update the pit using Interest packet
    * not simply add the name into the pit

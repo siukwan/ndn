@@ -87,7 +87,16 @@ NrPitImpl::NotifyNewAggregate ()
 
   Pit::NotifyNewAggregate ();
 }
-
+//获取车辆当前所在的路段
+std::string NrPitImpl::getCurrentLane()
+{
+	std::vector<Ptr<Entry> >::iterator pit=m_pitContainer.begin();
+	Ptr<Entry> entry = *pit;
+	//获取兴趣
+	Name::const_iterator head=entry->GetInterest()->GetName().begin();
+	//当前路段为：uriConvertToString(head->toUri())
+	return uriConvertToString(head->toUri());
+}
 //更新PIT表
 bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& id)
 {

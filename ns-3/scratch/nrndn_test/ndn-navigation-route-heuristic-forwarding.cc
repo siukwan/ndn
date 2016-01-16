@@ -323,18 +323,24 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		// Update the PIT here
 		//更新PIT表
-		cout<<"节点："<<m_node->GetId();
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
 		//当前所在路段？
-		cout<<"UpdatePit->NodeID:"<<nodeId<<" "<<remoteRoute[0]<<endl;
+		string currentLane=m_nrpit->getCurrentLane();
+		cout<<endl;
+
+		for(unsigned int i=0;i<remoteRoute.size();++i)
+			cout<<m_nrtree->uriConvertToString(remoteRoute[i])<<" ";
+		cout<< endl;
+		cout<<"邻居节点："<<nodeId<<" 所在路段："<<m_nrtree->uriConvertToString(remoteRoute[1])<<endl;
+		cout<<"当前节点："<<m_node->GetId()<<" 所在路段："<<currentLane<<endl;
 		//Update the Interest Tree
 
 
-		m_nrtree->levelOrder();
-		getchar();
+		//m_nrtree->levelOrder();
+		//getchar();
 		m_nrtree->MergeInterest(nodeId,0,remoteRoute,m_nrtree->root,m_nrtree->root->lane);
 		m_nrtree->levelOrder();
-		getchar();
+		//getchar();
 		// Update finish
 
 		//evaluate whether receiver's id is in sender's priority list

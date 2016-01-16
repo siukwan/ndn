@@ -109,6 +109,7 @@ void NrInterestTreeImpl::levelOrder()
 			InterestTreeNode* head=q.front();
 			q.pop();
 			cout<<head->lane<<"( ";
+			//输出相应感兴趣的节点
 			for(map<int,bool>::iterator ite=head->NodeId.begin();ite!=head->NodeId.end();ite++)
 				cout<<ite->first<<" ";
 			cout<<")  ";
