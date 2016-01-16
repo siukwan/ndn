@@ -69,9 +69,14 @@ void NrInterestTreeImpl::insertInterest(uint32_t&id,unsigned int pos,const vecto
 	}
 }
 
-void NrInterestTreeImpl::MergeInterest(uint32_t&id,unsigned int pos,const vector<string>& oldRoute,InterestTreeNode* root,string curLane)
+void NrInterestTreeImpl::MergeInterest(uint32_t&id,unsigned int pos,const vector<string>& oldRoute,string curLane,bool&flag)
 {
-	vector<string> route(oldRoute.size());
+	//如果车辆当前所在的道路与兴趣树的root不相同
+	if(curLane!= root->lane)
+	{
+		updateNowRoot(curLane);
+		flag=true;
+	}vector<string> route(oldRoute.size());
 	//把%5d等等转换成[]
 	for(unsigned int i=0;i<oldRoute.size();++i)
 	{
@@ -136,10 +141,24 @@ void NrInterestTreeImpl::updateNowRoot(string currentLane)
 	{
 		std::cout<<"车辆"<<NodeId<<"的兴趣树不存在子节点："<<currentLane<<endl;
 	}
-
+	//删除root的其他孩子节点
+	map<string , InterestTreeNode*>::iterator ite = root->child.begin();
+	vector<InterestTreeNode*> deleteNodeContainer(0);
+	for(;ite!=root->child.end();ite++)
+	{
+		if(ite->first!=currentLane)
+			deleteNodeContainer.push_back(ite->second);
+	}
 	//更新root节点
+	delete root;
 	root=tmp;
+	cout<<"更新当前节点，路段为："<<root->lane<<endl;
+	getchar();
 	//为了节约内存，需要删除其他不是currentLane的兄弟子树
+	for(unsigned int i=0;i<deleteNodeContainer.size();++i)
+	{
+		deleteTree(deleteNodeContainer[i]);
+	}
 
 }
 void NrInterestTreeImpl::deleteTree(InterestTreeNode* deleteNode)
@@ -147,7 +166,7 @@ void NrInterestTreeImpl::deleteTree(InterestTreeNode* deleteNode)
 	//如果节点为空，则直接返回
 	if(deleteNode == NULL ) return;
 
-	std::map<string , InterestTreeNode*>::iterator ite = deleteNode->child.begin();
+	map<string , InterestTreeNode*>::iterator ite = deleteNode->child.begin();
 	//先删除子节点
 	for(;ite!=deleteNode->child.end();ite++)
 	{//迭代删除

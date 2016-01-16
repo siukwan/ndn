@@ -61,7 +61,7 @@ public:
 	void deleteTree(InterestTreeNode* deleteNode);
 	void levelOrder();
 	string uriConvertToString(std::string str);
-	void MergeInterest(uint32_t&id,unsigned int pos,const vector<string>& oldRoute,InterestTreeNode* root,string curLane);
+	void MergeInterest(uint32_t&id,unsigned int pos,const vector<string>& oldRoute,string curLane,bool&flag);
 	uint32_t NodeId;
 	InterestTreeNode *root;
 
