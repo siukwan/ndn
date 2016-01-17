@@ -65,6 +65,7 @@ public:
 	InterestTreeNode* levelOrderDelete(string curLane);
 	uint32_t NodeId;
 	InterestTreeNode *root;
+	string prefix;//前缀，一般为"/"
 
 };
 

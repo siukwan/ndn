@@ -42,6 +42,7 @@ NrInterestTreeImpl::NrInterestTreeImpl()
 {
 	root = new InterestTreeNode();
 	NodeId=-1;
+	prefix="/";
 }
 NrInterestTreeImpl::~NrInterestTreeImpl ()
 {
@@ -52,25 +53,27 @@ void NrInterestTreeImpl::insertInterest(uint32_t&id,unsigned int pos,const vecto
 	if(pos >= route.size()) return;//已经遍历完毕
 	else if(pos == 0 && root->lane =="")
 	{//初始化插入
-		root->lane = route[0];
+		root->lane = prefix+route[pos];
 		root->NodeId[id]=true;
 		//cout<<"(InterestTree)初始化插入"<<root->lane<<" ID"<<id<<endl;
 		insertInterest(id,pos+1,route,root);
 	}
 	else
 	{
+		string nowRoute= prefix+route[pos];
 		//如果没有找到孩子
-		if( root->child.find( route[pos] ) ==root->child.end())
-			root->child[route[pos]]=new InterestTreeNode(route[pos]);
-		root->child[route[pos]]->NodeId[id]=true;
+		if( root->child.find( nowRoute ) ==root->child.end())
+			root->child[nowRoute]=new InterestTreeNode(nowRoute);
+		root->child[nowRoute]->NodeId[id]=true;
 		//cout<<"(InterestTree)  递归插入"<<root->child[route[pos]]->lane<<" ID"<<id<<endl;
 		//递归地插入
-		insertInterest(id,pos+1,route,root->child[route[pos]]);
+		insertInterest(id,pos+1,route,root->child[nowRoute]);
 	}
 }
 
 void NrInterestTreeImpl::MergeInterest(uint32_t&id,unsigned int pos,const vector<string>& oldRoute,string curLane,bool&flag)
 {
+	curLane=prefix+curLane;
 	//如果车辆当前所在的道路与兴趣树的root不相同
 	if(curLane!= root->lane)
 	{
@@ -87,7 +90,7 @@ void NrInterestTreeImpl::MergeInterest(uint32_t&id,unsigned int pos,const vector
 	for(idx=0;idx<route.size();++idx)
 	{
 		//找出当前的路段
-		if(curLane == route[idx])
+		if(curLane == prefix+route[idx])
 			break;
 	}
 	//没有共同的路段
@@ -131,10 +134,11 @@ void NrInterestTreeImpl::levelOrder()
 		level++;
 		cout<<endl;
 	}
+	getchar();
 }
 
 void NrInterestTreeImpl::updateNowRoot(string currentLane)
-{
+{//在MergeInterest中调用，curLane已经增加了prefix
 	//删除root的其他孩子节点
 	root = levelOrderDelete(currentLane);
 	cout<<"更新当前节点，路段为："<<root->lane<<endl;
@@ -143,7 +147,7 @@ void NrInterestTreeImpl::updateNowRoot(string currentLane)
 
 //层序删除，以找出在第三层或以上的路径，即当前路径不在root的孩子节点，在其更深层次的孩子节点中
 InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
-{
+{//updateNowRoot中调用，在之前已经添加了prefix
 	InterestTreeNode*result=NULL;
 	queue<InterestTreeNode*> q;
 	int count1=1;

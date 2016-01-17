@@ -333,7 +333,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		//getchar();
 		bool treeChangeFlag=false;
 
-		if(currentLane!=m_nrtree->root->lane)
+		if(m_nrtree->prefix+currentLane!=m_nrtree->root->lane)
 		{
 
 			printf("*****************************************************\n");
