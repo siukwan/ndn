@@ -63,6 +63,7 @@ public:
 	void    MergeInterest(uint32_t&id,unsigned int pos,const vector<string>& oldRoute,string curLane,bool&flag);
 	string  uriConvertToString(std::string str);
 	string  serialize();
+	InterestTreeNode* deserialize(string serializeTree);
 	InterestTreeNode* levelOrderDelete(string curLane);
 
 	uint32_t NodeId;

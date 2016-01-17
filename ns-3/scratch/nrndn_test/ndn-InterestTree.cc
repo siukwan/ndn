@@ -105,8 +105,7 @@ void NrInterestTreeImpl::MergeInterest(uint32_t&id,unsigned int pos,const vector
 void NrInterestTreeImpl::levelOrder()
 {
 	cout<<"(InterestTree)层序遍历"<<endl;
-	cout<<serialize()<<endl;
-	getchar();
+
 	queue<InterestTreeNode*> q;
 	q.push(this->root);
 	int count1=1;
@@ -253,7 +252,89 @@ string NrInterestTreeImpl::serialize()
 	}
 	return os.str();
 }
+//反序列化
+InterestTreeNode* NrInterestTreeImpl::deserialize(string serializeTree)
+{
+	serializeTree+="#";//避免最后一层还原不出来
+	InterestTreeNode* result;
+	vector<InterestTreeNode*> treeVector(0);
+	int level=0;
+	int flag = 0;
+	int laneFlag=1;
+	int levelFlag=2;
+	int NodeIdFlag=3;
+	string laneName="";
+	int InterestedNodeId=0;
+	map<int ,InterestTreeNode*> preLevel;
+	map<int ,InterestTreeNode*> thisLevel;
+	for(unsigned int i=0;i<serializeTree.size();++i)
+	{
+		if(serializeTree[i]=='#')
+		{//两种情况，刚开始和非刚开始
 
+			if(flag == NodeIdFlag)
+			{//知道NodeId值，可以挂在到父节点上
+				treeVector.back()->NodeId[InterestedNodeId]=true;
+				thisLevel[InterestedNodeId]=treeVector.back();//key:NodeId,value:InterestTreeNode
+				if(level!=0 && preLevel[InterestedNodeId]->child.find(laneName)==preLevel[InterestedNodeId]->child.end())
+					preLevel[InterestedNodeId]->child[laneName]=treeVector.back();//挂载到父节点上
+				InterestedNodeId=0;
+			}
+
+			flag = levelFlag;
+			if(i!=0)
+			{//上次的编号要加入到上一层中，并且新开一层，初始化所有参数
+				level++;
+				preLevel=thisLevel;
+				thisLevel.clear();//清楚当前层
+			}
+		}
+		else if(serializeTree[i]=='$')
+		{//接下来开始记录路段名字
+			if(flag == NodeIdFlag)
+			{//知道NodeId值，可以挂在到父节点上
+				treeVector.back()->NodeId[InterestedNodeId]=true;
+				thisLevel[InterestedNodeId]=treeVector.back();//key:NodeId,value:InterestTreeNode
+				if(level!=0 && preLevel[InterestedNodeId]->child.find(laneName)==preLevel[InterestedNodeId]->child.end())
+					preLevel[InterestedNodeId]->child[laneName]=treeVector.back();//挂载到父节点上
+				InterestedNodeId=0;
+			}
+			flag = laneFlag;
+			laneName="";
+			InterestedNodeId=0;
+		}
+		else if(serializeTree[i]=='^')
+		{//接下来记录NodeId
+			if(flag == laneFlag)
+			{//新建节点，因为只知道路段名，不知道NodeId的值，所以无法挂载到父节点上
+				treeVector.push_back(new InterestTreeNode(laneName));
+				if(level == 0 && treeVector.size() == 1)
+					result = treeVector.back();
+				InterestedNodeId=0;
+			}
+			else
+			{//知道NodeId值，可以挂在到父节点上
+				treeVector.back()->NodeId[InterestedNodeId]=true;
+				thisLevel[InterestedNodeId]=treeVector.back();//key:NodeId,value:InterestTreeNode
+				if(level!=0 && preLevel[InterestedNodeId]->child.find(laneName)==preLevel[InterestedNodeId]->child.end())
+					preLevel[InterestedNodeId]->child[laneName]=treeVector.back();//挂载到父节点上
+				InterestedNodeId=0;
+			}
+			flag = NodeIdFlag;
+		}
+		else
+		{
+			if(flag == levelFlag)
+			{}
+			else if(flag == laneFlag)
+				laneName+=serializeTree[i];
+			else if(flag == NodeIdFlag)
+				InterestedNodeId= InterestedNodeId*10+serializeTree[i]-'0';
+		}
+
+	}
+	return result;
+}
 //小锟添加，2016-1-15
 string NrInterestTreeImpl::uriConvertToString(string str)
 {

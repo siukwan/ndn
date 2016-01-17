@@ -345,6 +345,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 			printf("原兴趣树：\n");
 			m_nrtree->levelOrder();
+
+			string str_serialize = m_nrtree->serialize();
+			cout<<str_serialize<<endl<<"还原："<<endl;
+			Ptr<pit::nrndn::NrInterestTreeImpl> tmp_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
+			tmp_tree->root = tmp_tree->deserialize(str_serialize);
+			tmp_tree->levelOrder();
+			getchar();
+
 		}
 
 		m_nrtree->MergeInterest(nodeId,0,remoteRoute,currentLane,treeChangeFlag);
