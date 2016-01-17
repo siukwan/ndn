@@ -49,6 +49,7 @@ NrPitImpl::GetTypeId ()
 NrPitImpl::NrPitImpl ():
 		m_cleanInterval(Seconds(10.0))
 {
+	m_nrtree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
 }
 
 NrPitImpl::~NrPitImpl ()
@@ -305,6 +306,9 @@ std::string NrPitImpl::uriConvertToString(std::string str)
 }
 void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 {
+	cout<<"(NrPitImpl)laneChange:"<<endl;
+	m_nrtree->levelOrder();
+	getchar();
 	if (oldLane.empty()
 			|| (ndn::nrndn::NodeSensor::emptyLane == oldLane
 					&& ndn::nrndn::NodeSensor::emptyLane != newLane))

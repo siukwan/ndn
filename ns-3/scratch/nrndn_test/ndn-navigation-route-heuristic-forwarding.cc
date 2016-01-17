@@ -833,7 +833,8 @@ void NavigationRouteHeuristic::NotifyNewAggregate()
 
 
 	//m_nrtree = GetObject<pit::nrndn::NrInterestTreeImpl> ();
-	m_nrtree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
+	//m_nrtree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
+	m_nrtree = m_nrpit->m_nrtree;
 	super::NotifyNewAggregate ();
 	//std::cout<<"(n..forwarding):"<<m_node->GetId()<<std::endl;
 }

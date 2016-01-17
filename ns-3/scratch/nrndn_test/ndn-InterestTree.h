@@ -66,6 +66,7 @@ public:
 	uint32_t NodeId;
 	InterestTreeNode *root;
 	string prefix;//前缀，一般为"/"
+	Ptr<ndn::nrndn::NodeSensor>	m_sensor;
 
 };
 

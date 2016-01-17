@@ -19,7 +19,7 @@
 #include "ns3/ndn-name.h"
 
 #include "NodeSensor.h"
-
+#include "ndn-InterestTree.h"
 #include <vector>
 
 
@@ -111,6 +111,8 @@ public:
 
   //小锟添加，2015-8-23
   std::string uriConvertToString(std::string str);
+  //小锟添加，2016-1-17
+	Ptr<pit::nrndn::NrInterestTreeImpl> m_nrtree;
 protected:
   // inherited from Object class
   virtual void NotifyNewAggregate (); ///< @brief Even when object is aggregated to another Object
