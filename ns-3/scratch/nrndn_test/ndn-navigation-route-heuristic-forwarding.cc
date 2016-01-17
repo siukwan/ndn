@@ -877,7 +877,7 @@ void
 NavigationRouteHeuristic::SendHello()
 {
 	if(!m_running) return;
-	cout<<"(forwarding)发送hello包"<<m_node->GetId()<<endl;
+	//cout<<"(forwarding)发送hello包"<<m_node->GetId()<<endl;
 	if (m_HelloLogEnable)
 		NS_LOG_FUNCTION(this);
 	const double& x		= m_sensor->getX();
