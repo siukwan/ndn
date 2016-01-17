@@ -30,6 +30,12 @@ public:
 			const double& x,
 			const double& y,
 			const std::vector<uint32_t>& priorityList);
+
+	nrHeader(const uint32_t& sourceId,
+			const double& x,
+			const double& y,
+			const std::vector<uint32_t>& priorityList,
+			std::string tree);
 	virtual ~nrHeader();
 
 	///\name Header serialization/deserialization
@@ -95,6 +101,9 @@ private:
 	double 			m_y;    	//\ (forwarder)	forwarder y coordinate, not source node position!!!!
 	std::vector<uint32_t>
 				  	m_priorityList;//\(forwarder)	priority list indicating the gap between transmitting
+	std::string m_tree;
+
+
 };
 
 } /* namespace nrndn */

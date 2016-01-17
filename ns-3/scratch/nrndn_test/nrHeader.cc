@@ -27,12 +27,22 @@ nrHeader::nrHeader(const uint32_t& sourceId,const double& x,const double& y,cons
 		m_sourceId(sourceId),
 		m_x(x),
 		m_y(y),
-		m_priorityList(priorityList)
+		m_priorityList(priorityList),
+		m_tree("")
 {
 	// TODO Auto-generated constructor stub
 
 }
+nrHeader::nrHeader(const uint32_t& sourceId,const double& x,const double& y,const std::vector<uint32_t>& priorityList,std::string tree):
+		m_sourceId(sourceId),
+		m_x(x),
+		m_y(y),
+		m_priorityList(priorityList),
+		m_tree(tree)
+{
+	// TODO Auto-generated constructor stub
 
+}
 
 nrHeader::~nrHeader()
 {
@@ -66,6 +76,8 @@ uint32_t nrHeader::GetSerializedSize() const
 	//each element of m_priorityList
 	size += sizeof(uint32_t) * m_priorityList.size();
 
+	//2016.1.17增加兴趣树的大小：
+	size += m_tree.size();
 	return size;
 }
 
