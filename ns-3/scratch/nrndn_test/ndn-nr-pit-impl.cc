@@ -320,13 +320,13 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 
 	if(!IsOldLaneAtPitBegin)
 	{
-		std::cout<<"旧路段不在头部:"<<"oldLane:"<<(oldLane)<<" newLane:"<<uriConvertToString((*it)->GetInterest()->GetName().get(0).toUri())<<std::endl;
+		//std::cout<<"旧路段不在头部:"<<"oldLane:"<<(oldLane)<<" newLane:"<<uriConvertToString((*it)->GetInterest()->GetName().get(0).toUri())<<std::endl;
 
 		//遍历整个Pit
 		std::vector<Ptr<Entry> >::iterator itTraversal;
 		itTraversal =m_pitContainer.begin();
 		bool findOldLane=false;
-		std::cout<<"寻找oldLane中...\n";
+		//std::cout<<"寻找oldLane中...\n";
 		for(;itTraversal!=m_pitContainer.end();itTraversal++)
 		{//遍历整个PIT表，寻找oldLane是否在表中
 			if( uriConvertToString((*itTraversal)->GetInterest()->GetName().get(0).toUri()) == (oldLane) )
@@ -344,7 +344,7 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 			while(  uriConvertToString((*it)->GetInterest()->GetName().get(0).toUri())!=(oldLane)
 					&&it!=m_pitContainer.end())
 			{
-				std::cout<<a<<"遍历删除中："<<uriConvertToString( (*it)->GetInterest()->GetName().get(0).toUri())<<" OLd:"<<(oldLane)<<std::endl;
+				//std::cout<<a<<"遍历删除中："<<uriConvertToString( (*it)->GetInterest()->GetName().get(0).toUri())<<" OLd:"<<(oldLane)<<std::endl;
 				a++;
 				DynamicCast<EntryNrImpl>(*it)->RemoveAllTimeoutEvent();
 				m_pitContainer.erase(it);
@@ -352,20 +352,22 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 			}
 			if(it<=m_pitContainer.end())
 			{
-				std::cout<<"最后遍历删除中："<<uriConvertToString( (*it)->GetInterest()->GetName().get(0).toUri())<<" OLd:"<<(oldLane)<<std::endl;
+				//std::cout<<"最后遍历删除中："<<uriConvertToString( (*it)->GetInterest()->GetName().get(0).toUri())<<" OLd:"<<(oldLane)<<std::endl;
 				//1. Befor erase it, cancel all the counting Timer fore the neighbor to expire
 				DynamicCast<EntryNrImpl>(*it)->RemoveAllTimeoutEvent();
 				//2. erase it
 				m_pitContainer.erase(it);
-				std::cout<<"删除完毕\n";
+				//std::cout<<"删除完毕\n";
 			}
 			else
-				std::cout<<"删除完毕：迭代器为空\n";
+			{
+				//std::cout<<"删除完毕：迭代器为空\n";
+			}
 
 		}
 		else
 		{
-			std::cout<<"没找到...\n";
+			//std::cout<<"没找到...\n";
 		}
 	}
 	else
