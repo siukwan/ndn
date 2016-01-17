@@ -134,7 +134,7 @@ void NrInterestTreeImpl::levelOrder()
 		level++;
 		cout<<endl;
 	}
-	getchar();
+	//getchar();
 }
 
 void NrInterestTreeImpl::updateNowRoot(string currentLane)

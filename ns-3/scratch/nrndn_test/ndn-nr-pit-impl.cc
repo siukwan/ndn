@@ -306,9 +306,7 @@ std::string NrPitImpl::uriConvertToString(std::string str)
 }
 void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 {
-	cout<<"(NrPitImpl)laneChange:"<<endl;
-	m_nrtree->levelOrder();
-	getchar();
+	int needtoUpdateroot=0;
 	if (oldLane.empty()
 			|| (ndn::nrndn::NodeSensor::emptyLane == oldLane
 					&& ndn::nrndn::NodeSensor::emptyLane != newLane))
@@ -339,6 +337,8 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 		}
 		if(findOldLane)
 		{
+			//就路段不在头部，但是在后面
+			needtoUpdateroot=1;
 			it =m_pitContainer.begin();
 			int a=0;
 			while(  uriConvertToString((*it)->GetInterest()->GetName().get(0).toUri())!=(oldLane)
@@ -376,12 +376,19 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 		//1. Befor erase it, cancel all the counting Timer fore the neighbor to expire
 		DynamicCast<EntryNrImpl>(*it)->RemoveAllTimeoutEvent();
 
+		//就路段在头部，但是在后面
+		needtoUpdateroot=2;
 		//2. erase it
 		m_pitContainer.erase(it);
 		//std::cout<<"erase OK!"<<std::endl;
 		return;
 	}
+	if(needtoUpdateroot)
+	{
 
+		cout<<"(ndn-nr-pit-impl)新路段："<<newLane<<"  "<<needtoUpdateroot<<endl;
+		getchar();
+	}
 }
 
 void NrPitImpl::DoInitialize(void)
