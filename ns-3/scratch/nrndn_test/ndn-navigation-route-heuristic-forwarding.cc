@@ -975,7 +975,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		//hello信息来自前方，且邻居变化
 		if(msgdirection.second > 0 && nbChange_mode>0)
 		{//
-			printf("hello信息来自前方，且邻居发生变化%d\n",nbChange_mode);
+			//printf("hello信息来自前方，且邻居发生变化%d\n",nbChange_mode);
 			//getchar();
 		}
 

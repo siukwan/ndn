@@ -391,7 +391,7 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 		m_nrtree->levelOrder();
 		m_nrtree->updateNowRoot(m_nrtree->prefix+newLane);
 		m_nrtree->levelOrder();
-		getchar();
+		//getchar();
 	}
 }
 
