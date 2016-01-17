@@ -141,8 +141,9 @@ void NrInterestTreeImpl::levelOrder()
 void NrInterestTreeImpl::updateNowRoot(string currentLane)
 {//在MergeInterest中调用，curLane已经增加了prefix
 	//删除root的其他孩子节点
+	cout<<"(ndn-InterestTree)更新所在的路段："<<currentLane<<endl;
 	root = levelOrderDelete(currentLane);
-	cout<<"更新当前节点，路段为："<<root->lane<<endl;
+	cout<<"(ndn-InterestTree)更新当前节点，路段为："<<root->lane<<endl;
 	//getchar();
 }
 
