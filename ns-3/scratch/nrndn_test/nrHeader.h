@@ -92,7 +92,14 @@ public:
 	{
 		m_y = y;
 	}
-
+	std::string getTree() const
+	{
+		return m_tree;
+	}
+	void setTree(std::string t)
+	{
+		m_tree = t;
+	}
 	//\}
 
 private:
