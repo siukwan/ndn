@@ -341,7 +341,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				cout<<m_nrtree->uriConvertToString(remoteRoute[i])<<" ";
 			cout<< endl;
 			cout<<"邻居节点："<<nodeId<<" 所在路段："<<m_nrtree->uriConvertToString(remoteRoute[1])<<endl;
-			cout<<"当前节点："<<m_node->GetId()<<" 所在路段："<<currentLane<<endl;
+			cout<<"当前节点："<<m_node->GetId()<<" 所在路段：(PIT)"<<currentLane<<" (sensor)"<<m_sensor->getLane()<<endl;
 
 			printf("原兴趣树：\n");
 			m_nrtree->levelOrder();
