@@ -192,7 +192,7 @@ nrndnExample::nrndnExample () :
   HelloLogEnable(true),
   accidentNum(3),//默认3
   method(0),
-  interestFrequency(1),//本来是1秒1次
+  interestFrequency(0.00001),//本来是1秒1次,0.0001是10000秒一次
   hitRate(0),
   accuracyRate(0),
   disinterestRate(0),
@@ -506,8 +506,9 @@ nrndnExample::InstallNrNdnStack()
 	std::ostringstream TTLMaxStr;
 	TTLMaxStr<<TTLMax;
 	std::ostringstream pitCleanIntervalStr;
-	uint32_t pitCleanInterval = 1.0 / interestFrequency * 3.0;
-	pitCleanIntervalStr<<pitCleanInterval;
+	//uint32_t pitCleanInterval = 1.0 / interestFrequency * 3.0;
+	uint32_t pitCleanInterval = 1.0 / 1 * 3.0;//有什么作用？
+		pitCleanIntervalStr<<pitCleanInterval;
 	cout<<"pitInterval="<<pitCleanIntervalStr.str()<<endl;
 	ndnHelper.SetForwardingStrategy ("ns3::ndn::fw::nrndn::NavigationRouteHeuristic","HelloLogEnable",str,"NoFwStop",noFwStopStr,"TTLMax",TTLMaxStr.str());
 	ndnHelper.SetContentStore ("ns3::ndn::cs::Lru", "MaxSize", "1000");

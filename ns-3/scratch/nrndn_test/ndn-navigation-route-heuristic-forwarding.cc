@@ -346,12 +346,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			printf("原兴趣树：\n");
 			m_nrtree->levelOrder();
 
-			string str_serialize = m_nrtree->serialize();
-			cout<<str_serialize<<endl<<"还原："<<endl;
-			Ptr<pit::nrndn::NrInterestTreeImpl> tmp_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
-			tmp_tree->root = tmp_tree->deserialize(str_serialize);
-			tmp_tree->levelOrder();
-			getchar();
 
 		}
 
@@ -800,6 +794,7 @@ void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 {
 	if(!m_running) return;
 
+
 	if(HELLO_MESSAGE!=interest->GetScope()||m_HelloLogEnable)
 		NS_LOG_FUNCTION (this);
 
@@ -882,7 +877,7 @@ void
 NavigationRouteHeuristic::SendHello()
 {
 	if(!m_running) return;
-
+	cout<<"(forwarding)发送hello包"<<m_node->GetId()<<endl;
 	if (m_HelloLogEnable)
 		NS_LOG_FUNCTION(this);
 	const double& x		= m_sensor->getX();
