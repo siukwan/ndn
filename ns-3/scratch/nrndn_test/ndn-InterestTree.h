@@ -54,18 +54,20 @@ class NrInterestTreeImpl:public Object
 public:
 	static TypeId GetTypeId ();
 
-	NrInterestTreeImpl();
+	         NrInterestTreeImpl();
 	virtual ~NrInterestTreeImpl();
-	void insertInterest(uint32_t&id,unsigned int pos,const std::vector<string>& route,InterestTreeNode* root);
-	void updateNowRoot(string currentLane);
-	void deleteTree(InterestTreeNode* deleteNode);
-	void levelOrder();
-	string uriConvertToString(std::string str);
-	void MergeInterest(uint32_t&id,unsigned int pos,const vector<string>& oldRoute,string curLane,bool&flag);
+	void    insertInterest(uint32_t&id,unsigned int pos,const std::vector<string>& route,InterestTreeNode* root);
+	void    updateNowRoot(string currentLane);
+	void    deleteTree(InterestTreeNode* deleteNode);
+	void    levelOrder();
+	void    MergeInterest(uint32_t&id,unsigned int pos,const vector<string>& oldRoute,string curLane,bool&flag);
+	string  uriConvertToString(std::string str);
+	string  serialize();
 	InterestTreeNode* levelOrderDelete(string curLane);
+
 	uint32_t NodeId;
-	InterestTreeNode *root;
 	string prefix;//前缀，一般为"/"
+	InterestTreeNode *root;
 	Ptr<ndn::nrndn::NodeSensor>	m_sensor;
 
 };

@@ -70,7 +70,7 @@ void NrInterestTreeImpl::insertInterest(uint32_t&id,unsigned int pos,const vecto
 		insertInterest(id,pos+1,route,root->child[nowRoute]);
 	}
 }
-
+//合并兴趣与路线
 void NrInterestTreeImpl::MergeInterest(uint32_t&id,unsigned int pos,const vector<string>& oldRoute,string curLane,bool&flag)
 {
 	curLane=prefix+curLane;
@@ -105,6 +105,8 @@ void NrInterestTreeImpl::MergeInterest(uint32_t&id,unsigned int pos,const vector
 void NrInterestTreeImpl::levelOrder()
 {
 	cout<<"(InterestTree)层序遍历"<<endl;
+	cout<<serialize()<<endl;
+	getchar();
 	queue<InterestTreeNode*> q;
 	q.push(this->root);
 	int count1=1;
@@ -211,6 +213,46 @@ void NrInterestTreeImpl::deleteTree(InterestTreeNode* deleteNode)
 
 }
 
+//序列化#层数$路段1^id1^id2^id3$路段2^id4^id5
+string NrInterestTreeImpl::serialize()
+{
+	ostringstream os;
+	int level=0;
+	queue<InterestTreeNode*> q;
+	int count1=1;
+	int count2=0;
+	q.push(root);
+
+	while(!q.empty())
+	{
+		//记录当前的层数
+		os<<"#"<<level;
+
+		for(int i=0;i<count1;++i)
+		{
+			InterestTreeNode* head=q.front();
+			q.pop();
+			os<<"$"<<head->lane;
+			//把head对应的感兴趣节点记录到os中
+			for(map<int, bool>::iterator ite=head->NodeId.begin();ite!=head->NodeId.end();ite++)
+			{
+				if(ite->second)//避免了出现不为true的情况，即查询时不小心插入了
+				{
+					os<<"^"<<ite->first;
+				}
+			}
+			for(map<string,InterestTreeNode*>::iterator ite=head->child.begin();ite!=head->child.end();ite++)
+			{
+				q.push(ite->second);
+				count2++;
+			}
+		}
+		level++;
+		count1=count2;
+		count2=0;
+	}
+	return os.str();
+}
 
 //小锟添加，2016-1-15
 string NrInterestTreeImpl::uriConvertToString(string str)
