@@ -99,6 +99,7 @@ public:
 	void setTree(std::string t)
 	{
 		m_tree = t;
+		m_treesize=t.size();
 	}
 	//\}
 
@@ -108,6 +109,7 @@ private:
 	double 			m_y;    	//\ (forwarder)	forwarder y coordinate, not source node position!!!!
 	std::vector<uint32_t>
 				  	m_priorityList;//\(forwarder)	priority list indicating the gap between transmitting
+	uint32_t m_treesize;
 	std::string m_tree;
 
 
