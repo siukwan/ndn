@@ -144,6 +144,7 @@ void NrInterestTreeImpl::updateNowRoot(string currentLane)
 	if(currentLane == "UNKNOWN_LANE")
 	{//sensor获取回来的道路未知
 		cout<<"(ndn-InterestTree)currentLane UNKNOWN_LANE"<<endl;
+		getchar();
 		return;//没有找到适当的道路
 	}
 	cout<<"(ndn-InterestTree)更新所在的路段："<<currentLane<<endl;
