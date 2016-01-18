@@ -324,8 +324,9 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		// Update the PIT here
 		//更新PIT表
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
-		//当前所在路段？
-		string currentLane=m_nrpit->getCurrentLane();
+		//当前所在路段？使用pit的currentlane会存在问题，pit有时候在十字路口，没有把过去的路段删除，直接使用sensor的getlane
+		//string currentLane=m_nrpit->getCurrentLane();
+		string currentLane=m_sensor->getLane();
 		//Update the Interest Tree
 
 
