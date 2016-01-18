@@ -388,9 +388,9 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 	if(needtoUpdateroot)
 	{
 		cout<<"\n(ndn-nr-pit-impl)needtoUpdateroot新路段："<<newLane<<"  "<<needtoUpdateroot<<endl;
-/*		m_nrtree->levelOrder();
+   	m_nrtree->levelOrder();
 		m_nrtree->updateNowRoot(m_nrtree->prefix+newLane);
-		m_nrtree->levelOrder();*/
+		m_nrtree->levelOrder();
 		//getchar();
 	}
 }
