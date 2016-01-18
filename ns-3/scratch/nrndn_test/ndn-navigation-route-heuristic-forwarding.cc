@@ -285,6 +285,16 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	nodeId=nrheader.getSourceId();
 	//获取兴趣的随机编码
 	seq=interest->GetNonce();
+
+	//提取兴趣树，并且还原
+	string receive_tree_str = nrheader.getTree();
+	Ptr<pit::nrndn::NrInterestTreeImpl> receive_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
+	cout<<"(forwarding.cc)接收得到来自节点："<<nodeId<<"解序列化:"<<receive_tree_str<<endl;
+	receive_tree->root=receive_tree->deserialize(receive_tree_str);
+	receive_tree->NodeId=nodeId;
+	cout<<"(forwarding.cc)接收得到来自节点："<<nodeId<<endl;
+	receive_tree->levelOrder();
+	getchar();
 	//获取优先列表
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
@@ -714,6 +724,10 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	nrheader.setX(x);
 	nrheader.setY(y);
 	nrheader.setPriorityList(priorityList);
+
+	//设置信息,设置兴趣树
+	nrheader.setTree(m_nrtree->serialize());
+
 
 	Ptr<Packet> newPayload	= Create<Packet> ();
 	newPayload->AddHeader(nrheader);

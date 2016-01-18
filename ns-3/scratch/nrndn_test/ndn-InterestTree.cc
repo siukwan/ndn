@@ -105,7 +105,11 @@ void NrInterestTreeImpl::MergeInterest(uint32_t&id,unsigned int pos,const vector
 void NrInterestTreeImpl::levelOrder()
 {
 	cout<<"(InterestTree)层序遍历"<<endl;
-
+	if(this->root == NULL)
+	{
+		cout<<"(InterestTree)根结点为空"<<endl;
+		return ;
+	}
 	queue<InterestTreeNode*> q;
 	q.push(this->root);
 	int count1=1;
@@ -261,6 +265,7 @@ string NrInterestTreeImpl::serialize()
 //反序列化
 InterestTreeNode* NrInterestTreeImpl::deserialize(string serializeTree)
 {
+	if(serializeTree=="") return NULL;
 	serializeTree+="#";//避免最后一层还原不出来
 	InterestTreeNode* result;
 	vector<InterestTreeNode*> treeVector(0);
