@@ -141,7 +141,7 @@ void NrInterestTreeImpl::levelOrder()
 void NrInterestTreeImpl::updateNowRoot(string currentLane)
 {//在MergeInterest中调用，curLane已经增加了prefix
 	//删除root的其他孩子节点
-	if(currentLane == "UNKNOWN_LANE")
+	if(currentLane == prefix+"UNKNOWN_LANE")
 	{//sensor获取回来的道路未知
 		cout<<"(ndn-InterestTree)currentLane UNKNOWN_LANE"<<endl;
 		getchar();
