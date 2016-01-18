@@ -394,6 +394,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 						interest);
 			}
 		}
+		//不在优先列表中，则不转发
 		else
 		{
 			NS_LOG_DEBUG("Node id is not in PriorityList");
@@ -726,12 +727,15 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	// 4. record the forward times
 	ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
 }
-
+//用于判断本节点是否包含remoteRoute中的路段
 bool NavigationRouteHeuristic::PitCoverTheRestOfRoute(
 		const vector<string>& remoteRoute)
 {
 	NS_LOG_FUNCTION (this);
+	//获取本节点的导航路线
 	const vector<string>& localRoute =m_sensor->getNavigationRoute();
+
+	//获取当前所在的道路
 	const string& localLane=m_sensor->getLane();
 	vector<string>::const_iterator localRouteIt;
 	vector<string>::const_iterator remoteRouteIt;
