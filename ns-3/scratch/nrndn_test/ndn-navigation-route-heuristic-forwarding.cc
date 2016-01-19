@@ -289,10 +289,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//提取兴趣树，并且还原
 	string receive_tree_str = nrheader.getTree();
 	Ptr<pit::nrndn::NrInterestTreeImpl> receive_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
-	cout<<"(forwarding.cc)"<<m_node->GetId()<<"接收得到来自节点："<<nodeId<<"解序列化:"<<nrheader.getTree()<<endl;
+	//cout<<"(forwarding.cc)"<<m_node->GetId()<<"接收得到来自节点："<<nodeId<<"解序列化:"<<nrheader.getTree()<<endl;
 	receive_tree->root=receive_tree->deserialize(receive_tree_str);
 	receive_tree->NodeId=nodeId;
-	cout<<"(forwarding.cc)接收得到来自节点："<<nodeId<<endl;
+	cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
 	receive_tree->levelOrder();
 	getchar();
 	//获取优先列表
@@ -1052,8 +1052,8 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
 	//设置信息,设置兴趣树
 	nrheader.setTree(m_nrtree->serialize());
-	cout<<"(forwarding.cc)"<<m_node->GetId()<<"GetNrPayload，并设置兴趣树信息:\n"<<nrheader.getTree()<<endl;
-	getchar();
+	//cout<<"(forwarding.cc)"<<m_node->GetId()<<"GetNrPayload，并设置兴趣树信息:\n"<<nrheader.getTree()<<endl;
+	//getchar();
 	nrPayload->AddHeader(nrheader);
 	return nrPayload;
 }

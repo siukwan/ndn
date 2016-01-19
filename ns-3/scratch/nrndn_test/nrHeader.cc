@@ -123,7 +123,7 @@ uint32_t nrHeader::Deserialize(Buffer::Iterator start)
 		uint8_t a;
 		i.Read((uint8_t*)&a,sizeof(a));
 		m_tree+=(char)a;
-		std::cout<<a;
+		//std::cout<<a;
 	}
 	//i.Read((uint8_t*)&m_tree,treesize);
 	uint32_t size  = i.ReadNtohU32();
