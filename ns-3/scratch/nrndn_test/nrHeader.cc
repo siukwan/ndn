@@ -89,9 +89,16 @@ void nrHeader::Serialize(Buffer::Iterator start) const
 	i.Write((uint8_t*)&m_x,sizeof(m_x));
 	i.Write((uint8_t*)&m_y,sizeof(m_y));
 
+	//2016年1月19日，小锟添加，兴趣树的序列化
 	i.WriteHtonU32(m_tree.size());
-	std::cout<<m_tree<<std::endl<<"header,treesize:"<<m_tree.size()<<std::endl;
-	i.Write((uint8_t*)&m_tree,m_tree.size());
+	//std::cout<<m_tree<<std::endl<<"header,treesize:"<<m_tree.size()<<" totalSize:"<<GetSerializedSize()<<std::endl;
+	for(uint32_t j=0;j<m_tree.size();++j)
+	{
+		//std::cout<<(int)(m_tree[j])<<" "<<std::endl;
+		//需要强制转换每一个char为uint8_t才能成功序列化和反序列化
+		uint8_t tmp = (uint8_t )(m_tree[j]);
+		i.Write((uint8_t*)&tmp,sizeof(tmp));
+	}
 
 	i.WriteHtonU32(m_priorityList.size());
 	std::vector<uint32_t>::const_iterator it;
@@ -109,22 +116,23 @@ uint32_t nrHeader::Deserialize(Buffer::Iterator start)
 	i.Read((uint8_t*)&m_y,sizeof(m_y));
 
 	uint32_t treesize  = i.ReadNtohU32();
-	std::cout<<"读取的大小："<<treesize<<std::endl;
+	//std::cout<<"读取的大小："<<treesize<<std::endl;
+	m_tree="";
 	for(uint32_t j = 0;j<treesize;++j)
-	{
+	{//还原树
 		uint8_t a;
 		i.Read((uint8_t*)&a,sizeof(a));
+		m_tree+=(char)a;
 		std::cout<<a;
 	}
-
-	i.Read((uint8_t*)&m_tree,treesize);
+	//i.Read((uint8_t*)&m_tree,treesize);
 	uint32_t size  = i.ReadNtohU32();
 	for (uint32_t p = 0; p < size; p++)
 	{
 		m_priorityList.push_back(i.ReadNtohU32());
 	}
-
 	uint32_t dist = i.GetDistanceFrom(start);
+	//std::cout<<"读取的size"<<dist<<" 原来的size"<<GetSerializedSize()<<std::endl;
 	NS_ASSERT(dist == GetSerializedSize());
 	return dist;
 }
