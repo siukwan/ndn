@@ -1049,7 +1049,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 
 	const double& x = m_sensor->getX();
 	const double& y = m_sensor->getY();
-	ndn::nrndn::nrHeader nrheader(m_node->GetId()+123, x, y, priorityList);
+	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
 	//设置信息,设置兴趣树
 	nrheader.setTree(m_nrtree->serialize());
 	cout<<"(forwarding.cc)"<<m_node->GetId()<<"GetNrPayload，并设置兴趣树信息:\n"<<nrheader.getTree()<<endl;
