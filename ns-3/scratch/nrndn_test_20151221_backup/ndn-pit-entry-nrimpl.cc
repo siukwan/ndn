@@ -91,8 +91,8 @@ void EntryNrImpl::CleanExpiredIncomingNeighbors(uint32_t id)
 
 void EntryNrImpl::RemoveAllTimeoutEvent()
 {
-	std::cout<<"(nrimpl.cc)清除过期的表项"<<std::endl;
-	getchar();
+	//std::cout<<"(nrimpl.cc)清除过期的表项"<<std::endl;
+	//getchar();
 	std::unordered_map< uint32_t,EventId>::iterator it;
 	for(it=m_nbTimeoutEvent.begin();it!=m_nbTimeoutEvent.end();++it)
 	{
