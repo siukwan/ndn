@@ -170,7 +170,7 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 		cout<<"(ndn-InterestTree.cc)根结点为空，无法删除"<<endl;
 		return root;
 	}
-	cout<<curLane<<endl;
+	//cout<<curLane<<endl;
 	InterestTreeNode*result=NULL;
 	queue<InterestTreeNode*> q;
 	int count1=1;
