@@ -305,15 +305,7 @@ InterestTreeNode* NrInterestTreeImpl::deserialize(string serializeTree)
 	{
 		if(serializeTree[i]=='#')
 		{//两种情况，刚开始和非刚开始
-			/*
-			if(flag == NodeIdFlag)
-			{//知道NodeId值，可以挂在到父节点上
-				treeVector.back()->NodeId[InterestedNodeId]=true;
-				thisLevel[InterestedNodeId]=treeVector.back();//key:NodeId,value:InterestTreeNode
-				if(level!=0 && preLevel[InterestedNodeId]->child.find(laneName)==preLevel[InterestedNodeId]->child.end())
-					preLevel[InterestedNodeId]->child[laneName]=treeVector.back();//挂载到父节点上
-				InterestedNodeId=0;
-			}*/
+
 
 			flag = levelFlag;
 			if(i!=0)
@@ -326,15 +318,7 @@ InterestTreeNode* NrInterestTreeImpl::deserialize(string serializeTree)
 		}
 		else if(serializeTree[i]=='$')
 		{//接下来开始记录路段名字
-			/*
-			if(flag == NodeIdFlag)
-			{//知道NodeId值，可以挂在到父节点上
-				treeVector.back()->NodeId[InterestedNodeId]=true;
-				thisLevel[InterestedNodeId]=treeVector.back();//key:NodeId,value:InterestTreeNode
-				if(level!=0 && preLevel[InterestedNodeId]->child.find(laneName)==preLevel[InterestedNodeId]->child.end())
-					preLevel[InterestedNodeId]->child[laneName]=treeVector.back();//挂载到父节点上
-				InterestedNodeId=0;
-			}*/
+
 			flag = laneFlag;
 			laneName="";
 			++i;
@@ -356,23 +340,7 @@ InterestTreeNode* NrInterestTreeImpl::deserialize(string serializeTree)
 				if(level!=0 && preLevel[nodeValue]->child.find(laneName)==preLevel[nodeValue]->child.end())
 					preLevel[nodeValue]->child[laneName]=treeVector.back();//挂载到父节点上
 			}
-			/*
-			if(flag == laneFlag)
-			{//新建节点，因为只知道路段名，不知道NodeId的值，所以无法挂载到父节点上
-				treeVector.push_back(new InterestTreeNode(laneName));
-				if(level == 0 && treeVector.size() == 1)
-					result = treeVector.back();
-				InterestedNodeId=0;
-			}
-			else
-			{//知道NodeId值，可以挂在到父节点上
-				treeVector.back()->NodeId[InterestedNodeId]=true;
-				thisLevel[InterestedNodeId]=treeVector.back();//key:NodeId,value:InterestTreeNode
-				if(level!=0 && preLevel[InterestedNodeId]->child.find(laneName)==preLevel[InterestedNodeId]->child.end())
-					preLevel[InterestedNodeId]->child[laneName]=treeVector.back();//挂载到父节点上
-				InterestedNodeId=0;
-			}
-			*/
+
 			flag = NodeIdFlag;
 		}
 		else
@@ -381,8 +349,7 @@ InterestTreeNode* NrInterestTreeImpl::deserialize(string serializeTree)
 			{}
 			else if(flag == laneFlag)
 				laneName+=serializeTree[i];
-			//else if(flag == NodeIdFlag)
-			//	InterestedNodeId= InterestedNodeId*10+serializeTree[i]-'0';
+
 			++i;
 		}
 
