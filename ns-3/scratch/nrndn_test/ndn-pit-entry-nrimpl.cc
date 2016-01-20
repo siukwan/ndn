@@ -89,6 +89,32 @@ void EntryNrImpl::CleanExpiredIncomingNeighbors(uint32_t id)
 		m_incomingnbs.erase(incomingnb);
 }
 
+//删除PIT中指定id的邻居，和CleanExpiredIncomingNeighbors一样
+void EntryNrImpl::CleanPITNeighbors(uint32_t id)
+{
+	std::unordered_set< uint32_t >::iterator it;
+	NS_LOG_DEBUG("At PIT Entry:"<<GetInterest()->GetName().toUri()<<" To delete neighbor:"<<id);
+	std::unordered_set< uint32_t >::iterator incomingnb  = m_incomingnbs.find(id);
+	if (incomingnb != m_incomingnbs.end())
+		m_incomingnbs.erase(incomingnb);
+}
+//cout表项内容
+void EntryNrImpl::listPitEntry()
+{
+	std::cout<<"(pit-entry.cc)兴趣："<<m_interest_name<<" ";
+/*	std::cout<<"(pit-entry.cc)id及耗时:"<<std::endl;
+	for(std::unordered_map< uint32_t,EventId>::iterator ite = m_nbTimeoutEvent.begin();ite!=m_nbTimeoutEvent.end();ite++)
+	{
+		std::cout<<ite->first<<"("<<ite->second<<") ";
+	}*/
+	std::cout<<"id:";
+	for(std::unordered_set< uint32_t >::iterator ite = m_incomingnbs.begin();ite != m_incomingnbs.end();ite++)
+	{
+		std::cout<<*ite<<" ";
+	}
+	std::cout<<std::endl;
+}
+
 void EntryNrImpl::RemoveAllTimeoutEvent()
 {
 	std::unordered_map< uint32_t,EventId>::iterator it;

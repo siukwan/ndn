@@ -44,6 +44,9 @@ public:
 	 */
 	void RemoveAllTimeoutEvent();
 
+	//删除PIT中指定id的邻居
+	void CleanPITNeighbors(uint32_t id);
+	void listPitEntry();
 	/**
 	 * @brief Add `id` to the list of incoming neighbor list(m_incomingnbs)
 	 *
