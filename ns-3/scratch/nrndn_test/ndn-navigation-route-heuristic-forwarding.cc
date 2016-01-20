@@ -286,20 +286,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//获取兴趣的随机编码
 	seq=interest->GetNonce();
 
-	//提取兴趣树，并且还原
-	string receive_tree_str = nrheader.getTree();
-	Ptr<pit::nrndn::NrInterestTreeImpl> receive_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
-	//cout<<"(forwarding.cc)"<<m_node->GetId()<<"接收得到来自节点："<<nodeId<<"解序列化:"<<nrheader.getTree()<<endl;
-	receive_tree->root=receive_tree->deserialize(receive_tree_str);
-	receive_tree->NodeId=nodeId;
-	cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
-	receive_tree->levelOrder();
-	string tmp_curLane=receive_tree->prefix+m_sensor->getLane();
-	cout<<"(forwarding.cc)所在路段为："<<tmp_curLane<<"\ndelete后的兴趣树："<<endl;
 
-	receive_tree->root =receive_tree->levelOrderDelete(tmp_curLane);
-	receive_tree->levelOrder();
-	getchar();
 	//获取优先列表
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
@@ -336,9 +323,30 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		const vector<string> remoteRoute=
 							ExtractRouteFromName(interest->GetName());
 
+
+
+
+		//提取兴趣树，并且还原
+		string receive_tree_str = nrheader.getTree();
+		Ptr<pit::nrndn::NrInterestTreeImpl> receive_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
+		//cout<<"(forwarding.cc)"<<m_node->GetId()<<"接收得到来自节点："<<nodeId<<"解序列化:"<<nrheader.getTree()<<endl;
+		receive_tree->root=receive_tree->deserialize(receive_tree_str);
+		receive_tree->NodeId=nodeId;
+		//cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
+		//receive_tree->levelOrder();
+		string tmp_curLane=receive_tree->prefix+m_sensor->getLane();
+		//cout<<"(forwarding.cc)所在路段为："<<tmp_curLane<<"\ndelete后的兴趣树："<<endl;
+
+		receive_tree->root =receive_tree->levelOrderDelete(tmp_curLane);
+		//receive_tree->levelOrder();
+		//getchar();
+
+
+
 		// Update the PIT here
 		//更新PIT表
-		m_nrpit->UpdatePit(remoteRoute, nodeId);
+		//m_nrpit->UpdatePit(remoteRoute, nodeId);
+		m_nrpit->UpdatePitByInterestTree(receive_tree,nodeId);
 		//当前所在路段？使用pit的currentlane会存在问题，pit有时候在十字路口，没有把过去的路段删除，直接使用sensor的getlane
 		//string currentLane=m_nrpit->getCurrentLane();
 		string currentLane=m_sensor->getLane();

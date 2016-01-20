@@ -138,6 +138,65 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 	return true;
 }
 
+
+
+//小锟添加，通过兴趣树更新PIT表
+bool NrPitImpl::UpdatePitByInterestTree(Ptr<pit::nrndn::NrInterestTreeImpl>&receivetree,const uint32_t& id)
+{
+	std::ostringstream os;
+	//进行广度优先搜索，把兴趣树的所有节点都放到set里面
+	set<string> tree_set;
+	if(receivetree->root == NULL)
+		return false;
+	queue<InterestTreeNode*> q;
+	q.push(receivetree->root);
+	int count1=1;
+	int count2=0;
+	int level=0;
+	while(!q.empty())
+	{
+		for(int i=0;i<count1;i++)
+		{
+			InterestTreeNode* head=q.front();
+			q.pop();
+			tree_set.insert(head->lane);
+			map<string, InterestTreeNode* >::iterator ite = head->child.begin();
+			for(;ite!=head->child.end();ite++)
+			{
+				count2++;
+				q.push(ite->second);
+			}
+		}
+		count1=count2;
+		count2=0;
+		level++;
+	}
+	/*receivetree->levelOrder();
+	cout<<"(pit-impl.cc)"<<endl;
+	for(set<string>::iterator ite=tree_set.begin();ite!=tree_set.end();ite++)
+		cout<<*ite<<" ";
+	cout<<endl;
+	getchar();*/
+
+	std::vector<Ptr<Entry> >::iterator pit=m_pitContainer.begin();
+	for(;pit!=m_pitContainer.end();++pit)
+	{
+		const name::Component &pitName=(*pit)->GetInterest()->GetName().get(0);
+		//cout<<receivetree->prefix+uriConvertToString(pitName.toUri())<<" ";
+		if(tree_set.find(receivetree->prefix+uriConvertToString(pitName.toUri()))!=tree_set.end())
+		{
+			//cout<<"\n(找到)"<<receivetree->prefix+uriConvertToString(pitName.toUri())<<endl;
+			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
+			pitEntry->AddIncomingNeighbors(id);
+			os<<(*pit)->GetInterest()->GetName().toUri()<<" add Neighbor "<<id<<' ';
+			//std::cout<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" ";
+		}
+	}
+	//NS_LOG_UNCOND("update pit:"<<os.str());
+	NS_LOG_DEBUG("update pit:"<<os.str());
+	return true;
+}
+
 void
 NrPitImpl::DoDispose ()
 {

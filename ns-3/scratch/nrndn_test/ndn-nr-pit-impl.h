@@ -21,7 +21,8 @@
 #include "NodeSensor.h"
 #include "ndn-InterestTree.h"
 #include <vector>
-
+#include <set>
+#include <queue>
 
 namespace ns3
 {
@@ -31,7 +32,7 @@ namespace pit
 {
 namespace nrndn
 {
-
+using namespace std;
 /**
  * @ingroup ndn-pit
  * @brief Class implementing Pending Interests Table,
@@ -105,8 +106,7 @@ public:
    * multi entry of pit will be operated
    */
   bool UpdatePit(const std::vector<std::string>& route,const uint32_t& id);
-
-
+  bool UpdatePitByInterestTree(Ptr<pit::nrndn::NrInterestTreeImpl>&receivetree,const uint32_t& id);
   void laneChange(std::string oldLane, std::string newLane);
 
   //小锟添加，2015-8-23
