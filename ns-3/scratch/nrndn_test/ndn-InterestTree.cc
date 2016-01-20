@@ -159,6 +159,18 @@ void NrInterestTreeImpl::updateNowRoot(string currentLane)
 //层序删除，以找出在第三层或以上的路径，即当前路径不在root的孩子节点，在其更深层次的孩子节点中
 InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 {//updateNowRoot中调用，在之前已经添加了prefix
+	//删除root的其他孩子节点
+	if(curLane == prefix+"UNKNOWN_LANE")
+	{//sensor获取回来的道路未知
+		cout<<"(ndn-InterestTree)currentLane UNKNOWN_LANE"<<endl;
+		return root;//没有找到适当的道路
+	}
+	if(root == NULL)
+	{
+		cout<<"(ndn-InterestTree.cc)根结点为空，无法删除"<<endl;
+		return root;
+	}
+	cout<<curLane<<endl;
 	InterestTreeNode*result=NULL;
 	queue<InterestTreeNode*> q;
 	int count1=1;

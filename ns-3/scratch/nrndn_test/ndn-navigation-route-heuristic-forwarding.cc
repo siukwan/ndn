@@ -294,6 +294,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	receive_tree->NodeId=nodeId;
 	cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
 	receive_tree->levelOrder();
+	string tmp_curLane=receive_tree->prefix+m_sensor->getLane();
+	cout<<"(forwarding.cc)所在路段为："<<tmp_curLane<<"\ndelete后的兴趣树："<<endl;
+
+	receive_tree->root =receive_tree->levelOrderDelete(tmp_curLane);
+	receive_tree->levelOrder();
 	getchar();
 	//获取优先列表
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
@@ -935,6 +940,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader(nrheader);
 	//update neighbor list
+	//根据心跳包来更新邻居列表
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 
 	int nbChange_mode=0;
