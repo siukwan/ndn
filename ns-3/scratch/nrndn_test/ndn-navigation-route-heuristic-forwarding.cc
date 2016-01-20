@@ -740,6 +740,17 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 
 	//设置信息,设置兴趣树
 	nrheader.setTree(m_nrtree->serialize());
+	cout<<"(forward.cc)"<<m_nrtree->serialize()<<endl;
+
+
+	m_nrtree->levelOrder();
+	Ptr<pit::nrndn::NrInterestTreeImpl> receive_tree1 = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
+	//cout<<"(forwarding.cc)"<<m_node->GetId()<<"接收得到来自节点："<<nodeId<<"解序列化:"<<nrheader.getTree()<<endl;
+	receive_tree1->root=receive_tree1->deserialize(m_nrtree->serialize());
+	cout<<"还原"<<endl;
+	receive_tree1->levelOrder();
+
+	getchar();
 
 
 	Ptr<Packet> newPayload	= Create<Packet> ();
