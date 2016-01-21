@@ -342,7 +342,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		//receive_tree->levelOrder();
 		//getchar();
 		vector<vector<string>> receiveRoutes(0);
-		vector<int> receiveNode(0);
+		vector<uint32_t> receiveNode(0);
 		receive_tree->convert2Routes(receiveRoutes,receiveNode);
 		cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
 		receive_tree->levelOrder();
@@ -354,6 +354,17 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				cout<<receiveRoutes[i][j]<< " ";
 			cout<<endl;
 		}
+		cout<<"\n(forwarding.cc)合并前的兴趣树"<<endl;
+		m_nrtree->levelOrder();
+		getchar();
+		for(uint32_t i=0;i<receiveNode.size();++i)
+		{
+			bool flag1=false;
+			cout<<"合并的节点："<<receiveNode[i]<<endl;
+			m_nrtree->MergeInterest(receiveNode[i],receiveRoutes[i],m_sensor->getLane(),flag1);
+		}
+		cout<<"\n(forwarding.cc)合并后的兴趣树"<<endl;
+		m_nrtree->levelOrder();
 		getchar();
 
 
@@ -387,7 +398,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		}
 
-		m_nrtree->MergeInterest(nodeId,0,remoteRoute,currentLane,treeChangeFlag);
+		m_nrtree->MergeInterest(nodeId,remoteRoute,currentLane,treeChangeFlag);
 		if(treeChangeFlag)
 		{
 			printf("新兴趣树：\n");

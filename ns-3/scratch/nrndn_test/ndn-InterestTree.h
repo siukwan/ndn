@@ -60,14 +60,14 @@ public:
 	void    updateNowRoot(string currentLane);
 	void    deleteTree(InterestTreeNode* deleteNode);
 	void    levelOrder();
-	void    MergeInterest(uint32_t&id,unsigned int pos,const vector<string>& oldRoute,string curLane,bool&flag);
+	void    MergeInterest(uint32_t&id,const vector<string>& oldRoute,string curLane,bool&flag);
 	string  uriConvertToString(std::string str);
 	string  serialize();
 	InterestTreeNode* deserialize(string serializeTree);
 	InterestTreeNode* levelOrderDelete(string curLane);
-	void convert2Routes(vector<vector<string>>&routes,vector<int>&node_vec);
-	vector<string>  getSingleRoute(int node);
-	void getSingleRoute_dfs(vector<string>& result,int&node,InterestTreeNode*  treeNode);
+	void convert2Routes(vector<vector<string>>&routes,vector<uint32_t>&node_vec);
+	vector<string>  getSingleRoute(uint32_t node);
+	void getSingleRoute_dfs(vector<string>& result,uint32_t&node,InterestTreeNode*  treeNode);
 	uint32_t NodeId;
 	string prefix;//前缀，一般为"/"
 	InterestTreeNode *root;

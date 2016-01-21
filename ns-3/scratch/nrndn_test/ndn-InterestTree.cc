@@ -71,7 +71,7 @@ void NrInterestTreeImpl::insertInterest(uint32_t&id,unsigned int pos,const vecto
 	}
 }
 //合并兴趣与路线
-void NrInterestTreeImpl::MergeInterest(uint32_t&id,unsigned int pos,const vector<string>& oldRoute,string curLane,bool&flag)
+void NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRoute,string curLane,bool&flag)
 {
 	curLane=prefix+curLane;
 	//如果车辆当前所在的道路与兴趣树的root不相同
@@ -357,11 +357,11 @@ InterestTreeNode* NrInterestTreeImpl::deserialize(string serializeTree)
 	return result;
 }
 
-void NrInterestTreeImpl::convert2Routes(vector<vector<string>>&routes,vector<int>&node_vec)
+void NrInterestTreeImpl::convert2Routes(vector<vector<string>>&routes,vector<uint32_t>&node_vec)
 {
 	//遍历根部的所有节点，每个节点都有一个到根的路线
 
-	node_vec=vector<int> (0);
+	node_vec=vector<uint32_t> (0);
 	for(map<int,bool>::iterator ite = root->NodeId.begin();ite!=root->NodeId.end();ite++)
 	{
 		if(ite->second)
@@ -375,14 +375,14 @@ void NrInterestTreeImpl::convert2Routes(vector<vector<string>>&routes,vector<int
 	}
 }
 
-vector<string>  NrInterestTreeImpl::getSingleRoute(int node)
+vector<string>  NrInterestTreeImpl::getSingleRoute(uint32_t node)
 {
 	vector<string> tmp(0);
 	getSingleRoute_dfs(tmp,node,root);
 	return tmp;
 }
 
-void NrInterestTreeImpl::getSingleRoute_dfs(vector<string>& result,int&node,InterestTreeNode*  treeNode)
+void NrInterestTreeImpl::getSingleRoute_dfs(vector<string>& result,uint32_t&node,InterestTreeNode*  treeNode)
 {
 	//找到node所在的路线
 	if(treeNode->NodeId.find(node)!=treeNode->NodeId.end())
