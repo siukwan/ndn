@@ -64,7 +64,8 @@ uint32_t nrHeader::GetSerializedSize() const
 
 	//m_priorityList.size():
 	size += sizeof(uint32_t);
-
+	size += sizeof(uint32_t);
+	size +=m_route.size();
 	//each element of m_priorityList
 	size += sizeof(uint32_t) * m_priorityList.size();
 
@@ -77,6 +78,16 @@ void nrHeader::Serialize(Buffer::Iterator start) const
 	i.WriteHtonU32(m_sourceId);
 	i.Write((uint8_t*)&m_x,sizeof(m_x));
 	i.Write((uint8_t*)&m_y,sizeof(m_y));
+
+	i.WriteHtonU32(m_route.size());
+	for(uint32_t j=0;j<m_route.size();++j)
+	{
+		//std::cout<<(int)(m_tree[j])<<" "<<std::endl;
+		//需要强制转换每一个char为uint8_t才能成功序列化和反序列化
+		uint8_t tmp = (uint8_t )(m_route[j]);
+		i.Write((uint8_t*)&tmp,sizeof(tmp));
+	}
+
 
 	i.WriteHtonU32(m_priorityList.size());
 	std::vector<uint32_t>::const_iterator it;
@@ -93,6 +104,16 @@ uint32_t nrHeader::Deserialize(Buffer::Iterator start)
 	i.Read((uint8_t*)&m_x,sizeof(m_x));
 	i.Read((uint8_t*)&m_y,sizeof(m_y));
 
+	uint32_t routesize  = i.ReadNtohU32();
+	//std::cout<<"读取的大小："<<treesize<<std::endl;
+	m_route="";
+	for(uint32_t j = 0;j<routesize;++j)
+	{//还原树
+		uint8_t a;
+		i.Read((uint8_t*)&a,sizeof(a));
+		m_route+=(char)a;
+		//std::cout<<a;
+	}
 	uint32_t size  = i.ReadNtohU32();
 	for (uint32_t p = 0; p < size; p++)
 	{

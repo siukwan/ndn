@@ -323,8 +323,25 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	else// it is from nodes behind
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
-		const vector<string> remoteRoute=
+		const vector<string> remoteRoute2=
 							ExtractRouteFromName(interest->GetName());
+		const vector<string> remoteRoute=nrheader.getRoute();
+
+		cout<<"\n(forwarding.cc)nrheader的路径:"<<endl;
+		for(uint32_t i=0;i<remoteRoute.size();++i)
+		{
+			cout<<remoteRoute[i]<<" ";
+		}
+		cout<<"\n(forwarding.cc)ExtractRouteFromNamede的路径:"<<endl;
+		for(uint32_t i=0;i<remoteRoute.size();++i)
+		{
+			cout<<remoteRoute2[i]<<" ";
+		}
+		if(remoteRoute2 == remoteRoute)
+			cout<<"\n路径相同"<<endl;
+		else
+			cout<<"\n路径不同！！！！"<<endl;
+		getchar();
 
 		// Update the PIT here
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
@@ -943,7 +960,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	const double& y = m_sensor->getY();
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
 	nrheader.setRoute(thisRoute);
-	cout<<"(forwarding.cc)序列化前:"<<endl;
+/*	cout<<"(forwarding.cc)序列化前:"<<endl;
 	for(uint32_t i=0;i<thisRoute.size();++i)
 	{
 		cout<< thisRoute[i]<<" ";
@@ -956,7 +973,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		cout<< tmp[i]<<" ";
 	}
 	cout<<endl;
-	getchar();
+	getchar();*/
 	nrPayload->AddHeader(nrheader);
 	return nrPayload;
 }
