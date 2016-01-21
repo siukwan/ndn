@@ -333,7 +333,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			cout<<remoteRoute[i]<<" ";
 		}
 		cout<<"\n(forwarding.cc)ExtractRouteFromNamede的路径:"<<endl;
-		for(uint32_t i=0;i<remoteRoute.size();++i)
+		for(uint32_t i=0;i<remoteRoute2.size();++i)
 		{
 			cout<<remoteRoute2[i]<<" ";
 		}
