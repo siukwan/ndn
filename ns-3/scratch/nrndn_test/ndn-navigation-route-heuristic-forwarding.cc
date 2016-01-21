@@ -1050,7 +1050,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		{
 			priorityList = GetPriorityList();
 			//兴趣包才设置兴趣树的序列化，加入到header
-			m_nrtree_str=m_nrtree->serialize();
+			m_nrtree_str = m_nrtree->serialize();
 			break;
 		}
 	case HeaderHelper::CONTENT_OBJECT_NDNSIM:

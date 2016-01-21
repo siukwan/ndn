@@ -95,7 +95,17 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 	std::vector<std::string>::const_iterator it=
 			std::find(route.begin(),route.end(),head->toUri());
 	if(it==route.end())
+	{
+		std::cout<<"(pit-impl.cc)找不到"<<head->toUri();
+		getchar();
 		return false;
+
+	}
+	else
+	{
+		std::cout<<"(pit-impl.cc)找到"<<head->toUri();
+		//getchar();
+	}
 	for(;pit!=m_pitContainer.end()&&it!=route.end();++pit,++it)
 	{
 		const name::Component &pitName=(*pit)->GetInterest()->GetName().get(0);

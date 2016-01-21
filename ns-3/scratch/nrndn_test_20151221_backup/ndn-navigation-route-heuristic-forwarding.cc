@@ -326,7 +326,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		const vector<string> remoteRoute2=
 							ExtractRouteFromName(interest->GetName());
 		const vector<string> remoteRoute=nrheader.getRoute();
-/*
+
 		cout<<"\n(forwarding.cc)nrheader的路径:"<<endl;
 		for(uint32_t i=0;i<remoteRoute.size();++i)
 		{
@@ -341,8 +341,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			cout<<"\n路径相同"<<endl;
 		else
 			cout<<"\n路径不同！！！！"<<endl;
-		getchar();
-*/
+		//getchar();
+
 		// Update the PIT here
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
 		// Update finish
@@ -924,6 +924,9 @@ vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 	// Name is in reverse order, so reverse it again
 	// eg. if the navigation route is R1-R2-R3, the name is /R3/R2/R1
 	vector<string> result;
+	/*for(Name::const_iterator ite=name.begin();ite!=name.end();ite++)
+		result.push_back(ite->toUri());
+	std::reverse(result.begin(),result.end());*/
 	Name::const_reverse_iterator it;
 	for(it=name.rbegin();it!=name.rend();++it)
 		result.push_back(it->toUri());
