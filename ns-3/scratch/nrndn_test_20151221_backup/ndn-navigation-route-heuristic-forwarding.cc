@@ -323,10 +323,9 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	else// it is from nodes behind
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
-		const vector<string> remoteRoute2=
-							ExtractRouteFromName(interest->GetName());
+		//const vector<string> remoteRoute2= ExtractRouteFromName(interest->GetName());
 		const vector<string> remoteRoute=nrheader.getRoute();
-
+		/*
 		cout<<"\n(forwarding.cc)nrheader的路径:"<<endl;
 		for(uint32_t i=0;i<remoteRoute.size();++i)
 		{
@@ -342,7 +341,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		else
 			cout<<"\n路径不同！！！！"<<endl;
 		//getchar();
-
+		 */
 		// Update the PIT here
 		m_nrpit->UpdatePit(remoteRoute, nodeId);
 		// Update finish

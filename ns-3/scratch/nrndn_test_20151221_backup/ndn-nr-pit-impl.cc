@@ -93,23 +93,23 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 	Name::const_iterator head=entry->GetInterest()->GetName().begin();
 	//Can name::Component use "=="?
 	std::vector<std::string>::const_iterator it=
-			std::find(route.begin(),route.end(),head->toUri());
+			std::find(route.begin(),route.end(),uriConvertToString(head->toUri()));
 	if(it==route.end())
 	{
-		std::cout<<"(pit-impl.cc)找不到"<<head->toUri();
+		std::cout<<"(pit-impl.cc)找不到"<<uriConvertToString(head->toUri());
 		getchar();
 		return false;
 
 	}
 	else
 	{
-		std::cout<<"(pit-impl.cc)找到"<<head->toUri();
+		std::cout<<"(pit-impl.cc)找到"<<uriConvertToString(head->toUri());
 		//getchar();
 	}
 	for(;pit!=m_pitContainer.end()&&it!=route.end();++pit,++it)
 	{
 		const name::Component &pitName=(*pit)->GetInterest()->GetName().get(0);
-		if(pitName.toUri() == *it)
+		if(uriConvertToString(pitName.toUri()) == *it)
 		{
 			Ptr<EntryNrImpl> pitEntry = DynamicCast<EntryNrImpl>(*pit);
 			pitEntry->AddIncomingNeighbors(id);
