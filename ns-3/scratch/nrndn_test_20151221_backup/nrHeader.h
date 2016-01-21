@@ -40,7 +40,10 @@ public:
 	void Serialize(Buffer::Iterator start) const;
 	uint32_t Deserialize(Buffer::Iterator start);
 	void Print(std::ostream &os) const;
-
+	void setRoute(const std::vector<std::string>& route);
+	std::vector<std::string> getRoute();
+	std::string getSerializeRoute();
+	void setSerializeRoute(std::string routeStr);
 	//\}
 
 	///\name Fields
@@ -95,6 +98,7 @@ private:
 	double 			m_y;    	//\ (forwarder)	forwarder y coordinate, not source node position!!!!
 	std::vector<uint32_t>
 				  	m_priorityList;//\(forwarder)	priority list indicating the gap between transmitting
+	std::string m_route;
 };
 
 } /* namespace nrndn */

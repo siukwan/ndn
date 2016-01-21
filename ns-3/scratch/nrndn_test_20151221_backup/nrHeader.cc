@@ -19,6 +19,7 @@ nrHeader::nrHeader():
 		m_x(0),
 		m_y(0)
 {
+	m_route="";
 	// TODO Auto-generated constructor stub
 
 }
@@ -29,6 +30,7 @@ nrHeader::nrHeader(const uint32_t& sourceId,const double& x,const double& y,cons
 		m_y(y),
 		m_priorityList(priorityList)
 {
+	m_route="";
 	// TODO Auto-generated constructor stub
 
 }
@@ -111,6 +113,41 @@ void nrHeader::Print(std::ostream& os) const
 		os<<*it<<"\t";
 	}
 	os<<std::endl;
+}
+
+void nrHeader::setRoute(const std::vector<std::string>& route)
+{
+	m_route="";
+	for(uint32_t i=0;i<route.size();++i)
+		m_route+=route[i];
+}
+
+std::string nrHeader::getSerializeRoute()
+{
+	return m_route;
+}
+void nrHeader::setSerializeRoute(std::string routeStr)
+{
+	m_route=routeStr;
+}
+
+std::vector<std::string> nrHeader::getRoute()
+{
+	std::vector<std::string> route(0);
+	if(m_route=="") return route;
+	std::string seg="";
+	for(uint32_t i=0;i<m_route.size();++i)
+	{
+		if(m_route[i]=='/')
+		{
+			if(seg!="")
+				route.push_back(seg);
+			seg="/";
+		}
+		else
+			seg+=m_route[i];
+	}
+	return route;
 }
 
 } /* namespace nrndn */

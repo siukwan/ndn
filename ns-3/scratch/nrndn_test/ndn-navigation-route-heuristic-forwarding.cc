@@ -1041,32 +1041,35 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
 	std::vector<uint32_t> priorityList;
+	string m_nrtree_str="";
 	switch (type)
 	{
 	case HeaderHelper::INTEREST_NDNSIM:
-	{
-		priorityList = GetPriorityList();
-		break;
-	}
+		{
+			priorityList = GetPriorityList();
+			//兴趣包才设置兴趣树的序列化，加入到header
+			m_nrtree_str=m_nrtree->serialize();
+			break;
+		}
 	case HeaderHelper::CONTENT_OBJECT_NDNSIM:
-	{
-		priorityList = GetPriorityListOfDataSource(dataName);
-		if(priorityList.empty())//There is no interested nodes behind
-			return Create<Packet>();
-		break;
-	}
+		{
+			priorityList = GetPriorityListOfDataSource(dataName);
+			if(priorityList.empty())//There is no interested nodes behind
+				return Create<Packet>();
+			break;
+		}
 	default:
-	{
-		NS_ASSERT_MSG(false, "unrecognize packet type");
-		break;
-	}
+		{
+			NS_ASSERT_MSG(false, "unrecognize packet type");
+			break;
+		}
 	}
 
 	const double& x = m_sensor->getX();
 	const double& y = m_sensor->getY();
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
 	//设置信息,设置兴趣树
-	nrheader.setTree(m_nrtree->serialize());
+	nrheader.setTree(m_nrtree_str);
 	//cout<<"(forwarding.cc)"<<m_node->GetId()<<"GetNrPayload，并设置兴趣树信息:\n"<<nrheader.getTree()<<endl;
 	//getchar();
 	nrPayload->AddHeader(nrheader);

@@ -681,7 +681,6 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	nrheader.setX(x);
 	nrheader.setY(y);
 	nrheader.setPriorityList(priorityList);
-
 	Ptr<Packet> newPayload	= Create<Packet> ();
 	newPayload->AddHeader(nrheader);
 
