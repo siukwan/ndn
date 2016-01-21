@@ -387,6 +387,7 @@ void NrInterestTreeImpl::getSingleRoute_dfs(vector<string>& result,uint32_t&node
 	//找到node所在的路线
 	if(treeNode->NodeId.find(node)!=treeNode->NodeId.end())
 	{
+		//需要把前缀prefix去掉
 		result.push_back(treeNode->lane.substr(prefix.size()));
 		//遍历孩子节点
 		for(map<string, InterestTreeNode* >::iterator ite=treeNode->child.begin();ite!=treeNode->child.end();ite++)

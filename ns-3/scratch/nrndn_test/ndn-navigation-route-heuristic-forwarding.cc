@@ -346,26 +346,26 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		receive_tree->convert2Routes(receiveRoutes,receiveNode);
 		cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
 		receive_tree->levelOrder();
-		cout<<"(forwarding.cc)\n分解的路段为："<<endl;
+		/*		cout<<"(forwarding.cc)\n分解的路段为："<<endl;
 		for(uint32_t i=0;i<receiveNode.size();++i)
 		{
 			cout<<"节点："<<receiveNode[i]<<endl;
 			for(uint32_t j=0;j<receiveRoutes[i].size();j++)
 				cout<<receiveRoutes[i][j]<< " ";
 			cout<<endl;
-		}
-		cout<<"\n(forwarding.cc)合并前的兴趣树"<<endl;
+		}*/
+		cout<<"(forwarding.cc)合并前的兴趣树"<<endl;
 		m_nrtree->levelOrder();
-		getchar();
+		//getchar();
 		for(uint32_t i=0;i<receiveNode.size();++i)
 		{
 			bool flag1=false;
 			cout<<"合并的节点："<<receiveNode[i]<<endl;
 			m_nrtree->MergeInterest(receiveNode[i],receiveRoutes[i],m_sensor->getLane(),flag1);
 		}
-		cout<<"\n(forwarding.cc)合并后的兴趣树"<<endl;
+		cout<<"(forwarding.cc)合并后的兴趣树"<<endl;
 		m_nrtree->levelOrder();
-		getchar();
+		//getchar();
 
 
 		// Update the PIT here
@@ -377,7 +377,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		string currentLane=m_sensor->getLane();
 		//Update the Interest Tree
 
-
+/*
 		//m_nrtree->levelOrder();
 		//getchar();
 		bool treeChangeFlag=false;
@@ -407,7 +407,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			//getchar();
 		}
 		// Update finish
-
+*/
 		//evaluate whether receiver's id is in sender's priority list
 		bool idIsInPriorityList;
 		vector<uint32_t>::const_iterator idit;
