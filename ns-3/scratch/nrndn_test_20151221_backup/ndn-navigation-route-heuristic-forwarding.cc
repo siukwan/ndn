@@ -246,11 +246,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 	if(Face::APPLICATION==face->GetFlags())
 	{
+		//cout<<"(forwarding.cc)消费者产生兴趣包："<<m_node->GetId()<<endl;
 		NS_LOG_DEBUG("Get interest packet from APPLICATION");
 		// This is the source interest from the upper node application (eg, nrConsumer) of itself
 		// 1.Set the payload
 		//sourceId都没有改
-		interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload()));
+		interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),m_sensor->getNavigationRoute()));
 
 		// 2. record the Interest Packet
 		m_interestNonceSeen.Put(interest->GetNonce(),true);
@@ -383,7 +384,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		NS_LOG_DEBUG("Get data packet from APPLICATION");
 		// This is the source data from the upper node application (eg, nrProducer) of itself
 		// 1.Set the payload
-		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),data->GetName());
+		vector<string> tmp(0);
+		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),tmp,data->GetName());
 		if(!payload->GetSize())
 			return;
 		data->SetPayload(payload);
@@ -679,6 +681,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	sourceId=nrheader.getSourceId();
 	nonce   =src->GetNonce();
 	// source id do not change
+	//则路线也不应该变
 	nrheader.setX(x);
 	nrheader.setY(y);
 	nrheader.setPriorityList(priorityList);
@@ -910,23 +913,15 @@ vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 	return result;
 }
 
-Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload, const Name& dataName /*= *((Name*)NULL) */)
+Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload,vector<string> thisRoute, const Name& dataName /*= *((Name*)NULL) */)
 {
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
-	vector<string> thisRoute(0);
 	std::vector<uint32_t> priorityList;
 	switch (type)
 	{
 	case HeaderHelper::INTEREST_NDNSIM:
 	{
-		cout<<"(forwarding.cc)test";
-		thisRoute=ExtractRouteFromName(dataName);
-		cout<<"(forwarding.cc)";
-		for(uint32_t i=0;i<thisRoute.size();++i)
-		{
-			cout<<thisRoute[i]<<" "<<endl;
-		}
 		priorityList = GetPriorityList();
 		break;
 	}
@@ -947,7 +942,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	const double& x = m_sensor->getX();
 	const double& y = m_sensor->getY();
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
-	//nrheader.setRoute(thisRoute);
+	nrheader.setRoute(thisRoute);
 	nrPayload->AddHeader(nrheader);
 	return nrPayload;
 }
