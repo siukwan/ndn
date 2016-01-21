@@ -356,6 +356,54 @@ InterestTreeNode* NrInterestTreeImpl::deserialize(string serializeTree)
 	}
 	return result;
 }
+
+void NrInterestTreeImpl::convert2Routes(vector<vector<string>>&routes,vector<int>&node_vec)
+{
+	//遍历根部的所有节点，每个节点都有一个到根的路线
+
+	node_vec=vector<int> (0);
+	for(map<int,bool>::iterator ite = root->NodeId.begin();ite!=root->NodeId.end();ite++)
+	{
+		if(ite->second)
+			node_vec.push_back(ite->first);
+	}
+	routes=vector<vector<string>> (node_vec.size(),vector<string>(0));
+
+	for(uint32_t i=0;i<node_vec.size();++i)
+	{
+		routes[i]=getSingleRoute(node_vec[i]);
+	}
+}
+
+vector<string>  NrInterestTreeImpl::getSingleRoute(int node)
+{
+	vector<string> tmp(0);
+	getSingleRoute_dfs(tmp,node,root);
+	return tmp;
+}
+
+void NrInterestTreeImpl::getSingleRoute_dfs(vector<string>& result,int&node,InterestTreeNode*  treeNode)
+{
+	//找到node所在的路线
+	if(treeNode->NodeId.find(node)!=treeNode->NodeId.end())
+	{
+		result.push_back(treeNode->lane);
+		//遍历孩子节点
+		for(map<string, InterestTreeNode* >::iterator ite=treeNode->child.begin();ite!=treeNode->child.end();ite++)
+		{
+			if(ite->second)
+			{
+				//找到了直接返回就可以
+				if(ite->second->NodeId.find(node)!=ite->second->NodeId.end())
+				{
+					getSingleRoute_dfs(result,node,ite->second);
+					return ;
+				}
+			}
+		}
+	}
+}
+
 //小锟添加，2016-1-15
 string NrInterestTreeImpl::uriConvertToString(string str)
 {

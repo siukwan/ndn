@@ -144,7 +144,7 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 void NrPitImpl::showPit()
 {
 	cout<<"(pit-impl.cc)显示pit内容："<<endl;
-	for(int i=0;i<m_pitContainer.size();++i)
+	for(uint32_t i=0;i<m_pitContainer.size();++i)
 	{
 		Ptr<EntryNrImpl> pitEntry_siu = DynamicCast<EntryNrImpl>(m_pitContainer[i]);
 		pitEntry_siu->listPitEntry();

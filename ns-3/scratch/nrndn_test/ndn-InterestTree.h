@@ -65,7 +65,9 @@ public:
 	string  serialize();
 	InterestTreeNode* deserialize(string serializeTree);
 	InterestTreeNode* levelOrderDelete(string curLane);
-
+	void convert2Routes(vector<vector<string>>&routes,vector<int>&node_vec);
+	vector<string>  getSingleRoute(int node);
+	void getSingleRoute_dfs(vector<string>& result,int&node,InterestTreeNode*  treeNode);
 	uint32_t NodeId;
 	string prefix;//前缀，一般为"/"
 	InterestTreeNode *root;

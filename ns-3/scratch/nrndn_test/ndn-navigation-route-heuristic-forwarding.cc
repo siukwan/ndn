@@ -246,6 +246,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 	if(Face::APPLICATION==face->GetFlags())
 	{
+		//consumer产生兴趣包，在路由层进行转发
 		NS_LOG_DEBUG("Get interest packet from APPLICATION");
 		// This is the source interest from the upper node application (eg, nrConsumer) of itself
 		// 1.Set the payload
@@ -340,7 +341,20 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		receive_tree->root =receive_tree->levelOrderDelete(tmp_curLane);
 		//receive_tree->levelOrder();
 		//getchar();
-
+		vector<vector<string>> receiveRoutes(0);
+		vector<int> receiveNode(0);
+		receive_tree->convert2Routes(receiveRoutes,receiveNode);
+		cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
+		receive_tree->levelOrder();
+		cout<<"(forwarding.cc)\n分解的路段为："<<endl;
+		for(uint32_t i=0;i<receiveNode.size();++i)
+		{
+			cout<<"节点："<<receiveNode[i]<<endl;
+			for(uint32_t j=0;j<receiveRoutes[i].size();j++)
+				cout<<receiveRoutes[i][j]<< " ";
+			cout<<endl;
+		}
+		getchar();
 
 
 		// Update the PIT here
