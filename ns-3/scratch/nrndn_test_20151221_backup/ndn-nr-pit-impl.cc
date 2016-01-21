@@ -96,14 +96,14 @@ bool NrPitImpl::UpdatePit(const std::vector<std::string>& route,const uint32_t& 
 			std::find(route.begin(),route.end(),uriConvertToString(head->toUri()));
 	if(it==route.end())
 	{
-		std::cout<<"(pit-impl.cc)找不到"<<uriConvertToString(head->toUri());
-		getchar();
+	/*	std::cout<<"(pit-impl.cc)找不到"<<uriConvertToString(head->toUri());
+		getchar();*/
 		return false;
 
 	}
 	else
 	{
-		std::cout<<"(pit-impl.cc)找到"<<uriConvertToString(head->toUri());
+		//std::cout<<"(pit-impl.cc)找到"<<uriConvertToString(head->toUri());
 		//getchar();
 	}
 	for(;pit!=m_pitContainer.end()&&it!=route.end();++pit,++it)
