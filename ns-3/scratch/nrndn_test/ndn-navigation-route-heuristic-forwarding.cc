@@ -925,6 +925,8 @@ NavigationRouteHeuristic::SendHello()
 	nrheader.setX(x);
 	nrheader.setY(y);
 	nrheader.setSourceId(m_node->GetId());
+	//心跳包中不需要发送兴趣树，所以把兴趣树清空
+	nrheader.setTree("");
 	newPayload->AddHeader(nrheader);
 
 	//3. setup interest packet
