@@ -119,7 +119,7 @@ void nrHeader::setRoute(const std::vector<std::string>& route)
 {
 	m_route="";
 	for(uint32_t i=0;i<route.size();++i)
-		m_route+=route[i];
+		m_route+="^"+route[i];
 }
 
 std::string nrHeader::getSerializeRoute()
@@ -135,14 +135,15 @@ std::vector<std::string> nrHeader::getRoute()
 {
 	std::vector<std::string> route(0);
 	if(m_route=="") return route;
+	m_route+="^";
 	std::string seg="";
 	for(uint32_t i=0;i<m_route.size();++i)
 	{
-		if(m_route[i]=='/')
+		if(m_route[i]=='^')
 		{
 			if(seg!="")
 				route.push_back(seg);
-			seg="/";
+			seg="";
 		}
 		else
 			seg+=m_route[i];

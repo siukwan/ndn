@@ -943,6 +943,20 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	const double& y = m_sensor->getY();
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
 	nrheader.setRoute(thisRoute);
+	cout<<"(forwarding.cc)序列化前:"<<endl;
+	for(uint32_t i=0;i<thisRoute.size();++i)
+	{
+		cout<< thisRoute[i]<<" ";
+	}
+	cout<<endl;
+	cout<<"(forwarding.cc)反序列化后:"<<nrheader.getSerializeRoute()<<endl;
+	vector<string> tmp = nrheader.getRoute();
+	for(uint32_t i=0;i<tmp.size();++i)
+	{
+		cout<< tmp[i]<<" ";
+	}
+	cout<<endl;
+	getchar();
 	nrPayload->AddHeader(nrheader);
 	return nrPayload;
 }
