@@ -188,11 +188,11 @@ nrndnExample::nrndnExample () :
   //phyMode("OfdmRate24Mbps"),
   verbose (false),
   flood(false),
-  transRange(200),
+  transRange(300),
   HelloLogEnable(true),
-  accidentNum(30),//默认3
+  accidentNum(200),//默认3
   method(0),
-  interestFrequency(1),//本来是1秒1次,0.0001是10000秒一次
+  interestFrequency(0.1),//本来是1秒1次,0.0001是10000秒一次
   hitRate(0),
   accuracyRate(0),
   disinterestRate(0),
@@ -202,7 +202,7 @@ nrndnExample::nrndnExample () :
   averageDelay(0),
   SumForwardTimes(0),
   noFwStop(false),
-  TTLMax(3),
+  TTLMax(1),
   virtualPayloadSize(1024)
 {
 	//os =  std::cout;
@@ -246,8 +246,9 @@ nrndnExample::Configure (int argc, char **argv)
   cmd.AddValue("TTLMax","This value indicate that when a data is received by disinterested node, the max hop count it should be forwarded",TTLMax);
   cmd.AddValue("interestFreq","Interest Packet Sending Frequency(Hz)",interestFrequency);
   cmd.AddValue("virtualPayloadSize","Virtual payload size for traffic Content packets",virtualPayloadSize);
-
   cmd.Parse (argc, argv);
+  std::cout<<"(main.cc)兴趣包发送频率:"<<interestFrequency<<std::endl;
+ // getchar();
   return true;
 }
 
