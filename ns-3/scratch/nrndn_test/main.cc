@@ -62,6 +62,11 @@ public:
   /// Report results
   void Report ();
 
+  uint32_t getMethod()
+  {
+	  return method;
+  }
+
 private:
   ///\name parameters
   //\{
@@ -176,7 +181,11 @@ int main (int argc, char **argv)
 	nrndnExample test;
 	if (!test.Configure(argc, argv))
 		NS_FATAL_ERROR("Configuration failed. Aborted.");
-
+	if(test.getMethod() == 3)
+	{
+		cout<<"编译完成，退出程序"<<endl;
+		return 0;
+	}
 	test.Run();
 	test.Report();
 	return 0;

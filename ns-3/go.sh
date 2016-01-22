@@ -14,6 +14,9 @@ echo $file_name
 mkdir ~/ndc-ns3-result/$file_name
 
 cd ~/ndn/ns-3/
+#先进行编译
+./waf --run "nrndn_test --method=3"
+
 #后台运行ndn
 ./waf --run "nrndn_test --method=0" > ~/ndc-ns3-result/$file_name/ndn_record.txt &
 #后台运行dis
@@ -41,6 +44,6 @@ git push
 
 #输出开始和结束时间
 echo "开始时间："$git_date
-$end_date=$(date)
+end_date=$(date)
 echo "结束时间："$end_date 
 exit
