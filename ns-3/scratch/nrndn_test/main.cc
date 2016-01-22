@@ -40,6 +40,9 @@ using namespace ns3::vanetmobility;
 struct timeval StartTime;
 struct timeval EndTime;
 double TimeUse=0;
+//获取时间
+time_t startTime;
+time_t endTime;
 
 class nrndnExample
 {
@@ -169,6 +172,7 @@ int main (int argc, char **argv)
 {
 
 	gettimeofday(&StartTime, NULL);
+	time(&startTime);
 	nrndnExample test;
 	if (!test.Configure(argc, argv))
 		NS_FATAL_ERROR("Configuration failed. Aborted.");
@@ -378,6 +382,19 @@ nrndnExample::Report ()
 	TimeUse = 1000000*(EndTime.tv_sec-StartTime.tv_sec)+EndTime.tv_usec-StartTime.tv_usec;
 	TimeUse/=1000;
 	NS_LOG_UNCOND ("Report data outputs here");
+	time(&endTime);
+	tm *timeOut;
+	timeOut=localtime(&startTime);
+	cout<<"(main.cc)开始时间：";
+	cout<<timeOut->tm_year+1900<<"-"<<timeOut->tm_mon+1<<"-"<<timeOut->tm_mday<<" "<<timeOut->tm_hour<<":"<<timeOut->tm_min<<":"<<timeOut->tm_sec<<endl;
+	os<<"(main.cc)开始时间：";
+	os<<timeOut->tm_year+1900<<"-"<<timeOut->tm_mon+1<<"-"<<timeOut->tm_mday<<" "<<timeOut->tm_hour<<":"<<timeOut->tm_min<<":"<<timeOut->tm_sec<<endl;
+	timeOut=localtime(&endTime);
+	os<<"(main.cc)结束时间：";
+	os<<timeOut->tm_year+1900<<"-"<<timeOut->tm_mon+1<<"-"<<timeOut->tm_mday<<" "<<timeOut->tm_hour<<":"<<timeOut->tm_min<<":"<<timeOut->tm_sec<<endl;
+	cout<<"(main.cc)结束时间：";
+	cout<<timeOut->tm_year+1900<<"-"<<timeOut->tm_mon+1<<"-"<<timeOut->tm_mday<<" "<<timeOut->tm_hour<<":"<<timeOut->tm_min<<":"<<timeOut->tm_sec<<endl;
+
 	std::cout<<"(main.cc)Report data outputs here\n";
 	std::cout<<"(main.cc)运行方法是：";
 	switch(method)
