@@ -461,7 +461,7 @@ nrndnExample::Report ()
 			<<std::left<<std::setw(10)<<"avgDelay"
 			<<std::left<<std::setw(10)<<"avgFwd"
 			<<std::left<<std::setw(11)<<"avgIntFwd"
-			<<std::left<<std::setw(10)<<"SumFwdTimes"
+			<<std::left<<std::setw(10)<<"SumFwd"
 			<<std::left<<std::setw(13)<<"IntByteSent"
 			<<std::left<<std::setw(11)<<"HelByteSnt"
 			<<std::left<<std::setw(11)<<"DatByteSnt"
@@ -497,7 +497,7 @@ nrndnExample::Report ()
 
 
 	std::cout<<std::left<<std::setw(11)<<"avgIntFwd"
-			<<std::left<<std::setw(10)<<"SumFwdTimes"
+			<<std::left<<std::setw(10)<<"SumFwd"
 			<<std::left<<std::setw(13)<<"IntByteSent"
 			<<std::left<<std::setw(11)<<"HelByteSnt"
 			<<std::left<<std::setw(11)<<"DatByteSnt"
