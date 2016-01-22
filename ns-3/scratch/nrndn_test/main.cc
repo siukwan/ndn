@@ -21,13 +21,14 @@
 //#include "ndn-nr-pit-impl.h"
 
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include <string>
 #include <dirent.h>
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-
+#include <sys/time.h>
 NS_LOG_COMPONENT_DEFINE("nrndn.Example");
 
 using namespace ns3;
@@ -35,6 +36,11 @@ using namespace std;
 using namespace ns3::ndn::nrndn;
 //using namespace ns3::ndn;
 using namespace ns3::vanetmobility;
+
+struct timeval StartTime;
+struct timeval EndTime;
+double TimeUse=0;
+
 class nrndnExample
 {
 public:
@@ -161,13 +167,14 @@ private:
 
 int main (int argc, char **argv)
 {
+
+	gettimeofday(&StartTime, NULL);
 	nrndnExample test;
 	if (!test.Configure(argc, argv))
 		NS_FATAL_ERROR("Configuration failed. Aborted.");
 
 	test.Run();
 	test.Report();
-
 	return 0;
 }
 
@@ -366,6 +373,10 @@ void nrndnExample::RunCDSSim()
 void
 nrndnExample::Report ()
 {
+
+	gettimeofday(&EndTime, NULL);
+	TimeUse = 1000000*(EndTime.tv_sec-StartTime.tv_sec)+EndTime.tv_usec-StartTime.tv_usec;
+	TimeUse/=1000;
 	NS_LOG_UNCOND ("Report data outputs here");
 	std::cout<<"(main.cc)Report data outputs here\n";
 	std::cout<<"(main.cc)运行方法是：";
@@ -386,8 +397,106 @@ nrndnExample::Report ()
 	}
 	//1. get statistic first
 	getStatistic();
+	os<<"(main.cc)method:";
+	switch(method)
+	{
+	case 0:
+		os<<"RunNrndnSim()\n";
+		break;
+	case 1:
+		os<<"RunDistSim()\n";
+		break;
+	case 2:
+		os<<"RunCDSSim()\n";
+		break;
+	default:
+		os<<"Undefine method\n"<<endl;
+		break;
+	}
+
+	os<<"(main.cc)accidentNum:"<<accidentNum<<endl;
+	os<<"(main.cc)transRange:"<<transRange<<endl;
+	os<<"(main.cc)noFwStop:"<<noFwStop<<endl;
+	os<<"(main.cc)TTLMax:"<<noFwStop<<endl;
+	os<<"(main.cc)interestFreq:"<<noFwStop<<endl;
+	os<<"(main.cc)nodeSum:"<<size<<endl;
+	os<<"(main.cc)simulationTime:"<<totalTime<<endl;
+	os<<"(main.cc)runningTime:"<<(int)(TimeUse/1000)/60<<"m"<<((int)(TimeUse/1000))%60<<"s"<<endl;
+
+	cout<<"(main.cc)accidentNum:"<<accidentNum<<endl;
+	cout<<"(main.cc)transRange:"<<transRange<<endl;
+	cout<<"(main.cc)noFwStop:"<<noFwStop<<endl;
+	cout<<"(main.cc)TTLMax:"<<noFwStop<<endl;
+	cout<<"(main.cc)interestFreq:"<<noFwStop<<endl;
+	cout<<"(main.cc)nodeSum:"<<size<<endl;
+	cout<<"(main.cc)simulationTime:"<<totalTime<<endl;
+	cout<<"(main.cc)runningTime:"<<(int)(TimeUse/1000)/60<<"m"<<((int)(TimeUse/1000))%60<<"s"<<endl;
+
+
+	cout<<"总花费时间为："<<TimeUse<<"ms"<<endl;
+	cout<<"总花费时间为："<<TimeUse/1000<<"s"<<endl;
+	cout<<"总花费时间为："<<(int)(TimeUse/1000)/60<<"分"<<((int)(TimeUse/1000))%60<<"秒"<<endl;
 
 	//2. output the result
+	os<<std::left<<std::setw(11)<<"arrivalR"
+			<<std::left<<std::setw(10)<<"accuracyR"
+			<<std::left<<std::setw(10)<<"hitR"
+			<<std::left<<std::setw(10)<<"avgDelay"
+			<<std::left<<std::setw(10)<<"avgFwd"
+			<<std::left<<std::setw(11)<<"avgIntFwd"
+			<<std::left<<std::setw(10)<<"SumFwdTimes"
+			<<std::left<<std::setw(13)<<"IntByteSent"
+			<<std::left<<std::setw(11)<<"HelByteSnt"
+			<<std::left<<std::setw(11)<<"DatByteSnt"
+			<<std::left<<std::setw(11)<<"ByteSnt"
+			<<std::left<<std::setw(11)<<"disinterestR"<<endl;
+	os<<std::left<<std::setw(11)<<arrivalRate
+			<<std::left<<std::setw(10)<<accuracyRate
+			<<std::left<<std::setw(10)<<hitRate
+			<<std::left<<std::setw(10)<<averageDelay
+			<<std::left<<std::setw(10)<<averageForwardTimes
+			<<std::left<<std::setw(11)<<averageInterestForwardTimes
+			<<std::left<<std::setw(10)<<SumForwardTimes
+			<<std::left<<std::setw(13)<<nrUtils::InterestByteSent
+			<<std::left<<std::setw(11)<<nrUtils::HelloByteSent
+			<<std::left<<std::setw(11)<<nrUtils::DataByteSent
+			<<std::left<<std::setw(11)<<nrUtils::ByteSent
+			<<std::left<<std::setw(11)<<disinterestRate<<endl;
+
+
+
+
+
+	std::cout<<std::left<<std::setw(11)<<"arrivalR"
+			<<std::left<<std::setw(10)<<"accuracyR"
+			<<std::left<<std::setw(10)<<"hitR"
+			<<std::left<<std::setw(10)<<"avgDelay"
+			<<std::left<<std::setw(10)<<"avgFwd"<<endl;
+	std::cout<<std::left<<std::setw(11)<<arrivalRate
+			<<std::left<<std::setw(10)<<accuracyRate
+			<<std::left<<std::setw(10)<<hitRate
+			<<std::left<<std::setw(10)<<averageDelay
+			<<std::left<<std::setw(10)<<averageForwardTimes<<endl<<endl;
+
+
+	std::cout<<std::left<<std::setw(11)<<"avgIntFwd"
+			<<std::left<<std::setw(10)<<"SumFwdTimes"
+			<<std::left<<std::setw(13)<<"IntByteSent"
+			<<std::left<<std::setw(11)<<"HelByteSnt"
+			<<std::left<<std::setw(11)<<"DatByteSnt"
+			<<std::left<<std::setw(11)<<"ByteSnt"
+			<<std::left<<std::setw(11)<<"disinterestR"<<endl;
+
+	std::cout<<std::left<<std::setw(11)<<averageInterestForwardTimes
+			<<std::left<<std::setw(10)<<SumForwardTimes
+			<<std::left<<std::setw(13)<<nrUtils::InterestByteSent
+			<<std::left<<std::setw(11)<<nrUtils::HelloByteSent
+			<<std::left<<std::setw(11)<<nrUtils::DataByteSent
+			<<std::left<<std::setw(11)<<nrUtils::ByteSent
+			<<std::left<<std::setw(11)<<disinterestRate<<endl;
+
+
+	/*
 	os<<arrivalRate <<'\t'
 			<<accuracyRate<<'\t'
 			<<hitRate<<'\t'
@@ -400,6 +509,7 @@ nrndnExample::Report ()
 			<<nrUtils::DataByteSent<<'\t'
 			<<nrUtils::ByteSent<<'\t'
 			<<disinterestRate<<endl;
+			*/
 }
 
 void
