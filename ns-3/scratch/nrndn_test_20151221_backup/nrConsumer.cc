@@ -41,7 +41,7 @@ TypeId nrConsumer::GetTypeId()
 //		    	   	    		MakePointerAccessor (&nrConsumer::m_sensor),
 //		    	   	    		MakePointerChecker<ns3::ndn::nrndn::NodeSensor> ())
 		    .AddAttribute ("PayloadSize", "Virtual payload size for traffic Content packets",
-		    		            UintegerValue (1024),
+		    		            UintegerValue (0),
 		    	                MakeUintegerAccessor (&nrConsumer::m_virtualPayloadSize),
 		    		            MakeUintegerChecker<uint32_t> ())
 		    ;
@@ -49,7 +49,7 @@ TypeId nrConsumer::GetTypeId()
 }
 
 nrConsumer::nrConsumer():
-		m_virtualPayloadSize(1024)
+		m_virtualPayloadSize(0)
 {
 	// TODO Auto-generated constructor stub
 
