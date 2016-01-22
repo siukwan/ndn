@@ -360,7 +360,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		for(uint32_t i=0;i<receiveNode.size();++i)
 		{
 			bool flag1=false;
-			cout<<"(forwarding.cc)合并的节点："<<receiveNode[i]<<endl;
+			//cout<<"(forwarding.cc)合并的节点："<<receiveNode[i]<<endl;
 			m_nrtree->MergeInterest(receiveNode[i],receiveRoutes[i],m_sensor->getLane(),flag1);
 		}
 		cout<<"(forwarding.cc)合并后的兴趣树"<<endl;

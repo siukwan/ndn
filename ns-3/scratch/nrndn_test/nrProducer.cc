@@ -232,7 +232,7 @@ void nrProducer::NotifyNewAggregate()
 
 void nrProducer::OnSendingTrafficData()
 {
-	std::cout<<"siu:"<<GetNode()->GetId()<<" OnSendingTrafficData"<<endl;
+	//std::cout<<"siu:"<<GetNode()->GetId()<<" OnSendingTrafficData"<<endl;
 	//Before sending traffic Data, reflash the current lane first!!
 	//If not, Let's assume vehicle A is just into lane_2 and previous lane is lane_1,
 	//        when A sending traffic data, it's data name may be lane_1 because
@@ -244,7 +244,7 @@ void nrProducer::OnSendingTrafficData()
 
 	NS_LOG_FUNCTION(this << "Sending Traffic Data:"<<m_prefix.toUri());
 	//siukwan add 2015.8.28
-	std::cout<<"siu:"<<GetNode()->GetId()<<"Sending Traffic Data:"<<m_prefix.toUri()<<std::endl;
+	//std::cout<<"siu:"<<GetNode()->GetId()<<"Sending Traffic Data:"<<m_prefix.toUri()<<std::endl;
 	if (!m_active)
 		return;
 

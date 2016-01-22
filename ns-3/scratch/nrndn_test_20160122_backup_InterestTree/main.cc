@@ -434,8 +434,8 @@ nrndnExample::Report ()
 	os<<"(main.cc)accidentNum:"<<accidentNum<<endl;
 	os<<"(main.cc)transRange:"<<transRange<<endl;
 	os<<"(main.cc)noFwStop:"<<noFwStop<<endl;
-	os<<"(main.cc)TTLMax:"<<noFwStop<<endl;
-	os<<"(main.cc)interestFreq:"<<noFwStop<<endl;
+	os<<"(main.cc)TTLMax:"<<TTLMax<<endl;
+	os<<"(main.cc)interestFreq:"<<interestFrequency<<endl;
 	os<<"(main.cc)nodeSum:"<<size<<endl;
 	os<<"(main.cc)simulationTime:"<<totalTime<<endl;
 	os<<"(main.cc)runningTime:"<<(int)(TimeUse/1000)/60<<"m"<<((int)(TimeUse/1000))%60<<"s"<<endl;
@@ -443,8 +443,8 @@ nrndnExample::Report ()
 	cout<<"(main.cc)accidentNum:"<<accidentNum<<endl;
 	cout<<"(main.cc)transRange:"<<transRange<<endl;
 	cout<<"(main.cc)noFwStop:"<<noFwStop<<endl;
-	cout<<"(main.cc)TTLMax:"<<noFwStop<<endl;
-	cout<<"(main.cc)interestFreq:"<<noFwStop<<endl;
+	cout<<"(main.cc)TTLMax:"<<TTLMax<<endl;
+	cout<<"(main.cc)interestFreq:"<<interestFrequency<<endl;
 	cout<<"(main.cc)nodeSum:"<<size<<endl;
 	cout<<"(main.cc)simulationTime:"<<totalTime<<endl;
 	cout<<"(main.cc)runningTime:"<<(int)(TimeUse/1000)/60<<"m"<<((int)(TimeUse/1000))%60<<"s"<<endl;
