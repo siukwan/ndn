@@ -212,7 +212,7 @@ nrndnExample::nrndnExample () :
   averageInterestForwardTimes(0),
   averageDelay(0),
   SumForwardTimes(0),
-  noFwStop(false),
+  noFwStop(true),
   TTLMax(1),
   virtualPayloadSize(1024)
 {
@@ -561,6 +561,10 @@ nrndnExample::LoadTraffic()
 //获取结点size
 	size = mobility->GetNodeSize();
 	std::cout<<"节点size："<<size<<std::endl;
+
+	accidentNum=size*4;
+	std::cout<<"(main.cc)修改accidentNum为size的4倍"<<accidentNum<<std::endl;
+
 }
 
 void
