@@ -571,7 +571,7 @@ nrndnExample::InstallNrndnApplications ()
 	ndn::AppHelper consumerHelper ("ns3::ndn::nrndn::nrConsumer");
 	//Ndn application for sending out Interest packets at a "constant" rate (Poisson process)
 	consumerHelper.SetAttribute ("Frequency", DoubleValue (interestFrequency));
-	consumerHelper.SetAttribute ("PayloadSize", UintegerValue (1));//virtualPayloadSize
+	consumerHelper.SetAttribute ("PayloadSize", UintegerValue (0));//从virtualPayloadSize改为0,因为兴趣树已经包含在header中
 	//If you send the same interest packet for several times, the data producer will
 	//response your interest packet respectively. It may be a waste. So we can set Consumer::MaxSeq
 	//To limit the times interest packet send. For example,just 1.0
