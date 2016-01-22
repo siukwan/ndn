@@ -283,7 +283,7 @@ void nrProducer::OnSendingTrafficData()
 void nrProducer::OnData(Ptr<const Data> contentObject)
 {
 	NS_LOG_FUNCTION ("None its business");
-	std::cout<<"siu:"<<"None its business"<<endl;
+	//std::cout<<"siu:"<<"None its business"<<endl;
 	App::OnData(contentObject);
 }
 
