@@ -499,12 +499,12 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 	if(isDuplicatedData(nodeId,signature))
 	{
-		cout<<"OnData重复包"<<endl;
+		//cout<<"OnData重复包"<<endl;
 	}
 
 	if(m_dataSignatureSeen.Get(data->GetSignature()))
 	{
-		cout<<"OnData重复包2......................."<<endl;
+		//cout<<"OnData重复包2......................."<<endl;
 		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
 		return;
 	}
