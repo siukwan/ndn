@@ -34,9 +34,9 @@ cat ~/input/NR-NDN-Simulation/result.txt ~/input/CDS-Simulation/result.txt  ~/in
 
 
 cd ~/ndc-ns3-result
-git add $file_name/ndn_record.txt
-git add $file_name/dis_record.txt
-git add $file_name/cds_record.txt
+#git add $file_name/ndn_record.txt
+#git add $file_name/dis_record.txt
+#git add $file_name/cds_record.txt
 git add $file_name/result.txt
 
 git commit -m "$git_date"
