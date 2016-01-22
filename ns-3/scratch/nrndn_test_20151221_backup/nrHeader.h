@@ -99,7 +99,6 @@ private:
 	std::vector<uint32_t>
 				  	m_priorityList;//\(forwarder)	priority list indicating the gap between transmitting
 	std::string m_route;
-	uint32_t    m_routeSize;
 };
 
 } /* namespace nrndn */
