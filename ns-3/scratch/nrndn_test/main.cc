@@ -367,6 +367,23 @@ void
 nrndnExample::Report ()
 {
 	NS_LOG_UNCOND ("Report data outputs here");
+	std::cout<<"(main.cc)Report data outputs here\n";
+	std::cout<<"(main.cc)运行方法是：";
+	switch(method)
+	{
+	case 0:
+		std::cout<<"RunNrndnSim()\n";
+		break;
+	case 1:
+		std::cout<<"RunDistSim()\n";
+		break;
+	case 2:
+		std::cout<<"RunCDSSim()\n";
+		break;
+	default:
+		cout<<"Undefine method"<<endl;
+		break;
+	}
 	//1. get statistic first
 	getStatistic();
 
