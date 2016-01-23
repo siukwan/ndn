@@ -5,7 +5,7 @@ git pull
 
 #定义时间变量
 git_date=$(date)
-shell_date=$(date +%Y%m%d-%k%M%S)
+shell_date=$(date +%Y%m%d-%H%M%S)
 file_name="result-"$shell_date
 
 #输出shell_data
@@ -30,7 +30,7 @@ sleep 4
 wait
 
 #把结果合并输出到result.txt
-cat ~/input/NR-NDN-Simulation/result.txt ~/input/CDS-Simulation/result.txt  ~/input/CDS-Simulation/result.txt > ~/ndc-ns3-result/$file_name/result.txt
+cat ~/input/NR-NDN-Simulation/result.txt ~/input/Dist-Simulation/result.txt  ~/input/CDS-Simulation/result.txt > ~/ndc-ns3-result/$file_name/result.txt
 
 
 cd ~/ndc-ns3-result
