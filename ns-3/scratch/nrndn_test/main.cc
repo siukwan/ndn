@@ -212,7 +212,7 @@ nrndnExample::nrndnExample () :
   HelloLogEnable(true),
   accidentNum(200),//默认3
   method(0),
-  interestFrequency(2),//本来是1秒1次,0.0001是10000秒一次
+  interestFrequency(0.5),//本来是1秒1次,0.0001是10000秒一次
   hitRate(0),
   accuracyRate(0),
   disinterestRate(0),
