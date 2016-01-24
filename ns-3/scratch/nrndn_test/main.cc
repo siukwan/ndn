@@ -393,10 +393,10 @@ nrndnExample::Report ()
 		method_cout="RunNrndnSim()";
 		break;
 	case 1:
-		method_cout="RunDistSim()";
+		method_cout="RunDistSim() ";
 		break;
 	case 2:
-		method_cout="RunCDSSim()";
+		method_cout="RunCDSSim()  ";
 		break;
 	default:
 		method_cout="Undefine method";
