@@ -62,8 +62,8 @@ public:
 	void    levelOrder();
 	void    MergeInterest(uint32_t&id,const vector<string>& oldRoute,string curLane,bool&flag);
 	string  uriConvertToString(std::string str);
-	string  serialize();
-	InterestTreeNode* deserialize(string serializeTree);
+	string  serialize_withId();
+	InterestTreeNode* deserialize_withId(string serializeTree);
 	string  serialize_noId();
 	InterestTreeNode* deserialize_noId(string serializeTree);
 	void tree2Routes(vector<vector<string>>& routes,vector<string> tmpRoutes,InterestTreeNode* node);

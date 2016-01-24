@@ -235,7 +235,7 @@ void NrInterestTreeImpl::deleteTree(InterestTreeNode* deleteNode)
 }
 
 //序列化#层数$路段1^id1^id2^id3$路段2^id4^id5
-string NrInterestTreeImpl::serialize()
+string NrInterestTreeImpl::serialize_withId()
 {
 	ostringstream os;
 	int level=0;
@@ -368,7 +368,7 @@ void NrInterestTreeImpl::tree2Routes(vector<vector<string>>& routes,vector<strin
 	tmpRoutes.pop_back();
 }
 //反序列化
-InterestTreeNode* NrInterestTreeImpl::deserialize(string serializeTree)
+InterestTreeNode* NrInterestTreeImpl::deserialize_withId(string serializeTree)
 {
 	if(serializeTree=="") return NULL;
 	serializeTree+="#";//避免最后一层还原不出来

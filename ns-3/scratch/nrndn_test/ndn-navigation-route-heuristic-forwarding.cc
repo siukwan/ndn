@@ -331,7 +331,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		string receive_tree_str = nrheader.getTree();
 		Ptr<pit::nrndn::NrInterestTreeImpl> receive_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
 		//cout<<"(forwarding.cc)"<<m_node->GetId()<<"接收得到来自节点："<<nodeId<<"解序列化:"<<nrheader.getTree()<<endl;
-		receive_tree->root=receive_tree->deserialize(receive_tree_str);
+		receive_tree->root=receive_tree->deserialize_noId(receive_tree_str);
 		receive_tree->NodeId=nodeId;
 		//cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
 		//receive_tree->levelOrder();
@@ -755,7 +755,7 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	nrheader.setPriorityList(priorityList);
 
 	//设置信息,设置兴趣树
-	nrheader.setTree(m_nrtree->serialize());
+	nrheader.setTree(m_nrtree->serialize_noId());
 
 
 
@@ -1066,7 +1066,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		{
 			priorityList = GetPriorityList();
 			//兴趣包才设置兴趣树的序列化，加入到header
-			m_nrtree_str = m_nrtree->serialize();
+			m_nrtree_str = m_nrtree->serialize_noId();
 			break;
 		}
 	case HeaderHelper::CONTENT_OBJECT_NDNSIM:

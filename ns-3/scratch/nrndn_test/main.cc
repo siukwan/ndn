@@ -133,6 +133,7 @@ private:
 
   //accuracyRate: among all the nodes received, how many are interested
   double accuracyRate;
+  double disinterestRate;
   double arrivalRate;
   double averageForwardTimes;
   double averageInterestForwardTimes;
@@ -140,7 +141,6 @@ private:
   uint32_t SumForwardTimes;
 
 
-  double disinterestRate;
 
   bool noFwStop;
 
