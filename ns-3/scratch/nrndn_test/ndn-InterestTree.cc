@@ -349,6 +349,22 @@ InterestTreeNode* NrInterestTreeImpl::deserialize_noId(string serializeTree)
 	root=tree_map[1]->child.begin()->second;
 	return root;
 }
+
+void NrInterestTreeImpl::tree2Routes(vector<vector<string>>& routes,vector<string> tmpRoutes,InterestTreeNode* node)
+{
+	if(node==NULL) return;
+	else if(node->child.size()==0&&tmpRoutes.size()!=0)
+		routes.push_back(tmpRoutes);
+	else
+	{
+		for(map<string,InterestTreeNode*>::iterator ite=node->child.begin();ite!=node->child.end();ite++)
+		{
+			tmpRoutes.push_back(ite->first.substr(prefix.size()));
+			tree2Routes(routes,tmpRoutes,ite->second);
+			tmpRoutes.pop_back();
+		}
+	}
+}
 //反序列化
 InterestTreeNode* NrInterestTreeImpl::deserialize(string serializeTree)
 {

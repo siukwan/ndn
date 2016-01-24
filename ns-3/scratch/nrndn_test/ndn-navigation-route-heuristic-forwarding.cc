@@ -344,6 +344,26 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		vector<vector<string>> receiveRoutes(0);
 		vector<uint32_t> receiveNode(0);
 		receive_tree->convert2Routes(receiveRoutes,receiveNode);
+
+
+		vector<vector<string>> receiveRoutes2(0);
+		vector<string> tmpRoutes2(0);
+		receive_tree->tree2Routes(receiveRoutes2,tmpRoutes2,receive_tree->root);
+		for(uint32_t i=0;i<receiveRoutes.size();++i)
+		{
+			for(uint32_t j=0;j<receiveRoutes[i].size();++j)
+				cout<<receiveRoutes[i][j]<<" ";
+			cout<<endl;
+		}
+
+		for(uint32_t i=0;i<receiveRoutes2.size();++i)
+		{
+			for(uint32_t j=0;j<receiveRoutes2[i].size();++j)
+				cout<<receiveRoutes2[i][j]<<" ";
+			cout<<endl;
+		}
+		getchar();
+
 		cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
 		receive_tree->levelOrder();
 		string tmp_string=receive_tree->serialize_noId();

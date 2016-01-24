@@ -66,6 +66,7 @@ public:
 	InterestTreeNode* deserialize(string serializeTree);
 	string  serialize_noId();
 	InterestTreeNode* deserialize_noId(string serializeTree);
+	void tree2Routes(vector<vector<string>>& routes,vector<string> tmpRoutes,InterestTreeNode* node);
 	InterestTreeNode* levelOrderDelete(string curLane);
 	void convert2Routes(vector<vector<string>>&routes,vector<uint32_t>&node_vec);
 	vector<string>  getSingleRoute(uint32_t node);
