@@ -293,14 +293,15 @@ string NrInterestTreeImpl::serialize_noId()
 {
 	if(root==NULL) return "";
 	ostringstream os;
-
+	int prefixSize=prefix.size();
 	//节点+父亲节点编号
 	queue<pair<InterestTreeNode*,unsigned char>> q;
 	int count1=1;
 	int count2=0;
 	unsigned char tmpId=2;
 	q.push({root,tmpId});
-	os<<root->lane<<"^"<<tmpId<<(unsigned char)(1);
+	cout<<"serialize头结点"<<endl;
+	os<<root->lane.substr(prefixSize)<<"^"<<tmpId<<(unsigned char)(1);
 
 	while(!q.empty())
 	{
@@ -313,7 +314,7 @@ string NrInterestTreeImpl::serialize_noId()
 			for(map<string,InterestTreeNode*>::iterator ite=head->child.begin();ite!=head->child.end();ite++)
 			{
 				tmpId++;
-				os<<ite->first<<"^"<<tmpId<<parentId;
+				os<<ite->first.substr(prefixSize)<<"^"<<tmpId<<parentId;
 				q.push({ite->second,tmpId});//孩子节点+父亲节点编号
 				count2++;
 			}
@@ -337,7 +338,7 @@ InterestTreeNode* NrInterestTreeImpl::deserialize_noId(string serializeTree)
 		{
 			uint32_t childId=serializeTree[i+1];
 			uint32_t parentId=serializeTree[i+2];
-			tree_map[childId]= new InterestTreeNode(laneName);//建立新的儿子节点
+			tree_map[childId]= new InterestTreeNode(prefix+laneName);//建立新的儿子节点
 			tree_map[parentId]->child[laneName]=tree_map[childId];//把儿子节点挂载到父亲节点上
 			i+=3;
 			//cout<<childId<<" "<<parentId<<" "<<laneName<<endl;
@@ -353,7 +354,8 @@ InterestTreeNode* NrInterestTreeImpl::deserialize_noId(string serializeTree)
 void NrInterestTreeImpl::tree2Routes(vector<vector<string>>& routes,vector<string> tmpRoutes,InterestTreeNode* node)
 {
 	if(node==NULL) return;
-	tmpRoutes.push_back(node->lane.substr(prefix.size()));
+	int prefixSize=prefix.size();
+	tmpRoutes.push_back(node->lane.substr(prefixSize));
 	if(node->child.size()==0&&tmpRoutes.size()!=0)
 		routes.push_back(tmpRoutes);
 	else

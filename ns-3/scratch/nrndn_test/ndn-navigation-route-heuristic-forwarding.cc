@@ -338,47 +338,19 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		string tmp_curLane=receive_tree->prefix+m_sensor->getLane();
 		//cout<<"(forwarding.cc)所在路段为："<<tmp_curLane<<"\ndelete后的兴趣树："<<endl;
 
+		//找到当前路段，把当前路段作为根结点，其余的删除
 		receive_tree->root =receive_tree->levelOrderDelete(tmp_curLane);
 		//receive_tree->levelOrder();
 		//getchar();
 		vector<vector<string>> receiveRoutes(0);
 		vector<string> tmpRoutes(0);
-		//vector<uint32_t> receiveNode(0);
-		//receive_tree->convert2Routes(receiveRoutes,receiveNode);
 		receive_tree->tree2Routes(receiveRoutes,tmpRoutes,receive_tree->root);
 
-/*
-		vector<vector<string>> receiveRoutes2(0);
-		vector<string> tmpRoutes2(0);
-		receive_tree->tree2Routes(receiveRoutes2,tmpRoutes2,receive_tree->root);
-		cout<<endl;
-		for(uint32_t i=0;i<receiveRoutes.size();++i)
-		{
-			for(uint32_t j=0;j<receiveRoutes[i].size();++j)
-				cout<<receiveRoutes[i][j]<<" ";
-			cout<<endl;
-		}
-		cout<<"无NodeId"<<endl;
-		for(uint32_t i=0;i<receiveRoutes2.size();++i)
-		{
-			for(uint32_t j=0;j<receiveRoutes2[i].size();++j)
-				cout<<receiveRoutes2[i][j]<<" ";
-			cout<<endl;
-		}
-		getchar();
+
 
 		cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
 		receive_tree->levelOrder();
-		string tmp_string=receive_tree->serialize_noId();
-		cout<<"(forwarding.cc)序列化："<<tmp_string<<endl;
-		Ptr<pit::nrndn::NrInterestTreeImpl> tmp_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
-		tmp_tree->deserialize_noId(tmp_string);
-		cout<<"(forwarding.cc)反序列化："<<endl;
-		tmp_tree->levelOrder();
-		getchar();*/
-		cout<<"(forwarding.cc)合并前的兴趣树"<<endl;
-		m_nrtree->levelOrder();
-		getchar();
+
 		for(uint32_t i=0;i<receiveRoutes.size();++i)
 		{
 			bool flag1=false;
