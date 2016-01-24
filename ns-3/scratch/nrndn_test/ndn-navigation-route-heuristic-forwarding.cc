@@ -345,7 +345,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		vector<string> tmpRoutes(0);
 		//vector<uint32_t> receiveNode(0);
 		//receive_tree->convert2Routes(receiveRoutes,receiveNode);
-		receive_tree->tree2Routes(convert2Routes,tmpRoutes,receive_tree->root);
+		receive_tree->tree2Routes(receiveRoutes,tmpRoutes,receive_tree->root);
 
 /*
 		vector<vector<string>> receiveRoutes2(0);
@@ -379,7 +379,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		cout<<"(forwarding.cc)合并前的兴趣树"<<endl;
 		m_nrtree->levelOrder();
 		getchar();
-		for(uint32_t i=0;i<receiveNode.size();++i)
+		for(uint32_t i=0;i<receiveRoutes.size();++i)
 		{
 			bool flag1=false;
 			//cout<<"(forwarding.cc)合并的节点："<<receiveNode[i]<<endl;
