@@ -286,6 +286,69 @@ string NrInterestTreeImpl::serialize()
 	}
 	return os.str();
 }
+
+
+//序列化，不带NodeId信息 路段^自己编号父亲编号 最大上限为256
+string NrInterestTreeImpl::serialize_noId()
+{
+	if(root==NULL) return "";
+	ostringstream os;
+
+	//节点+父亲节点编号
+	queue<pair<InterestTreeNode*,unsigned char>> q;
+	int count1=1;
+	int count2=0;
+	unsigned char tmpId=2;
+	q.push({root,tmpId});
+	os<<root->lane<<"^"<<tmpId<<(unsigned char)(1);
+
+	while(!q.empty())
+	{
+		for(int i=0;i<count1;++i)
+		{
+			InterestTreeNode* head=q.front().first;
+			unsigned char parentId=q.front().second;
+			q.pop();
+			//遍历孩子节点，压紧队列和序列化
+			for(map<string,InterestTreeNode*>::iterator ite=head->child.begin();ite!=head->child.end();ite++)
+			{
+				tmpId++;
+				os<<ite->first<<"^"<<tmpId<<parentId;
+				q.push({ite->second,tmpId});//孩子节点+父亲节点编号
+				count2++;
+			}
+		}
+		count1=count2;
+		count2=0;
+	}
+	return os.str();
+}
+//反序列化,不带NodeId
+InterestTreeNode* NrInterestTreeImpl::deserialize_noId(string serializeTree)
+{
+	if(serializeTree=="") return NULL;
+
+	map<int ,InterestTreeNode*> tree_map;
+	tree_map[1]=new InterestTreeNode("parent");
+	string laneName="";
+	for(unsigned int i=0;i<serializeTree.size();)
+	{
+		if(serializeTree[i]=='^')
+		{
+			uint32_t childId=serializeTree[i+1];
+			uint32_t parentId=serializeTree[i+2];
+			tree_map[childId]= new InterestTreeNode(laneName);//建立新的儿子节点
+			tree_map[parentId]->child[laneName]=tree_map[childId];//把儿子节点挂载到父亲节点上
+			i+=3;
+			//cout<<childId<<" "<<parentId<<" "<<laneName<<endl;
+			laneName="";
+		}
+		else
+			laneName+=serializeTree[i++];
+	}
+	root=tree_map[1]->child.begin()->second;
+	return root;
+}
 //反序列化
 InterestTreeNode* NrInterestTreeImpl::deserialize(string serializeTree)
 {

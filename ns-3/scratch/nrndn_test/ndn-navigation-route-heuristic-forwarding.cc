@@ -344,16 +344,15 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		vector<vector<string>> receiveRoutes(0);
 		vector<uint32_t> receiveNode(0);
 		receive_tree->convert2Routes(receiveRoutes,receiveNode);
-		//cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
-		//receive_tree->levelOrder();
-		/*		cout<<"(forwarding.cc)\n分解的路段为："<<endl;
-		for(uint32_t i=0;i<receiveNode.size();++i)
-		{
-			cout<<"节点："<<receiveNode[i]<<endl;
-			for(uint32_t j=0;j<receiveRoutes[i].size();j++)
-				cout<<receiveRoutes[i][j]<< " ";
-			cout<<endl;
-		}*/
+		cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
+		receive_tree->levelOrder();
+		string tmp_string=receive_tree->serialize_noId();
+		cout<<"(forwarding.cc)序列化："<<tmp_string<<endl;
+		Ptr<pit::nrndn::NrInterestTreeImpl> tmp_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
+		tmp_tree->deserialize_noId(tmp_string);
+		cout<<"(forwarding.cc)反序列化："<<endl;
+		tmp_tree->levelOrder();
+		getchar();
 		//cout<<"(forwarding.cc)合并前的兴趣树"<<endl;
 		//m_nrtree->levelOrder();
 		//getchar();
@@ -377,37 +376,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		string currentLane=m_sensor->getLane();
 		//Update the Interest Tree
 
-/*
-		//m_nrtree->levelOrder();
-		//getchar();
-		bool treeChangeFlag=false;
-
-		if(m_nrtree->prefix+currentLane!=m_nrtree->root->lane)
-		{
-
-			printf("*****************************************************\n");
-			for(unsigned int i=0;i<remoteRoute.size();++i)
-				cout<<m_nrtree->uriConvertToString(remoteRoute[i])<<" ";
-			cout<< endl;
-			cout<<"邻居节点："<<nodeId<<" 所在路段："<<m_nrtree->uriConvertToString(remoteRoute[1])<<endl;
-			cout<<"当前节点："<<m_node->GetId()<<" 所在路段：(PIT)"<<currentLane<<" (sensor)"<<m_sensor->getLane()<<endl;
-
-			printf("原兴趣树：\n");
-			m_nrtree->levelOrder();
-
-
-		}
-
-		m_nrtree->MergeInterest(nodeId,remoteRoute,currentLane,treeChangeFlag);
-		if(treeChangeFlag)
-		{
-			printf("新兴趣树：\n");
-			m_nrtree->levelOrder();
-			printf("*****************************************************\n");
-			//getchar();
-		}
-		// Update finish
-*/
 		//evaluate whether receiver's id is in sender's priority list
 		bool idIsInPriorityList;
 		vector<uint32_t>::const_iterator idit;
