@@ -3,7 +3,8 @@
 #定义时间变量
 git_date=$(date)
 shell_date=$(date +%Y%m%d-%H%M%S)
-file_name="result-"$shell_date
+vehicle_num=$(cat  ~/input/routes.rou.xml | grep "</vehicle>" | wc -l)
+file_name="r-"$shell_date"-"$vehicle_num"nodes"
 
 #输出shell_data
 echo $file_name
