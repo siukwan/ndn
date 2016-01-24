@@ -348,8 +348,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 
 
-		cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
-		receive_tree->levelOrder();
+		//cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
+		//receive_tree->levelOrder();
 
 		for(uint32_t i=0;i<receiveRoutes.size();++i)
 		{
@@ -357,9 +357,9 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			//cout<<"(forwarding.cc)合并的节点："<<receiveNode[i]<<endl;
 			m_nrtree->MergeInterest(receive_tree->NodeId,receiveRoutes[i],m_sensor->getLane(),flag1);
 		}
-		cout<<"(forwarding.cc)合并后的兴趣树"<<endl;
-		m_nrtree->levelOrder();
-		getchar();
+	//	cout<<"(forwarding.cc)合并后的兴趣树"<<endl;
+	//	m_nrtree->levelOrder();
+	//	getchar();
 
 
 		// Update the PIT here

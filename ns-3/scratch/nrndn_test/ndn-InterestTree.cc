@@ -300,7 +300,6 @@ string NrInterestTreeImpl::serialize_noId()
 	int count2=0;
 	unsigned char tmpId=2;
 	q.push({root,tmpId});
-	cout<<"serialize头结点"<<endl;
 	os<<root->lane.substr(prefixSize)<<"^"<<tmpId<<(unsigned char)(1);
 
 	while(!q.empty())
