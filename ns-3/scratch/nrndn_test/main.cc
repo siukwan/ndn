@@ -386,11 +386,26 @@ void nrndnExample::RunCDSSim()
 void
 nrndnExample::Report ()
 {
-
+	string method_cout="";
+	switch(method)
+	{
+	case 0:
+		method_cout="RunNrndnSim()";
+		break;
+	case 1:
+		method_cout="RunDistSim()";
+		break;
+	case 2:
+		method_cout="RunCDSSim()";
+		break;
+	default:
+		method_cout="Undefine method";
+		break;
+	}
 	gettimeofday(&EndTime, NULL);
 	TimeUse = 1000000*(EndTime.tv_sec-StartTime.tv_sec)+EndTime.tv_usec-StartTime.tv_usec;
 	TimeUse/=1000;
-	NS_LOG_UNCOND ("Report data outputs here");
+	NS_LOG_UNCOND (method_cout+":report data outputs here");
 	time(&endTime);
 	tm *timeOut;
 	timeOut=localtime(&startTime);
@@ -405,40 +420,10 @@ nrndnExample::Report ()
 	cout<<timeOut->tm_year+1900<<"-"<<timeOut->tm_mon+1<<"-"<<timeOut->tm_mday<<" "<<timeOut->tm_hour<<":"<<timeOut->tm_min<<":"<<timeOut->tm_sec<<endl;
 
 	std::cout<<"(main.cc)Report data outputs here\n";
-	std::cout<<"(main.cc)运行方法是：";
-	switch(method)
-	{
-	case 0:
-		std::cout<<"RunNrndnSim()\n";
-		break;
-	case 1:
-		std::cout<<"RunDistSim()\n";
-		break;
-	case 2:
-		std::cout<<"RunCDSSim()\n";
-		break;
-	default:
-		cout<<"Undefine method"<<endl;
-		break;
-	}
+	std::cout<<"(main.cc)运行方法是："<<method_cout<<endl;
 	//1. get statistic first
 	getStatistic();
-	os<<"(main.cc)method:";
-	switch(method)
-	{
-	case 0:
-		os<<"RunNrndnSim()\n";
-		break;
-	case 1:
-		os<<"RunDistSim()\n";
-		break;
-	case 2:
-		os<<"RunCDSSim()\n";
-		break;
-	default:
-		os<<"Undefine method\n"<<endl;
-		break;
-	}
+	os<<"(main.cc)method:"<<method_cout<<endl;
 
 	os<<"(main.cc)accidentNum:"<<accidentNum<<endl;
 	os<<"(main.cc)transRange:"<<transRange<<endl;
