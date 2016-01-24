@@ -41,7 +41,7 @@ TypeId nrConsumer::GetTypeId()
 //		    	   	    		MakePointerAccessor (&nrConsumer::m_sensor),
 //		    	   	    		MakePointerChecker<ns3::ndn::nrndn::NodeSensor> ())
 		    .AddAttribute ("PayloadSize", "Virtual payload size for traffic Content packets",
-		    		            UintegerValue (1024),
+		    		            UintegerValue (0),
 		    	                MakeUintegerAccessor (&nrConsumer::m_virtualPayloadSize),
 		    		            MakeUintegerChecker<uint32_t> ())
 		    ;
@@ -49,7 +49,7 @@ TypeId nrConsumer::GetTypeId()
 }
 
 nrConsumer::nrConsumer():
-		m_virtualPayloadSize(1024)
+		m_virtualPayloadSize(0)
 {
 	// TODO Auto-generated constructor stub
 
@@ -100,7 +100,8 @@ void nrConsumer::ScheduleNextPacket()
 	this->Consumer::SetAttribute("Prefix", StringValue(prefix));
 	//std::cout<<"test2\n";
 	NS_LOG_INFO ("Node "<<GetNode()->GetId()<<" now is interestd on "<<prefix.data());
-	std::cout<<GetNode()->GetId()<<" ";
+	//std::cout<<GetNode()->GetId()<<" ";
+	//getchar();
 	//std::cout<<"test3\n";
 	//3. Schedule next packet
 	//ConsumerCbr::ScheduleNextPacket();
@@ -140,8 +141,7 @@ void nrConsumer::doConsumerCbrScheduleNextPacket()
 {
 	  if (m_firstTime)
 	    {//第一次发送兴趣包
-	      m_sendEvent = Simulator::Schedule (Seconds (0.0),
-	                                         &nrConsumer::SendPacket, this);
+	      m_sendEvent = Simulator::Schedule (Seconds (0.0), &nrConsumer::SendPacket, this);
 	      m_firstTime = false;
 	    }
 	  else if (!m_sendEvent.IsRunning ())
@@ -158,7 +158,12 @@ void nrConsumer::doConsumerCbrScheduleNextPacket()
 void nrConsumer::SendPacket()
 {
 	  if (!m_active) return;
-
+	  if(!m_firstTime&&*m_nbChange_mode==0)
+	  {
+	    // m_sendEvent = Simulator::Schedule (Seconds (1.0 / m_frequency), &nrConsumer::SendPacket, this);
+		  ScheduleNextPacket ();
+		  return;
+	  }
 	  NS_LOG_FUNCTION_NOARGS ();
 
 	  uint32_t seq=std::numeric_limits<uint32_t>::max (); //invalid
@@ -260,6 +265,9 @@ void nrConsumer::DoInitialize(void)
 		Ptr<ForwardingStrategy> forwardingStrategy=m_node->GetObject<ForwardingStrategy>();
 		NS_ASSERT_MSG(forwardingStrategy,"nrConsumer::DoInitialize cannot find ns3::ndn::fw::ForwardingStrategy");
 		m_forwardingStrategy = DynamicCast<fw::nrndn::NavigationRouteHeuristic>(forwardingStrategy);
+		m_nbChange_mode=&(m_forwardingStrategy->m_nbChange_mode);
+		//cout<<"(consumer.cc)m_nbChange_mode"<<*m_nbChange_mode<<endl;
+		//getchar();
 	}
 	if (m_sensor == 0)
 	{

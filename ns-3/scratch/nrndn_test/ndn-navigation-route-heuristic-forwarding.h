@@ -45,6 +45,7 @@ namespace nrndn
 class NavigationRouteHeuristic: public GreenYellowRed
 {
 public:
+	int m_nbChange_mode;
 	static TypeId
 	GetTypeId(void);
 
@@ -419,6 +420,7 @@ private:
 	 */
 	void NotifyUpperLayer(Ptr<Data> data);
 
+
 private:
 	typedef GreenYellowRed super;
 	/**
@@ -446,6 +448,7 @@ private:
 	//PIT表在forwarding中
 	Ptr<pit::nrndn::NrPitImpl> m_nrpit; ///< \brief Reference to PIT to which this forwarding strategy is associated
 	Ptr<pit::nrndn::NrInterestTreeImpl> m_nrtree;
+	bool m_firstSendInterest;
 	uint32_t				m_CacheSize;
 
 	ndn::nrndn::cache::LRUCache<uint32_t,bool>

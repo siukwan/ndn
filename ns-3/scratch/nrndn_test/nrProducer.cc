@@ -66,7 +66,7 @@ TypeId nrProducer::GetTypeId()
 
 nrProducer::nrProducer():
 		m_rand (0, std::numeric_limits<uint32_t>::max ()),
-		m_virtualPayloadSize(0),
+		m_virtualPayloadSize(1024),
 		m_signature(0)
 {
 	//NS_LOG_FUNCTION(this);

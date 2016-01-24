@@ -97,7 +97,8 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_TTLMax(3),
 	NoFwStop(false)
 {
-
+	m_firstSendInterest=true;
+	m_nbChange_mode=0;
 	m_htimer.SetFunction (&NavigationRouteHeuristic::HelloTimerExpire, this);
 	m_nb.SetCallback (MakeCallback (&NavigationRouteHeuristic::FindBreaksLinkToNextHop, this));
 
@@ -246,18 +247,24 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 	if(Face::APPLICATION==face->GetFlags())
 	{
-		//consumer产生兴趣包，在路由层进行转发
-		NS_LOG_DEBUG("Get interest packet from APPLICATION");
-		// This is the source interest from the upper node application (eg, nrConsumer) of itself
-		// 1.Set the payload
-		interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload()));
+		if((!m_firstSendInterest&&m_nbChange_mode>0)||m_firstSendInterest)
+		{
+			m_nbChange_mode=0;
+			if(m_firstSendInterest) m_firstSendInterest=false;
+			else cout<<"(forwarding.cc)"<<m_node->GetId()<<"邻居发生变化，发送兴趣包"<<endl;
+ 			//consumer产生兴趣包，在路由层进行转发
+			NS_LOG_DEBUG("Get interest packet from APPLICATION");
+			// This is the source interest from the upper node application (eg, nrConsumer) of itself
+			// 1.Set the payload
+			interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload()));
 
-		// 2. record the Interest Packet
-		m_interestNonceSeen.Put(interest->GetNonce(),true);
+			// 2. record the Interest Packet
+			m_interestNonceSeen.Put(interest->GetNonce(),true);
 
-		// 3. Then forward the interest packet directly
-		Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
-				&NavigationRouteHeuristic::SendInterestPacket,this,interest);
+			// 3. Then forward the interest packet directly
+			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
+					&NavigationRouteHeuristic::SendInterestPacket,this,interest);
+		}
 		return;
 	}
 
@@ -942,19 +949,19 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	//根据心跳包来更新邻居列表
 	m_nb.Update(nrheader.getSourceId(),nrheader.getX(),nrheader.getY(),Time (AllowedHelloLoss * HelloInterval));
 
-	int nbChange_mode=0;
+	m_nbChange_mode=0;
 	//进行邻居变化的检测
 	if(m_preNB.getNb().size()<m_nb.getNb().size())//数量不等，邻居发生变化
 	{//发送兴趣包
 		//cout<<"邻居增加，重发"<<endl;
 		//getchar();
-		nbChange_mode=1;//邻居增加
+		m_nbChange_mode=1;//邻居增加
 	}
 	else if(m_preNB.getNb().size()<m_nb.getNb().size())//数量不等，邻居发生变化
 	{
 		/*cout<<"邻居减少，重发"<<endl;
 		getchar();*/
-		nbChange_mode=2;//邻居减少
+		m_nbChange_mode=2;//邻居减少
 	}
 	else
 	{
@@ -973,7 +980,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		if(nbChange)
 		{//邻居变化，发送兴趣包
 
-			nbChange_mode=3;//邻居变化
+			m_nbChange_mode=3;//邻居变化
 			/*
 			cout<<"邻居变化，重发"<<endl;
 			prenb=m_preNB.getNb().begin();
@@ -1000,7 +1007,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 				packetFromDirection(interest);
 
 		//hello信息来自前方，且邻居变化
-		if(msgdirection.second > 0 && nbChange_mode>0)
+		if(msgdirection.second > 0 && m_nbChange_mode>0)
 		{//
 			//printf("hello信息来自前方，且邻居发生变化%d\n",nbChange_mode);
 			//getchar();
