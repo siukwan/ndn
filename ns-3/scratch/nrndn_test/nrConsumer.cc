@@ -160,8 +160,8 @@ void nrConsumer::SendPacket()
 	  if (!m_active) return;
 	  if(!m_firstTime&&*m_nbChange_mode==0)
 	  {
-	    // m_sendEvent = Simulator::Schedule (Seconds (1.0 / m_frequency), &nrConsumer::SendPacket, this);
-		  ScheduleNextPacket ();
+	     m_sendEvent = Simulator::Schedule (Seconds (1.0 / m_frequency), &nrConsumer::SendPacket, this);
+		  //ScheduleNextPacket ();
 		  return;
 	  }
 	  NS_LOG_FUNCTION_NOARGS ();

@@ -36,7 +36,7 @@ tail -2 ~/input/NR-NDN-Simulation/result.txt >> ~/$file_name/result.txt
 tail -1 ~/input/Dist-Simulation/result.txt   >> ~/$file_name/result.txt
 tail -1 ~/input/CDS-Simulation/result.txt    >> ~/$file_name/result.txt
 
-
+cp ~/$file_name/result.txt ~/$file_name/README.md
 
 #先去更新ndc-ns3-result文件夹
 cd ~/ndc-ns3-result
@@ -50,6 +50,7 @@ cd ~/ndc-ns3-result
 #git add $file_name/dis_record.txt
 #git add $file_name/cds_record.txt
 git add $file_name/result.txt
+#git add $file_name/README.md
 
 git commit -m "$git_date"
 git push
@@ -58,4 +59,6 @@ git push
 echo "开始时间："$git_date
 end_date=$(date)
 echo "结束时间："$end_date 
+
+tail -4 ~/ndc-ns3-result/$file_name/result.txt
 exit
