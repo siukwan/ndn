@@ -349,6 +349,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		vector<vector<string>> receiveRoutes2(0);
 		vector<string> tmpRoutes2(0);
 		receive_tree->tree2Routes(receiveRoutes2,tmpRoutes2,receive_tree->root);
+		cout<<endl;
 		for(uint32_t i=0;i<receiveRoutes.size();++i)
 		{
 			for(uint32_t j=0;j<receiveRoutes[i].size();++j)
