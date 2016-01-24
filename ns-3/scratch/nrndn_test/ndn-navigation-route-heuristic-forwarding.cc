@@ -342,10 +342,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		//receive_tree->levelOrder();
 		//getchar();
 		vector<vector<string>> receiveRoutes(0);
-		vector<uint32_t> receiveNode(0);
-		receive_tree->convert2Routes(receiveRoutes,receiveNode);
+		vector<string> tmpRoutes(0);
+		//vector<uint32_t> receiveNode(0);
+		//receive_tree->convert2Routes(receiveRoutes,receiveNode);
+		receive_tree->tree2Routes(convert2Routes,tmpRoutes,receive_tree->root);
 
-
+/*
 		vector<vector<string>> receiveRoutes2(0);
 		vector<string> tmpRoutes2(0);
 		receive_tree->tree2Routes(receiveRoutes2,tmpRoutes2,receive_tree->root);
@@ -356,7 +358,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				cout<<receiveRoutes[i][j]<<" ";
 			cout<<endl;
 		}
-
+		cout<<"无NodeId"<<endl;
 		for(uint32_t i=0;i<receiveRoutes2.size();++i)
 		{
 			for(uint32_t j=0;j<receiveRoutes2[i].size();++j)
@@ -373,19 +375,19 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		tmp_tree->deserialize_noId(tmp_string);
 		cout<<"(forwarding.cc)反序列化："<<endl;
 		tmp_tree->levelOrder();
+		getchar();*/
+		cout<<"(forwarding.cc)合并前的兴趣树"<<endl;
+		m_nrtree->levelOrder();
 		getchar();
-		//cout<<"(forwarding.cc)合并前的兴趣树"<<endl;
-		//m_nrtree->levelOrder();
-		//getchar();
 		for(uint32_t i=0;i<receiveNode.size();++i)
 		{
 			bool flag1=false;
 			//cout<<"(forwarding.cc)合并的节点："<<receiveNode[i]<<endl;
-			m_nrtree->MergeInterest(receiveNode[i],receiveRoutes[i],m_sensor->getLane(),flag1);
+			m_nrtree->MergeInterest(receive_tree->NodeId,receiveRoutes[i],m_sensor->getLane(),flag1);
 		}
-		//cout<<"(forwarding.cc)合并后的兴趣树"<<endl;
-		//m_nrtree->levelOrder();
-		//getchar();
+		cout<<"(forwarding.cc)合并后的兴趣树"<<endl;
+		m_nrtree->levelOrder();
+		getchar();
 
 
 		// Update the PIT here
