@@ -94,6 +94,7 @@ void nrConsumer::ScheduleNextPacket()
 	if(prefix=="")
 	{//兴趣为空，直接返回
 		std::cout<<"ID:"<<GetNode()->GetId()<<" Prefix为空"<<std::endl;
+		doConsumerCbrScheduleNextPacket();
 		return;
 	}
 	this->Consumer::SetAttribute("Prefix", StringValue(prefix));
@@ -138,7 +139,7 @@ std::vector<std::string> nrConsumer::GetCurrentInterest()
 void nrConsumer::doConsumerCbrScheduleNextPacket()
 {
 	  if (m_firstTime)
-	    {
+	    {//第一次发送兴趣包
 	      m_sendEvent = Simulator::Schedule (Seconds (0.0),
 	                                         &nrConsumer::SendPacket, this);
 	      m_firstTime = false;
