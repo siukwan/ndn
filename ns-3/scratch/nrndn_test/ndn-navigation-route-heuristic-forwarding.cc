@@ -247,10 +247,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 	if(Face::APPLICATION==face->GetFlags())
 	{
-		if((!m_firstSendInterest&&m_nbChange_mode>0)||m_firstSendInterest)
-		{
-			m_nbChange_mode=0;
-			if(m_firstSendInterest) m_firstSendInterest=false;
+
 			//else cout<<"(forwarding.cc)"<<m_node->GetId()<<"邻居发生变化，发送兴趣包"<<endl;
  			//consumer产生兴趣包，在路由层进行转发
 			NS_LOG_DEBUG("Get interest packet from APPLICATION");
@@ -264,8 +261,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			// 3. Then forward the interest packet directly
 			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 					&NavigationRouteHeuristic::SendInterestPacket,this,interest);
-		}
-		return;
+
 	}
 
 	//如果它是个心跳包
@@ -328,8 +324,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	else// it is from nodes behind
 	{
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
-		const vector<string> remoteRoute=
-							ExtractRouteFromName(interest->GetName());
+		const vector<string> remoteRoute= ExtractRouteFromName(interest->GetName());
 
 
 
@@ -955,13 +950,13 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	{//发送兴趣包
 		//cout<<"邻居增加，重发"<<endl;
 		//getchar();
-		m_nbChange_mode=1;//邻居增加
+		m_nbChange_mode=2;//邻居增加
 	}
 	else if(m_preNB.getNb().size()<m_nb.getNb().size())//数量不等，邻居发生变化
 	{
 		/*cout<<"邻居减少，重发"<<endl;
 		getchar();*/
-		m_nbChange_mode=2;//邻居减少
+		m_nbChange_mode=1;//邻居减少
 	}
 	else
 	{
@@ -1006,8 +1001,9 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		pair<bool, double> msgdirection = packetFromDirection(interest);
 
 		//hello信息来自前方，且邻居变化，即前面邻居变化
-		if(msgdirection.second > 0 && m_nbChange_mode>0)
+		if(msgdirection.second > 0 && m_nbChange_mode>1)
 		{//
+			m_nbChange_mode=0;
 			//printf("%d收到hello信息来自前方，且邻居发生变化%d\n",m_node->GetId(),m_nbChange_mode);
 			notifyUpperOnInterest(m_node->GetId());
 		}
