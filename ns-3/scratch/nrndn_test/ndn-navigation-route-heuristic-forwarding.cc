@@ -1003,11 +1003,10 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 
 
 	//判断兴趣包的方向
-		pair<bool, double> msgdirection =
-				packetFromDirection(interest);
+		pair<bool, double> msgdirection = packetFromDirection(interest);
 
-		//hello信息来自前方，且邻居变化
-		if(/*msgdirection.second > 0 && */m_nbChange_mode>0)
+		//hello信息来自前方，且邻居变化，即前面邻居变化
+		if(msgdirection.second > 0 && m_nbChange_mode>0)
 		{//
 			//printf("%d收到hello信息来自前方，且邻居发生变化%d\n",m_node->GetId(),m_nbChange_mode);
 			notifyUpperOnInterest(m_node->GetId());
