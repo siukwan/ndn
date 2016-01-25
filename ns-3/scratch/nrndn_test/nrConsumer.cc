@@ -155,12 +155,12 @@ void nrConsumer::doConsumerCbrScheduleNextPacket()
 void nrConsumer::SendPacket()
 {
 	  if (!m_active) return;
-	  if(!m_firstTime&&*m_nbChange_mode==0)
+	/*  if(!m_firstTime&&*m_nbChange_mode==0)
 	  {
 	     m_sendEvent = Simulator::Schedule (Seconds (1.0 / m_frequency), &nrConsumer::SendPacket, this);
 		  //ScheduleNextPacket ();
 		  return;
-	  }
+	  }*/
 	  NS_LOG_FUNCTION_NOARGS ();
 
 	  uint32_t seq=std::numeric_limits<uint32_t>::max (); //invalid
@@ -194,7 +194,7 @@ void nrConsumer::SendPacket()
 	  m_transmittedInterests (interest, this, m_face);
 	  m_face->ReceiveInterest (interest);
 	  //std::cout<<"准备出错\n";
-	  ScheduleNextPacket ();
+	  //ScheduleNextPacket ();
 	//  std::cout<<"已经出错\n";
 
 	  //std::cout<<"ScheduleNextPacket \n";
@@ -224,8 +224,7 @@ Ptr<Packet> nrConsumer::GetNrPayload()
 */
 
 void nrConsumer::OnData(Ptr<const Data> data)
-{	cout<<"nrConsumer:收到数据包"<<endl;
-getchar();
+{
 	NS_LOG_FUNCTION (this);
 	Ptr<Packet> nrPayload	= data->GetPayload()->Copy();
 	const Name& name = data->GetName();
@@ -284,8 +283,9 @@ void nrConsumer::OnTimeout(uint32_t sequenceNumber)
 void nrConsumer::OnInterest(Ptr<const Interest> interest)
 {
 	int type =  interest->GetNonce();
-	cout<<"(nrConsumer.cc)consumer收到兴趣包"<<type<<endl;
-	getchar();
+	//cout<<"(nrConsumer.cc)consumer收到兴趣包，触发发送兴趣包"<<type<<endl;
+	SendPacket();
+	//getchar();
 	//NS_ASSERT_MSG(false,"nrConsumer should not be supposed to ""receive Interest Packet!!");
 }
 

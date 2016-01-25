@@ -251,7 +251,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		{
 			m_nbChange_mode=0;
 			if(m_firstSendInterest) m_firstSendInterest=false;
-			else cout<<"(forwarding.cc)"<<m_node->GetId()<<"邻居发生变化，发送兴趣包"<<endl;
+			//else cout<<"(forwarding.cc)"<<m_node->GetId()<<"邻居发生变化，发送兴趣包"<<endl;
  			//consumer产生兴趣包，在路由层进行转发
 			NS_LOG_DEBUG("Get interest packet from APPLICATION");
 			// This is the source interest from the upper node application (eg, nrConsumer) of itself
@@ -1007,9 +1007,9 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 				packetFromDirection(interest);
 
 		//hello信息来自前方，且邻居变化
-		if(msgdirection.second > 0 && m_nbChange_mode>0)
+		if(/*msgdirection.second > 0 && */m_nbChange_mode>0)
 		{//
-			printf("%d收到hello信息来自前方，且邻居发生变化%d\n",m_node->GetId(),m_nbChange_mode);
+			//printf("%d收到hello信息来自前方，且邻居发生变化%d\n",m_node->GetId(),m_nbChange_mode);
 			notifyUpperOnInterest(m_node->GetId());
 		}
 
