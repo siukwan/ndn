@@ -97,6 +97,7 @@ void nrConsumer::ScheduleNextPacket()
 		doConsumerCbrScheduleNextPacket();
 		return;
 	}
+	 // if (m_firstTime)
 	this->Consumer::SetAttribute("Prefix", StringValue(prefix));
 	//std::cout<<"test2\n";
 	NS_LOG_INFO ("Node "<<GetNode()->GetId()<<" now is interestd on "<<prefix.data());
@@ -145,12 +146,8 @@ void nrConsumer::doConsumerCbrScheduleNextPacket()
 	      m_firstTime = false;
 	    }
 	  else if (!m_sendEvent.IsRunning ())
-	    m_sendEvent = Simulator::Schedule (
-	                                       (m_random == 0) ?
-	                                         Seconds(1.0 / m_frequency)
-	                                       :
-	                                         Seconds(m_random->GetValue ()),
-	                                       &nrConsumer::SendPacket, this);
+		  m_sendEvent = Simulator::Schedule (Seconds (0.0), &nrConsumer::SendPacket, this);
+	   // m_sendEvent = Simulator::Schedule ((m_random == 0) ? Seconds(1.0 / m_frequency) : Seconds(m_random->GetValue ()), &nrConsumer::SendPacket, this);
 }
 
 
@@ -227,7 +224,8 @@ Ptr<Packet> nrConsumer::GetNrPayload()
 */
 
 void nrConsumer::OnData(Ptr<const Data> data)
-{
+{	cout<<"nrConsumer:收到数据包"<<endl;
+getchar();
 	NS_LOG_FUNCTION (this);
 	Ptr<Packet> nrPayload	= data->GetPayload()->Copy();
 	const Name& name = data->GetName();
@@ -254,6 +252,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 
 void nrConsumer::NotifyNewAggregate()
 {
+
   super::NotifyNewAggregate ();
 }
 
@@ -284,6 +283,8 @@ void nrConsumer::OnTimeout(uint32_t sequenceNumber)
 
 void nrConsumer::OnInterest(Ptr<const Interest> interest)
 {
+	cout<<"consumer收到兴趣包"<<endl;
+	getchar();
 	NS_ASSERT_MSG(false,"nrConsumer should not be supposed to "
 			"receive Interest Packet!!");
 }

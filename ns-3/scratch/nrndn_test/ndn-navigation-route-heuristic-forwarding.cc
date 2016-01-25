@@ -1009,8 +1009,16 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		//hello信息来自前方，且邻居变化
 		if(msgdirection.second > 0 && m_nbChange_mode>0)
 		{//
-			//printf("hello信息来自前方，且邻居发生变化%d\n",nbChange_mode);
-			//getchar();
+			printf("hello信息来自前方，且邻居发生变化%d\n",m_nbChange_mode);
+			vector<Ptr<Face> >::iterator fit;
+			for (fit = m_inFaceList.begin(); fit != m_inFaceList.end(); ++fit)
+			{
+				//App::OnInterest() will be executed,
+				//including nrProducer::OnData.
+				//But none of its business, just ignore
+				(*fit)->SendInterest(NULL);
+			}
+			getchar();
 		}
 
 
