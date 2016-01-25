@@ -56,11 +56,11 @@ public:
 
 	         NrInterestTreeImpl();
 	virtual ~NrInterestTreeImpl();
-	void    insertInterest(uint32_t&id,unsigned int pos,const std::vector<string>& route,InterestTreeNode* root);
+	void    insertInterest(uint32_t&id,unsigned int pos,const std::vector<string>& route,InterestTreeNode* root,bool&changeFlag);
 	void    updateNowRoot(string currentLane);
 	void    deleteTree(InterestTreeNode* deleteNode);
 	void    levelOrder();
-	void    MergeInterest(uint32_t&id,const vector<string>& oldRoute,string curLane,bool&flag);
+	bool    MergeInterest(uint32_t&id,const vector<string>& oldRoute,string curLane,bool&flag);
 	string  uriConvertToString(std::string str);
 	string  serialize_withId();
 	InterestTreeNode* deserialize_withId(string serializeTree);

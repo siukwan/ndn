@@ -48,30 +48,34 @@ NrInterestTreeImpl::~NrInterestTreeImpl ()
 {
 
 }
-void NrInterestTreeImpl::insertInterest(uint32_t&id,unsigned int pos,const vector<string>& route,InterestTreeNode* root)
+void NrInterestTreeImpl::insertInterest(uint32_t&id,unsigned int pos,const vector<string>& route,InterestTreeNode* root,bool&changeFlag)
 {
 	if(pos >= route.size()) return;//已经遍历完毕
 	else if(pos == 0 && root->lane =="")
 	{//初始化插入
 		root->lane = prefix+route[pos];
 		root->NodeId[id]=true;
+		changeFlag=true;
 		//cout<<"(InterestTree)初始化插入"<<root->lane<<" ID"<<id<<endl;
-		insertInterest(id,pos+1,route,root);
+		insertInterest(id,pos+1,route,root,changeFlag);
 	}
 	else
 	{
 		string nowRoute= prefix+route[pos];
 		//如果没有找到孩子
 		if( root->child.find( nowRoute ) ==root->child.end())
+		{
 			root->child[nowRoute]=new InterestTreeNode(nowRoute);
+			changeFlag=true;
+		}
 		root->child[nowRoute]->NodeId[id]=true;
 		//cout<<"(InterestTree)  递归插入"<<root->child[route[pos]]->lane<<" ID"<<id<<endl;
 		//递归地插入
-		insertInterest(id,pos+1,route,root->child[nowRoute]);
+		insertInterest(id,pos+1,route,root->child[nowRoute],changeFlag);
 	}
 }
 //合并兴趣与路线
-void NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRoute,string curLane,bool&flag)
+bool NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRoute,string curLane,bool&flag)
 {
 	curLane=prefix+curLane;
 	//如果车辆当前所在的道路与兴趣树的root不相同
@@ -93,13 +97,15 @@ void NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRout
 		if(curLane == prefix+route[idx])
 			break;
 	}
+	bool changeFlag=false;
 	//没有共同的路段
 	if(idx == route.size())
-		return;
+		return changeFlag;
 
 	//增加当前路段的兴趣节点
 	root->NodeId[id]=true;
-	insertInterest(id,idx+1,route,root);
+	insertInterest(id,idx+1,route,root,changeFlag);
+	return changeFlag;
 }
 
 void NrInterestTreeImpl::levelOrder()

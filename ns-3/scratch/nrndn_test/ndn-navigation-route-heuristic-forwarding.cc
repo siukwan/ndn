@@ -352,12 +352,13 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		//cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
 		//receive_tree->levelOrder();
-
+		bool changeFlag=false;
 		for(uint32_t i=0;i<receiveRoutes.size();++i)
 		{
 			bool flag1=false;
 			//cout<<"(forwarding.cc)合并的节点："<<receiveNode[i]<<endl;
-			m_nrtree->MergeInterest(receive_tree->NodeId,receiveRoutes[i],m_sensor->getLane(),flag1);
+			flag1=(m_nrtree->MergeInterest(receive_tree->NodeId,receiveRoutes[i],m_sensor->getLane(),flag1));
+			if(flag1)changeFlag=true;
 		}
 	//	cout<<"(forwarding.cc)合并后的兴趣树"<<endl;
 	//	m_nrtree->levelOrder();
@@ -381,6 +382,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		//evaluate end
 
+		if(!changeFlag)
+		{
+			NS_LOG_DEBUG("InterestTree no changed");
+			//cout<<"forwarding.cc 兴趣树没有变化，不转发"<<endl;
+			//getchar();
+			DropInterestePacket(interest);
+			return ;
+		}
 		if (idIsInPriorityList)
 		{
 			NS_LOG_DEBUG("Node id is in PriorityList");
@@ -784,7 +793,8 @@ void NavigationRouteHeuristic::DoInitialize(void)
 	m_nrtree->NodeId=m_node->GetId();
 	//获取所有的导航路线
 	const std::vector<std::string>& route =	m_sensor->getNavigationRoute();
-	m_nrtree->insertInterest(m_nrtree->NodeId,0,route,m_nrtree->root);
+	bool tmpflag=false;
+	m_nrtree->insertInterest(m_nrtree->NodeId,0,route,m_nrtree->root,tmpflag);
 	//m_nrtree->levelOrder();
 	//getchar();
 }
