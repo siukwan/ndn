@@ -420,6 +420,8 @@ private:
 	 */
 	void NotifyUpperLayer(Ptr<Data> data);
 
+	//利用face通知上层应用调用OnInterest
+	void notifyUpperOnInterest(uint32_t type);
 
 private:
 	typedef GreenYellowRed super;

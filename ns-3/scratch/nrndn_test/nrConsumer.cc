@@ -283,7 +283,8 @@ void nrConsumer::OnTimeout(uint32_t sequenceNumber)
 
 void nrConsumer::OnInterest(Ptr<const Interest> interest)
 {
-	cout<<"consumer收到兴趣包"<<endl;
+	int type =  interest->GetNonce();
+	cout<<"(nrConsumer.cc)consumer收到兴趣包"<<type<<endl;
 	getchar();
 	//NS_ASSERT_MSG(false,"nrConsumer should not be supposed to ""receive Interest Packet!!");
 }

@@ -1009,21 +1009,33 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		//hello信息来自前方，且邻居变化
 		if(msgdirection.second > 0 && m_nbChange_mode>0)
 		{//
-			printf("hello信息来自前方，且邻居发生变化%d\n",m_nbChange_mode);
-			vector<Ptr<Face> >::iterator fit;
-			for (fit = m_inFaceList.begin(); fit != m_inFaceList.end(); ++fit)
-			{
-				//App::OnInterest() will be executed,
-				//including nrProducer::OnInterest.
-				(*fit)->SendInterest(interest);
-			}
-			getchar();
+			printf("%d收到hello信息来自前方，且邻居发生变化%d\n",m_node->GetId(),m_nbChange_mode);
+			notifyUpperOnInterest(m_node->GetId());
 		}
 
 
 	m_preNB=m_nb;//更新把上一次的邻居表
 }
-
+//利用face通知上层应用调用OnInterest
+void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t type)
+{//把type存放到interest中，以此来区分不同的notify类型
+	vector<Ptr<Face> >::iterator fit;
+	Ptr<Interest> interest = Create<Interest> ();
+	interest->SetNonce(type);
+	int count=0;
+	for (fit = m_inFaceList.begin(); fit != m_inFaceList.end(); ++fit)
+	{//只有一个Face？有两个，一个是consumer，一个是producer
+		//App::OnInterest() will be executed,
+		//including nrProducer::OnInterest.
+		count++;
+		(*fit)->SendInterest(interest);
+	}
+	if(count>2)
+	{
+		cout<<"(forwarding.cc)notifyUpperOnInterest中的Face数量大于2："<<count<<endl;
+		getchar();
+	}
+}
 std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList()
 {
 	return GetPriorityList(m_sensor->getNavigationRoute());

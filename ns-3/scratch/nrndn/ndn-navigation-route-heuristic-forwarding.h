@@ -417,6 +417,7 @@ private:
 	 */
 	void NotifyUpperLayer(Ptr<Data> data);
 
+
 private:
 	typedef GreenYellowRed super;
 	/**
