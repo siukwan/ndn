@@ -81,8 +81,7 @@ nrProducer::~nrProducer()
 void nrProducer::OnInterest(Ptr<const Interest> interest)
 {
 
-	NS_ASSERT_MSG(false,"nrProducer should not be supposed to"
-			" receive Interest Packet!!");
+	//NS_ASSERT_MSG(false,"nrProducer should not be supposed to"" receive Interest Packet!!");
 	/*
 	App::OnInterest(interest); // tracing inside
 

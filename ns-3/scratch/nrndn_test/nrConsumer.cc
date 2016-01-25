@@ -285,8 +285,7 @@ void nrConsumer::OnInterest(Ptr<const Interest> interest)
 {
 	cout<<"consumer收到兴趣包"<<endl;
 	getchar();
-	NS_ASSERT_MSG(false,"nrConsumer should not be supposed to "
-			"receive Interest Packet!!");
+	//NS_ASSERT_MSG(false,"nrConsumer should not be supposed to ""receive Interest Packet!!");
 }
 
 bool nrConsumer::IsInterestData(const Name& name)

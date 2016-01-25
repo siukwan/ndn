@@ -1014,9 +1014,8 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			for (fit = m_inFaceList.begin(); fit != m_inFaceList.end(); ++fit)
 			{
 				//App::OnInterest() will be executed,
-				//including nrProducer::OnData.
-				//But none of its business, just ignore
-				(*fit)->SendInterest(NULL);
+				//including nrProducer::OnInterest.
+				(*fit)->SendInterest(interest);
 			}
 			getchar();
 		}
