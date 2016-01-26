@@ -1,12 +1,17 @@
 #!/bin/bash
 
-program_name="nrndn_test";
+#参数个数为1(第一个参数为程序的名字)，则默认是nrndn_test
+if [ $# != 1 ];then
+	program_name="nrndn_test";
+else
+	program_name="nrndn_20160126_easonOriginal";
+fi
 
 #定义时间变量
 git_date=$(date)
 shell_date=$(date +%Y%m%d-%H%M%S)
 vehicle_num=$(cat  ~/input/routes.rou.xml | grep "</vehicle>" | wc -l)
-file_name="r-"$shell_date"-"$vehicle_num"nodes_"$program_name
+file_name=$shell_date"-"$vehicle_num"nodes_"$program_name
 
 #输出shell_data
 echo $file_name
