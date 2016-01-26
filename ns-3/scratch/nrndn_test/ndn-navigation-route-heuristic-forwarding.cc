@@ -291,7 +291,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			{//10秒之内W
 				if(nodeId!=nrheader.getForwardId())
 				cout<<"(forwarding.cc)"<<m_node->GetId()<<"收到自己("<<nodeId<<")发的兴趣包"<<nrheader.getForwardId()<<"："<<interest->GetNonce()<<"   "<<m_myInterest[interest->GetNonce()]<<endl;
-				//getchar();
+				getchar();
 			}
 		}
 
