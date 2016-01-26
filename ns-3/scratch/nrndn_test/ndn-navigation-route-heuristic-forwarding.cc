@@ -281,7 +281,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		nodeId=nrheader.getSourceId();
 		//获取兴趣的随机编码
 		seq=interest->GetNonce();
-
 	//如果兴趣包已经被发送了，不再处理兴趣包，使用LRUcache结构
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
@@ -289,9 +288,9 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if(m_myInterest.find(interest->GetNonce())!=m_myInterest.end())
 		{
 			if(Simulator::Now().GetSeconds()-m_myInterest[interest->GetNonce()]<10)
-			{//10秒之内
-				cout<<"(forwarding.cc)"<<m_node->GetId()<<"收到自己("<<nodeId<<")发的兴趣包："<<interest->GetNonce()<<"   "<<m_myInterest[interest->GetNonce()]<<endl;
-				getchar();
+			{//10秒之内W
+				cout<<"(forwarding.cc)"<<m_node->GetId()<<"收到自己("<<nodeId<<")发的兴趣包"<<nrheader.getForwardId()<<"："<<interest->GetNonce()<<"   "<<m_myInterest[interest->GetNonce()]<<endl;
+				//getchar();
 			}
 		}
 
@@ -418,6 +417,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			}
 			else
 			{
+				interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload()));
 				//Start a timer and wait
 				double index = distance(pri.begin(), idit);
 				double random = m_uniformRandomVariable->GetInteger(0, 20);
@@ -1102,6 +1102,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
 	//设置信息,设置兴趣树
 	nrheader.setTree(m_nrtree_str);
+	nrheader.setForwardId(m_node->GetId());
 	//cout<<"(forwarding.cc)"<<m_node->GetId()<<"GetNrPayload，并设置兴趣树信息:\n"<<nrheader.getTree()<<endl;
 	//getchar();
 	nrPayload->AddHeader(nrheader);

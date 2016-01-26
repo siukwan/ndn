@@ -25,6 +25,7 @@ nrHeader::nrHeader():
 
 nrHeader::nrHeader(const uint32_t& sourceId,const double& x,const double& y,const std::vector<uint32_t>& priorityList):
 		m_sourceId(sourceId),
+		m_forwardId(9999999),
 		m_x(x),
 		m_y(y),
 		m_priorityList(priorityList),
@@ -35,6 +36,7 @@ nrHeader::nrHeader(const uint32_t& sourceId,const double& x,const double& y,cons
 }
 nrHeader::nrHeader(const uint32_t& sourceId,const double& x,const double& y,const std::vector<uint32_t>& priorityList,std::string tree):
 		m_sourceId(sourceId),
+		m_forwardId(9999999),
 		m_x(x),
 		m_y(y),
 		m_priorityList(priorityList),
