@@ -1,5 +1,7 @@
 #!/bin/bash
 
+program_name="nrndn_test";
+
 #定义时间变量
 git_date=$(date)
 shell_date=$(date +%Y%m%d-%H%M%S)
@@ -13,16 +15,16 @@ mkdir ~/$file_name
 
 cd ~/ndn/ns-3/
 #先进行编译
-./waf --run "nrndn_test --method=3"
+./waf --run "$program_name --method=3"
 
 #后台运行ndn
-./waf --run "nrndn_test --method=0" > ~/$file_name/ndn_record.txt &
+./waf --run "$program_name --method=0" > ~/$file_name/ndn_record.txt &
 #后台运行dis
 sleep 4
-./waf --run "nrndn_test --method=1" > ~/$file_name/dis_record.txt &
+./waf --run "$program_name --method=1" > ~/$file_name/dis_record.txt &
 #后台运行cds
 sleep 4
-./waf --run "nrndn_test --method=2" > ~/$file_name/cds_record.txt &
+./waf --run "$program_name --method=2" > ~/$file_name/cds_record.txt &
 
 #等待后台程序结束
 wait
