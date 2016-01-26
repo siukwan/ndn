@@ -419,14 +419,13 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			}
 			else
 			{
-				cout<<"forwarding.cc转发前的ID"<<nrheader.getForwardId()<<endl;
 				interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload()));
 
 				Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
 				ndn::nrndn::nrHeader nrheader_tmp;
 				nrPayload_tmp->PeekHeader( nrheader_tmp);
 
-				cout<<"forwarding.cc转发后的ID"<<nrheader_tmp.getForwardId()<<endl;
+				cout<<"forwarding.cc转发前的ID"<<nrheader.getForwardId()<<"  转发后的ID"<<nrheader_tmp.getForwardId()<<endl;
 				//getchar();
 				//Start a timer and wait
 				double index = distance(pri.begin(), idit);
