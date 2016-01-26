@@ -261,7 +261,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			// 3. Then forward the interest packet directly
 			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 					&NavigationRouteHeuristic::SendInterestPacket,this,interest);
-
+			return;
 	}
 
 	//如果它是个心跳包
