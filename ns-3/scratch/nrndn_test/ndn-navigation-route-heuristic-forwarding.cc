@@ -427,7 +427,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				nrPayload_tmp->PeekHeader( nrheader_tmp);
 
 				cout<<"forwarding.cc转发后的ID"<<nrheader_tmp.getForwardId()<<endl;
-				getchar();
+				//getchar();
 				//Start a timer and wait
 				double index = distance(pri.begin(), idit);
 				double random = m_uniformRandomVariable->GetInteger(0, 20);
