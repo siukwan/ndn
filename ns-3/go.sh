@@ -6,7 +6,7 @@ program_name="nrndn_test";
 git_date=$(date)
 shell_date=$(date +%Y%m%d-%H%M%S)
 vehicle_num=$(cat  ~/input/routes.rou.xml | grep "</vehicle>" | wc -l)
-file_name="r-"$shell_date"-"$vehicle_num"nodes"
+file_name="r-"$shell_date"-"$vehicle_num"nodes_"$program_name
 
 #输出shell_data
 echo $file_name
