@@ -73,6 +73,16 @@ public:
 		m_sourceId = sourceId;
 	}
 
+	uint32_t getForwardId() const
+	{
+		return m_forwardId;
+	}
+
+	void setForwardId(uint32_t forwardId)
+	{
+		m_forwardId = forwardId;
+	}
+
 	double getX() const
 	{
 		return m_x;
@@ -105,6 +115,7 @@ public:
 
 private:
 	uint32_t		m_sourceId;	//\ (source)	id of source node (source)
+	uint32_t		m_forwardId;	//\ (source)	id of forward node (source)
 	double			m_x;		//\ (forwarder)	forwarder x coordinate, not source node position!!!!
 	double 			m_y;    	//\ (forwarder)	forwarder y coordinate, not source node position!!!!
 	std::vector<uint32_t>

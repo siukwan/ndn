@@ -67,6 +67,7 @@ uint32_t nrHeader::GetSerializedSize() const
 {
 	uint32_t size=0;
 	size += sizeof(m_sourceId);
+	size += sizeof(m_forwardId);
 	size += sizeof(m_x);
 	size += sizeof(m_y);
 
@@ -86,6 +87,7 @@ void nrHeader::Serialize(Buffer::Iterator start) const
 {
 	Buffer::Iterator& i = start;
 	i.WriteHtonU32(m_sourceId);
+	i.WriteHtonU32(m_forwardId);
 	i.Write((uint8_t*)&m_x,sizeof(m_x));
 	i.Write((uint8_t*)&m_y,sizeof(m_y));
 
@@ -112,6 +114,7 @@ uint32_t nrHeader::Deserialize(Buffer::Iterator start)
 {
 	Buffer::Iterator i = start;
 	m_sourceId	=	i.ReadNtohU32();
+	m_forwardId	=	i.ReadNtohU32();
 	i.Read((uint8_t*)&m_x,sizeof(m_x));
 	i.Read((uint8_t*)&m_y,sizeof(m_y));
 

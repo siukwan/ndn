@@ -257,7 +257,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 			// 2. record the Interest Packet
 			m_interestNonceSeen.Put(interest->GetNonce(),true);
-
+			m_myInterest[interest->GetNonce()]=Simulator::Now().GetSeconds();
 			// 3. Then forward the interest packet directly
 			Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 					&NavigationRouteHeuristic::SendInterestPacket,this,interest);
@@ -270,25 +270,36 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		ProcessHello(interest);
 		return;
 	}
+
+	//Payload是什么
+		Ptr<const Packet> nrPayload	= interest->GetPayload();
+		uint32_t nodeId;
+		uint32_t seq;
+		ndn::nrndn::nrHeader nrheader;
+		nrPayload->PeekHeader( nrheader);
+		//获取发送兴趣包节点的ID
+		nodeId=nrheader.getSourceId();
+		//获取兴趣的随机编码
+		seq=interest->GetNonce();
+
 	//如果兴趣包已经被发送了，不再处理兴趣包，使用LRUcache结构
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
-	//	cout<<"OnInterest重复包2......................."<<endl;
+		if(m_myInterest.find(interest->GetNonce())!=m_myInterest.end())
+		{
+			if(Simulator::Now().GetSeconds()-m_myInterest[interest->GetNonce()]<10)
+			{//10秒之内
+				cout<<"(forwarding.cc)"<<m_node->GetId()<<"收到自己("<<nodeId<<")发的兴趣包："<<interest->GetNonce()<<"   "<<m_myInterest[interest->GetNonce()]<<endl;
+				getchar();
+			}
+		}
+
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		return;
 	}
 
-	//Payload是什么
-	Ptr<const Packet> nrPayload	= interest->GetPayload();
-	uint32_t nodeId;
-	uint32_t seq;
-	ndn::nrndn::nrHeader nrheader;
-	nrPayload->PeekHeader( nrheader);
-	//获取发送兴趣包节点的ID
-	nodeId=nrheader.getSourceId();
-	//获取兴趣的随机编码
-	seq=interest->GetNonce();
+
 
 
 	//获取优先列表

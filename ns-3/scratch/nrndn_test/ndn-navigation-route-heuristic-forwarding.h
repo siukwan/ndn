@@ -457,7 +457,7 @@ private:
 							m_interestNonceSeen;///< \brief record the randomly-genenerated bytestring that is used to detect and discard duplicate Interest messages
 	ndn::nrndn::cache::LRUCache<uint32_t,bool>
 							m_dataSignatureSeen;///< \brief record the signature that is used to detect and discard duplicate data messages
-
+	map<uint32_t,double> m_myInterest;
 
 	vector<Ptr<Face> >      m_outFaceList;///< \brief face list(NetDeviceFace) that interest/data packet will be sent down to
 	vector<Ptr<Face> >      m_inFaceList;///< \brief face list(AppFace) that interest/data packet will be sent up to
