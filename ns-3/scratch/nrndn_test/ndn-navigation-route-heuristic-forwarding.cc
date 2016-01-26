@@ -270,7 +270,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		ProcessHello(interest);
 		return;
 	}
-
 	//Payload是什么
 		Ptr<const Packet> nrPayload	= interest->GetPayload();
 		uint32_t nodeId;
@@ -281,19 +280,17 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		nodeId=nrheader.getSourceId();
 		//获取兴趣的随机编码
 		seq=interest->GetNonce();
+	//	cout<<"forwarding.cc:"<<m_node->GetId()<<"收到兴趣包"<<nodeId<<endl;
 	//如果兴趣包已经被发送了，不再处理兴趣包，使用LRUcache结构
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
-		if(m_myInterest.find(interest->GetNonce())!=m_myInterest.end())
+		if(m_myInterest.find(interest->GetNonce())!=m_myInterest.end() && nodeId==m_node->GetId())
 		{
 			if(Simulator::Now().GetSeconds()-m_myInterest[interest->GetNonce()]<10)
 			{//10秒之内W
-				if(nodeId!=nrheader.getForwardId())
-				{
 					cout<<"(forwarding.cc)"<<m_node->GetId()<<"收到自己("<<nodeId<<")发的兴趣包"<<nrheader.getForwardId()<<"："<<interest->GetNonce()<<"   "<<m_myInterest[interest->GetNonce()]<<endl;
 					getchar();
-				}
 			}
 		}
 
@@ -395,6 +392,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		//evaluate end
 
+		if(nrheader.getSourceId()!=nrheader.getForwardId())
+		cout<<"forwarding.cc兴趣包源ID"<<nrheader.getSourceId()<<"  转发ID"<<nrheader.getForwardId()<<endl;
 		if(!changeFlag)
 		{
 			NS_LOG_DEBUG("InterestTree no changed");
@@ -420,7 +419,15 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			}
 			else
 			{
+				cout<<"forwarding.cc转发前的ID"<<nrheader.getForwardId()<<endl;
 				interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload()));
+
+				Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
+				ndn::nrndn::nrHeader nrheader_tmp;
+				nrPayload_tmp->PeekHeader( nrheader_tmp);
+
+				cout<<"forwarding.cc转发后的ID"<<nrheader_tmp.getForwardId()<<endl;
+				getchar();
 				//Start a timer and wait
 				double index = distance(pri.begin(), idit);
 				double random = m_uniformRandomVariable->GetInteger(0, 20);
