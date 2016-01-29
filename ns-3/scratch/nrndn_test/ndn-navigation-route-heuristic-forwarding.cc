@@ -253,7 +253,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			NS_LOG_DEBUG("Get interest packet from APPLICATION");
 			// This is the source interest from the upper node application (eg, nrConsumer) of itself
 			// 1.Set the payload
-			interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload()));
+			interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),999999999));
 
 			// 2. record the Interest Packet
 			m_interestNonceSeen.Put(interest->GetNonce(),true);
@@ -392,11 +392,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		//evaluate end
 
-		//第一次收到别人的兴趣包，源ID和转发ID肯定是一样的
-		if(nrheader.getSourceId()!=nrheader.getForwardId())
+	/*	if(nrheader.getSourceId()!=nrheader.getForwardId())
 			cout<<"forwarding.cc兴趣包源ID"<<nrheader.getSourceId()<<"  转发ID"<<nrheader.getForwardId()<<endl;
 		else
 			cout<<"forwarding.cc收到自己的"<<endl;
+		*/
 		if(!changeFlag)
 		{
 			NS_LOG_DEBUG("InterestTree no changed");
@@ -422,7 +422,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			}
 			else
 			{
-				interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload()));
+				interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),m_node->GetId()));
 
 				Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
 				ndn::nrndn::nrHeader nrheader_tmp;
@@ -460,7 +460,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		NS_LOG_DEBUG("Get data packet from APPLICATION");
 		// This is the source data from the upper node application (eg, nrProducer) of itself
 		// 1.Set the payload
-		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),data->GetName());
+		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),999999999,data->GetName());
 		if(!payload->GetSize())
 			return;
 		data->SetPayload(payload);
@@ -1080,7 +1080,7 @@ vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 	return result;
 }
 
-Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload, const Name& dataName /*= *((Name*)NULL) */)
+Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload,uint32_t forwardId, const Name& dataName /*= *((Name*)NULL) */)
 {
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
@@ -1114,14 +1114,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
 	//设置信息,设置兴趣树
 	nrheader.setTree(m_nrtree_str);
-	if(m_node->GetId() == nrheader.getSourceId())
-	{
-		cout<<"forwarding.cc应用层传下来的兴趣包："<<nrheader.getSourceId()<<endl;
-		nrheader.setForwardId(999999999);
-		getchar();
-	}
-	else
-		nrheader.setForwardId(m_node->GetId());
+	nrheader.setForwardId(forwardId);
 
 	//cout<<"(forwarding.cc)"<<m_node->GetId()<<"GetNrPayload，源ID:"<<nrheader.getSourceId()<<endl;
 	//getchar();
