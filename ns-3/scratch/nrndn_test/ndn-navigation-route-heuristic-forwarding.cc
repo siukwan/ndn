@@ -392,8 +392,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		//evaluate end
 
+		//第一次收到别人的兴趣包，源ID和转发ID肯定是一样的
 		if(nrheader.getSourceId()!=nrheader.getForwardId())
-		cout<<"forwarding.cc兴趣包源ID"<<nrheader.getSourceId()<<"  转发ID"<<nrheader.getForwardId()<<endl;
+			cout<<"forwarding.cc兴趣包源ID"<<nrheader.getSourceId()<<"  转发ID"<<nrheader.getForwardId()<<endl;
+		else
+			cout<<"forwarding.cc收到自己的"<<endl;
 		if(!changeFlag)
 		{
 			NS_LOG_DEBUG("InterestTree no changed");
@@ -426,7 +429,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				nrPayload_tmp->PeekHeader( nrheader_tmp);
 
 				cout<<"forwarding.cc转发前的ID"<<nrheader.getForwardId()<<"  转发后的ID"<<nrheader_tmp.getForwardId()<<endl;
-				//getchar();
+				getchar();
 				//Start a timer and wait
 				double index = distance(pri.begin(), idit);
 				double random = m_uniformRandomVariable->GetInteger(0, 20);
@@ -1111,7 +1114,14 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
 	//设置信息,设置兴趣树
 	nrheader.setTree(m_nrtree_str);
-	nrheader.setForwardId(m_node->GetId());
+	if(m_node->GetId() == nrheader.getSourceId())
+	{
+		cout<<"forwarding.cc应用层传下来的兴趣包："<<nrheader.getSourceId()<<endl;
+		nrheader.setForwardId(999999999);
+		getchar();
+	}
+	else
+		nrheader.setForwardId(m_node->GetId());
 
 	//cout<<"(forwarding.cc)"<<m_node->GetId()<<"GetNrPayload，源ID:"<<nrheader.getSourceId()<<endl;
 	//getchar();
