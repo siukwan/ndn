@@ -439,7 +439,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				ndn::nrndn::nrHeader nrheader_tmp;
 				nrPayload_tmp->PeekHeader( nrheader_tmp);
 
-				cout<<"forwarding.cc转发前的ID"<<nrheader.getForwardId()<<"  转发后的ID"<<nrheader_tmp.getForwardId()<<endl;
+				cout<<"forwarding.cc我的ID"<<m_node->GetId()<<"转发前的ID"<<nrheader.getForwardId()<<"  转发后的ID"<<nrheader_tmp.getForwardId()<<endl;
 				getchar();
 				//Start a timer and wait
 				double index = distance(pri.begin(), idit);
