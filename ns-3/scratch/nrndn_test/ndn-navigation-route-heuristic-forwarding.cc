@@ -281,6 +281,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		//获取兴趣的随机编码
 		seq=interest->GetNonce();
 		uint32_t myNodeId=m_node->GetId();
+		if(nodeId == myNodeId)
+		{
+			cout<<"forwarding.cc收到自己的兴趣包"<<endl;
+		}
 	//	cout<<"forwarding.cc:"<<m_node->GetId()<<"收到兴趣包"<<nodeId<<endl;
 	//如果兴趣包已经被发送了，不再处理兴趣包，使用LRUcache结构
 	//If the interest packet has already been sent, do not proceed the packet
@@ -291,7 +295,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			if(Simulator::Now().GetSeconds()-m_myInterest[interest->GetNonce()]<10)
 			{//10秒之内W
 					cout<<"(forwarding.cc)"<<m_node->GetId()<<"收到自己("<<nodeId<<")发的兴趣包"<<nrheader.getForwardId()<<"："<<interest->GetNonce()<<"   "<<m_myInterest[interest->GetNonce()]<<endl;
-					getchar();
+					//getchar();
 			}
 		}
 
