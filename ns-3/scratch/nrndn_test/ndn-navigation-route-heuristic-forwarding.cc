@@ -423,7 +423,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			}
 			else
 			{
-				interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),m_node->GetId()));
+				interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),999999999/*m_node->GetId()*/));
 
 				Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
 				ndn::nrndn::nrHeader nrheader_tmp;
