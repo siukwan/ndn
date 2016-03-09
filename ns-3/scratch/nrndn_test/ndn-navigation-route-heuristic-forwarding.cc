@@ -281,9 +281,15 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		//获取兴趣的随机编码
 		seq=interest->GetNonce();
 		uint32_t myNodeId=m_node->GetId();
+		uint32_t forwardId = nrheader.getForwardId();
 		if(nodeId == myNodeId)
 		{
 			cout<<"forwarding.cc收到自己的兴趣包"<<endl;
+		}
+		if(forwardId != 999999999)
+		{
+			printf("my:%d  src:%d   fwd:%d",myNodeId,nodeId,forwardId);
+			cout<<endl;
 		}
 	//	cout<<"forwarding.cc:"<<m_node->GetId()<<"收到兴趣包"<<nodeId<<endl;
 	//如果兴趣包已经被发送了，不再处理兴趣包，使用LRUcache结构
@@ -427,7 +433,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			}
 			else
 			{
-				interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),999999999/*m_node->GetId()*/));
+				interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),m_node->GetId()));
 
 				Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
 				ndn::nrndn::nrHeader nrheader_tmp;
