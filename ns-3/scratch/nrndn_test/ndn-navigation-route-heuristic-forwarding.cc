@@ -288,8 +288,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		}
 		if(forwardId != 999999999)
 		{
-			printf("my:%d  src:%d   fwd:%d",myNodeId,nodeId,forwardId);
-			cout<<endl;
+			//printf("my:%d  src:%d   fwd:%d",myNodeId,nodeId,forwardId);
+			//cout<<endl;
 		}
 	//	cout<<"forwarding.cc:"<<m_node->GetId()<<"收到兴趣包"<<nodeId<<endl;
 	//如果兴趣包已经被发送了，不再处理兴趣包，使用LRUcache结构
