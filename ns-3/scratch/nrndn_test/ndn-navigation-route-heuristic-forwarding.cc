@@ -292,9 +292,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		uint32_t myNodeId=m_node->GetId();
 		uint32_t forwardId = nrheader.getForwardId();
 		cout<<"forwarding.cc"<<myNodeId<<"收到的兴趣包"<<nodeId<<endl;
+		getchar();
 		if(nodeId == myNodeId)
 		{
-			cout<<"forwarding.cc收到自己的兴趣包"<<endl;
+			cout<<"forwarding.cc收到自己的兴趣包!!!!!!!!!!!!!!!!"<<myNodeId<<endl;
+			getchar();
 		}
 		if(forwardId != 999999999)
 		{
@@ -358,7 +360,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		const vector<string> remoteRoute= ExtractRouteFromName(interest->GetName());
 
 		cout<<"forwarding.cc"<<myNodeId<<"准备转发兴趣包"<<nodeId<<endl;
-		getchar();
+		//getchar();
 
 		//提取兴趣树，并且还原
 		string receive_tree_str = nrheader.getTree();
