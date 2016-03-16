@@ -457,6 +457,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 				cout<<"forwarding.cc我的ID"<<m_node->GetId()<<"  转发前的ID"<<nrheader.getForwardId()<<"  原始ID为"<<
 						nrheader_tmp.getSourceId()<<"   转发后的ID"<<nrheader_tmp.getForwardId()<<endl;
+
+				if(m_node->GetId()==nrheader_tmp.getSourceId())
+				{
+					cout<<"forwarding.cc"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<endl;
+					getchar();
+				}
+
+
 				if(nrheader_tmp.getSourceId()!=nrheader_tmp.getForwardId())
 					getchar();
 				//Start a timer and wait
