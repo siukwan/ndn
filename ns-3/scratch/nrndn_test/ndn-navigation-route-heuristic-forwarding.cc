@@ -406,7 +406,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		//Update the Interest Tree
 
 		//evaluate whether receiver's id is in sender's priority list
-		bool idIsInPriorityList;
+		bool idIsInPriorityList=true;
 		vector<uint32_t>::const_iterator idit;
 		idit = find(pri.begin(), pri.end(), m_node->GetId());
 		idIsInPriorityList = (idit != pri.end());
@@ -429,6 +429,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			DropInterestePacket(interest);
 			return ;
 		}
+		idIsInPriorityList=true;
 		if (idIsInPriorityList)
 		{
 			NS_LOG_DEBUG("Node id is in PriorityList");
@@ -470,6 +471,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		//不在优先列表中，则不转发
 		else
 		{
+			cout<<"forwarding.cc"<<myNodeId<<"不在优先列表中阿阿"<<nodeId<<endl;
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropInterestePacket(interest);
 		}
