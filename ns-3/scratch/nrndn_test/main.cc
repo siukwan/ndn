@@ -222,7 +222,7 @@ nrndnExample::nrndnExample () :
   averageDelay(0),
   SumForwardTimes(0),
   noFwStop(true),
-  TTLMax(3),
+  TTLMax(10),
   virtualPayloadSize(1024)
 {
 	//os =  std::cout;

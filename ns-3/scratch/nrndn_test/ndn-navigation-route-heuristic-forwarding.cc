@@ -255,6 +255,15 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			// 1.Set the payload
 			interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),999999999));
 
+			Ptr<const Packet> nrPayload	= interest->GetPayload();
+			uint32_t nodeId;
+			uint32_t seq;
+			ndn::nrndn::nrHeader nrheader;
+			nrPayload->PeekHeader( nrheader);
+			//获取发送兴趣包节点的ID
+			nodeId=nrheader.getSourceId();
+			uint32_t myNodeId=m_node->GetId();
+			cout<<"forwarding.cc"<<myNodeId<<"发送应用层的兴趣包"<<nodeId<<endl;
 			// 2. record the Interest Packet
 			m_interestNonceSeen.Put(interest->GetNonce(),true);
 			m_myInterest[interest->GetNonce()]=Simulator::Now().GetSeconds();
@@ -282,6 +291,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		seq=interest->GetNonce();
 		uint32_t myNodeId=m_node->GetId();
 		uint32_t forwardId = nrheader.getForwardId();
+		cout<<"forwarding.cc"<<myNodeId<<"收到的兴趣包"<<nodeId<<endl;
 		if(nodeId == myNodeId)
 		{
 			cout<<"forwarding.cc收到自己的兴趣包"<<endl;
@@ -347,8 +357,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
 		const vector<string> remoteRoute= ExtractRouteFromName(interest->GetName());
 
-
-
+		cout<<"forwarding.cc"<<myNodeId<<"准备转发兴趣包"<<nodeId<<endl;
+		getchar();
 
 		//提取兴趣树，并且还原
 		string receive_tree_str = nrheader.getTree();
@@ -408,9 +418,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		else
 			cout<<"forwarding.cc收到自己的"<<endl;
 		*/
+		changeFlag=true;
 		if(!changeFlag)
 		{
 			NS_LOG_DEBUG("InterestTree no changed");
+
+			cout<<"forwarding.cc"<<myNodeId<<"兴趣树没有变化，不转发"<<nodeId<<endl;
 			//cout<<"forwarding.cc 兴趣树没有变化，不转发"<<endl;
 			//getchar();
 			DropInterestePacket(interest);
@@ -450,6 +463,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
 						&NavigationRouteHeuristic::ForwardInterestPacket, this,
 						interest);
+
+				cout<<"forwarding.cc"<<myNodeId<<"转发成功"<<nodeId<<endl;
 			}
 		}
 		//不在优先列表中，则不转发
