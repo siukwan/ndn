@@ -427,18 +427,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 			interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),m_node->GetId()));
 
-							Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
-							ndn::nrndn::nrHeader nrheader_tmp;
-							nrPayload_tmp->PeekHeader( nrheader_tmp);
-
-							cout<<"forwarding.cc我的ID"<<m_node->GetId()<<"  转发前的ID"<<nrheader.getForwardId()<<"  原始ID为"<<
-									nrheader_tmp.getSourceId()<<"   转发后的ID"<<nrheader_tmp.getForwardId()<<endl;
-
-							if(m_node->GetId()==nrheader_tmp.getSourceId()&&nrheader.getForwardId()!=999999999)
-							{
-								cout<<"forwarding.cc"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<endl;
-								getchar();
-							}
+			Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
+			ndn::nrndn::nrHeader nrheader_tmp;
+			nrPayload_tmp->PeekHeader( nrheader_tmp);
+			if(m_node->GetId()==nrheader_tmp.getSourceId()&&nrheader.getForwardId()!=999999999)
+			{
+				cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<nodeId<<"  "<<myNodeId<<endl;
+				getchar();
+			}
 
 			DropInterestePacket(interest);
 			return ;
