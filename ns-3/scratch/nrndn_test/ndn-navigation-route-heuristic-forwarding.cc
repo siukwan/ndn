@@ -420,14 +420,26 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		else
 			cout<<"forwarding.cc收到自己的"<<endl;
 		*/
-		changeFlag=true;
+		//changeFlag=true;
 		if(!changeFlag)
 		{
 			NS_LOG_DEBUG("InterestTree no changed");
 
-			cout<<"forwarding.cc"<<myNodeId<<"兴趣树没有变化，不转发"<<nodeId<<endl;
-			//cout<<"forwarding.cc 兴趣树没有变化，不转发"<<endl;
-			//getchar();
+			interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),m_node->GetId()));
+
+							Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
+							ndn::nrndn::nrHeader nrheader_tmp;
+							nrPayload_tmp->PeekHeader( nrheader_tmp);
+
+							cout<<"forwarding.cc我的ID"<<m_node->GetId()<<"  转发前的ID"<<nrheader.getForwardId()<<"  原始ID为"<<
+									nrheader_tmp.getSourceId()<<"   转发后的ID"<<nrheader_tmp.getForwardId()<<endl;
+
+							if(m_node->GetId()==nrheader_tmp.getSourceId()&&nrheader.getForwardId()!=999999999)
+							{
+								cout<<"forwarding.cc"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<endl;
+								getchar();
+							}
+
 			DropInterestePacket(interest);
 			return ;
 		}
