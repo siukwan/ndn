@@ -413,6 +413,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		idit = find(pri.begin(), pri.end(), m_node->GetId());
 		idIsInPriorityList = (idit != pri.end());
 
+		cout<<"forwarding.cc优先级列表为:";
+		for(int ii=0;ii<pri.size();++ii)
+			cout<<pri[ii]<< " ";
+		cout<<endl;
+
 		//evaluate end
 
 	/*	if(nrheader.getSourceId()!=nrheader.getForwardId())
@@ -440,6 +445,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			return ;
 		}
 		idIsInPriorityList=true;
+
 		if (idIsInPriorityList)
 		{
 			NS_LOG_DEBUG("Node id is in PriorityList");

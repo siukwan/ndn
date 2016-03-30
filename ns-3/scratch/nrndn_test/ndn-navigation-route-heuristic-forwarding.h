@@ -127,6 +127,7 @@ public:
 	enum
 	{
 		HELLO_MESSAGE = 2,
+		FORWARD_ACK = 10,//用于响应转发者
 	};
 
 protected:
