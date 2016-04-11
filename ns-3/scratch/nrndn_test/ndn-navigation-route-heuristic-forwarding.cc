@@ -899,7 +899,11 @@ void NavigationRouteHeuristic::DropInterestePacket(Ptr<Interest> interest)
 	NS_LOG_DEBUG ("Drop interest Packet");
 	DropPacket();
 }
+//4月11日添加,发送ack包
+void NavigationRouteHeuristic::SendAckPacket(Ptr<Interest> ack)
+{
 
+}
 void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 {
 	if(!m_running) return;
