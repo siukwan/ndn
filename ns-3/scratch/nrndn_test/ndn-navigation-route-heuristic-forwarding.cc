@@ -900,9 +900,29 @@ void NavigationRouteHeuristic::DropInterestePacket(Ptr<Interest> interest)
 	DropPacket();
 }
 //4月11日添加,发送ack包
-void NavigationRouteHeuristic::SendAckPacket(Ptr<Interest> ack)
+void NavigationRouteHeuristic::SendAckPacket()
 {
+	if(!m_running) return;
+	//cout<<"(forwarding)发送hello包"<<m_node->GetId()<<endl;
+	if (m_HelloLogEnable)
+		NS_LOG_FUNCTION(this);
 
+	//2. setup payload
+	Ptr<Packet> newPayload	= Create<Packet> ();
+	ndn::nrndn::nrHeader nrheader;
+	nrheader.setX(0);
+	nrheader.setY(0);
+	nrheader.setSourceId(m_node->GetId());
+	//ACK包中不需要发送兴趣树，所以把兴趣树清空
+	nrheader.setTree("");
+	newPayload->AddHeader(nrheader);
+
+	//3. setup interest packet
+	Ptr<Interest> ackPacket	= Create<Interest> (newPayload);
+	interest->SetScope(FORWARD_ACK);	// 标志为ACK包
+
+	//4. send the ackPacket message
+	SendInterestPacket(ackPacket);
 }
 void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 {
