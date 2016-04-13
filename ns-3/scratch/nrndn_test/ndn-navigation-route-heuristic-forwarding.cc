@@ -919,7 +919,7 @@ void NavigationRouteHeuristic::SendAckPacket()
 
 	//3. setup interest packet
 	Ptr<Interest> ackPacket	= Create<Interest> (newPayload);
-	interest->SetScope(FORWARD_ACK);	// 标志为ACK包
+	ackPacket->SetScope(FORWARD_ACK);	// 标志为ACK包
 
 	//4. send the ackPacket message
 	SendInterestPacket(ackPacket);

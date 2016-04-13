@@ -312,6 +312,8 @@ private:
 	 */
 	void SendHello ();
 
+	//发送ACK包
+	void SendAckPacket();
 	/**
 	 * 	\brief	Determin whether a given location is in the front of the node
 	 *	@param	lane	lane of given location
