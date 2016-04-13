@@ -279,6 +279,13 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		ProcessHello(interest);
 		return;
 	}
+
+	if(FORWARD_ACK == interest->GetScope())
+	{
+		cout<<"收到ACK包"<<endl;
+		return;
+	}
+
 	//Payload是什么
 		Ptr<const Packet> nrPayload	= interest->GetPayload();
 		uint32_t nodeId;
@@ -990,11 +997,14 @@ void NavigationRouteHeuristic::SetCacheSize(uint32_t cacheSize)
 //4月11日添加,发送ack包
 void NavigationRouteHeuristic::SendAckPacket()
 {
+	cout<<"bug0"<<endl;
 	if(!m_running) return;
 	//1.setup name
-	Ptr<Name> name = ns3::Create<Name>("ack");
+	Ptr<Name> name = ns3::Create<Name>();
+	cout<<"bug01"<<endl;
 	//2. setup payload
 	Ptr<Packet> newPayload	= Create<Packet> ();
+	cout<<"bug"<<endl;
 	ndn::nrndn::nrHeader nrheader;
 	nrheader.setX(0);
 	nrheader.setY(0);
@@ -1002,14 +1012,17 @@ void NavigationRouteHeuristic::SendAckPacket()
 	//ACK包中不需要发送兴趣树，所以把兴趣树清空
 	nrheader.setTree("");
 	newPayload->AddHeader(nrheader);
+	cout<<"bug2"<<endl;
 
 	//3. setup interest packet
 	Ptr<Interest> ackPacket	= Create<Interest> (newPayload);
 	ackPacket->SetScope(FORWARD_ACK);	// 标志为ACK包
 	ackPacket->SetName(name); //ack name is ack;
 
+	cout<<"bug3"<<endl;
 	//4. send the ackPacket message
 	SendInterestPacket(ackPacket);
+	cout<<"bug4"<<endl;
 }
 
 
