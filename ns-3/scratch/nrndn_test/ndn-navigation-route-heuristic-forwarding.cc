@@ -414,18 +414,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		string currentLane=m_sensor->getLane();
 		//Update the Interest Tree
 
-		//evaluate whether receiver's id is in sender's priority list
-		bool idIsInPriorityList=true;
-		vector<uint32_t>::const_iterator idit;
-		idit = find(pri.begin(), pri.end(), m_node->GetId());
-		idIsInPriorityList = (idit != pri.end());
 
-		cout<<"forwarding.cc优先级列表为:";
-		for(int ii=0;ii<pri.size();++ii)
-			cout<<pri[ii]<< " ";
-		cout<<endl;
-
-		//evaluate end
 
 	/*	if(nrheader.getSourceId()!=nrheader.getForwardId())
 			cout<<"forwarding.cc兴趣包源ID"<<nrheader.getSourceId()<<"  转发ID"<<nrheader.getForwardId()<<endl;
@@ -454,6 +443,18 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			return ;
 		}
 
+		//evaluate whether receiver's id is in sender's priority list
+		bool idIsInPriorityList=true;
+		vector<uint32_t>::const_iterator idit;
+		idit = find(pri.begin(), pri.end(), m_node->GetId());
+		idIsInPriorityList = (idit != pri.end());
+
+		cout<<"forwarding.cc优先级列表为:";
+		for(int ii=0;ii<pri.size();++ii)
+			cout<<pri[ii]<< " ";
+		cout<<endl;
+		cout<<"Forwarding.cc 优先级列表判断为"<<idIsInPriorityList<<endl;
+		//evaluate end
 		idIsInPriorityList=true;
 
 		if (idIsInPriorityList)
@@ -997,14 +998,11 @@ void NavigationRouteHeuristic::SetCacheSize(uint32_t cacheSize)
 //4月11日添加,发送ack包
 void NavigationRouteHeuristic::SendAckPacket()
 {
-	cout<<"bug0"<<endl;
 	if(!m_running) return;
 	//1.setup name
 	Ptr<Name> name = ns3::Create<Name>();
-	cout<<"bug01"<<endl;
 	//2. setup payload
 	Ptr<Packet> newPayload	= Create<Packet> ();
-	cout<<"bug"<<endl;
 	ndn::nrndn::nrHeader nrheader;
 	nrheader.setX(0);
 	nrheader.setY(0);
@@ -1012,17 +1010,14 @@ void NavigationRouteHeuristic::SendAckPacket()
 	//ACK包中不需要发送兴趣树，所以把兴趣树清空
 	nrheader.setTree("");
 	newPayload->AddHeader(nrheader);
-	cout<<"bug2"<<endl;
 
 	//3. setup interest packet
 	Ptr<Interest> ackPacket	= Create<Interest> (newPayload);
 	ackPacket->SetScope(FORWARD_ACK);	// 标志为ACK包
 	ackPacket->SetName(name); //ack name is ack;
 
-	cout<<"bug3"<<endl;
 	//4. send the ackPacket message
 	SendInterestPacket(ackPacket);
-	cout<<"bug4"<<endl;
 }
 
 
