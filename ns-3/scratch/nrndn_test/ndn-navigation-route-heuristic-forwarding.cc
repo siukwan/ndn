@@ -476,11 +476,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			idit = find(pri.begin(), pri.end(), m_node->GetId());
 			bool idIsInPriorityList = (idit != pri.end());
 			double index;
+			//在优先级列表中,则设置响应的等待时间
 			if(idIsInPriorityList)
-			{
 				index = distance(pri.begin(), idit);
-			}
-			else
+			else//不在优先级列表中时,也要设置等待时间
 				index = pri.size()+1;
 
 			double random = m_uniformRandomVariable->GetInteger(0, 20);
