@@ -475,14 +475,18 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			vector<uint32_t>::const_iterator idit;
 			idit = find(pri.begin(), pri.end(), m_node->GetId());
 			bool idIsInPriorityList = (idit != pri.end());
+			double index;
 			if(idIsInPriorityList)
 			{
-				double index = distance(pri.begin(), idit);
-				double random = m_uniformRandomVariable->GetInteger(0, 20);
-				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
-				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
-						&NavigationRouteHeuristic::SendAckPacket, this);
+				index = distance(pri.begin(), idit);
 			}
+			else
+				index = pri.size()+1;
+
+			double random = m_uniformRandomVariable->GetInteger(0, 20);
+			Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
+			m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
+						&NavigationRouteHeuristic::SendAckPacket, this);
 
 			//SendAckPacket();
 			DropInterestePacket(interest);
