@@ -472,15 +472,19 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 			//发送ack包
 			//Start a timer and wait
-		/*	vector<uint32_t>::const_iterator idit;
-			double index = distance(pri.begin(), idit);
-			double random = m_uniformRandomVariable->GetInteger(0, 20);
-			Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
-			m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
-					&NavigationRouteHeuristic::SendAckPacket, this);
+			vector<uint32_t>::const_iterator idit;
+			idit = find(pri.begin(), pri.end(), m_node->GetId());
+			bool idIsInPriorityList = (idit != pri.end());
+			if(idIsInPriorityList)
+			{
+				double index = distance(pri.begin(), idit);
+				double random = m_uniformRandomVariable->GetInteger(0, 20);
+				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
+				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
+						&NavigationRouteHeuristic::SendAckPacket, this);
+			}
 
-*/
-			SendAckPacket();
+			//SendAckPacket();
 			DropInterestePacket(interest);
 			return ;
 		}
