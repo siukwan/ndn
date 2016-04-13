@@ -425,7 +425,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		else
 			cout<<"forwarding.cc收到自己的"<<endl;
 		*/
-		//changeFlag=true;
+
+		//兴趣树没有发生变化
 		if(!changeFlag)
 		{
 			NS_LOG_DEBUG("InterestTree no changed");
@@ -440,10 +441,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<nodeId<<"  "<<myNodeId<<endl;
 				getchar();
 			}
-
+			cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"兴趣树没有发生变化,发送ack"<<endl;
+			SendAckPacket();//发送ack包
 			DropInterestePacket(interest);
 			return ;
 		}
+
 		idIsInPriorityList=true;
 
 		if (idIsInPriorityList)
@@ -899,31 +902,7 @@ void NavigationRouteHeuristic::DropInterestePacket(Ptr<Interest> interest)
 	NS_LOG_DEBUG ("Drop interest Packet");
 	DropPacket();
 }
-//4月11日添加,发送ack包
-void NavigationRouteHeuristic::SendAckPacket()
-{
-	if(!m_running) return;
-	//cout<<"(forwarding)发送hello包"<<m_node->GetId()<<endl;
-	if (m_HelloLogEnable)
-		NS_LOG_FUNCTION(this);
 
-	//2. setup payload
-	Ptr<Packet> newPayload	= Create<Packet> ();
-	ndn::nrndn::nrHeader nrheader;
-	nrheader.setX(0);
-	nrheader.setY(0);
-	nrheader.setSourceId(m_node->GetId());
-	//ACK包中不需要发送兴趣树，所以把兴趣树清空
-	nrheader.setTree("");
-	newPayload->AddHeader(nrheader);
-
-	//3. setup interest packet
-	Ptr<Interest> ackPacket	= Create<Interest> (newPayload);
-	ackPacket->SetScope(FORWARD_ACK);	// 标志为ACK包
-
-	//4. send the ackPacket message
-	SendInterestPacket(ackPacket);
-}
 void NavigationRouteHeuristic::SendInterestPacket(Ptr<Interest> interest)
 {
 	if(!m_running) return;
@@ -1007,6 +986,34 @@ void NavigationRouteHeuristic::SetCacheSize(uint32_t cacheSize)
 	m_dataNonceSeen=ndn::nrndn::cache::LRUCache<uint32_t,bool>(m_CacheSize);
 }
 */
+
+//4月11日添加,发送ack包
+void NavigationRouteHeuristic::SendAckPacket()
+{
+	if(!m_running) return;
+	//1.setup name
+	Ptr<Name> name = ns3::Create<Name>("ack");
+	//2. setup payload
+	Ptr<Packet> newPayload	= Create<Packet> ();
+	ndn::nrndn::nrHeader nrheader;
+	nrheader.setX(0);
+	nrheader.setY(0);
+	nrheader.setSourceId(m_node->GetId());
+	//ACK包中不需要发送兴趣树，所以把兴趣树清空
+	nrheader.setTree("");
+	newPayload->AddHeader(nrheader);
+
+	//3. setup interest packet
+	Ptr<Interest> ackPacket	= Create<Interest> (newPayload);
+	ackPacket->SetScope(FORWARD_ACK);	// 标志为ACK包
+	ackPacket->SetName(name); //ack name is ack;
+
+	//4. send the ackPacket message
+	SendInterestPacket(ackPacket);
+}
+
+
+
 void
 NavigationRouteHeuristic::SendHello()
 {
