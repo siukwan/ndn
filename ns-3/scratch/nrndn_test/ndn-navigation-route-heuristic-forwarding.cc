@@ -257,7 +257,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 			Ptr<const Packet> nrPayload	= interest->GetPayload();
 			uint32_t nodeId;
-			uint32_t seq;
+			//uint32_t seq;
 			ndn::nrndn::nrHeader nrheader;
 			nrPayload->PeekHeader( nrheader);
 			//获取发送兴趣包节点的ID
@@ -283,6 +283,24 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(FORWARD_ACK == interest->GetScope())
 	{
 		cout<<"收到ACK包"<<endl;
+		Ptr<const Packet> nrPayload	= interest->GetPayload();
+		uint32_t nodeId;
+		uint32_t seq;
+		ndn::nrndn::nrHeader nrheader;
+		nrPayload->PeekHeader( nrheader);
+		//获取发送兴趣包节点的ID
+		nodeId=nrheader.getSourceId();
+		//获取兴趣的随机编码
+		seq=interest->GetNonce();
+		//如果重复
+		if(isDuplicatedInterest(nodeId,seq))
+		{
+			NS_LOG_DEBUG("Get ack packet from front or other direction and it is old packet");
+			cout<<"forwarding.cc收到同样的ACK包,不再发送!"<<endl;
+			getchar();
+			ExpireInterestPacketTimer(nodeId,seq);
+			return;
+		}
 		return;
 	}
 
@@ -363,6 +381,18 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//兴趣包来自后方
 	else// it is from nodes behind
 	{
+
+
+		//如果重复
+		if(isDuplicatedInterest(nodeId,seq))
+		{
+			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
+			cout<<"forwarding.cc后方数据包重复,不再发送!"<<endl;
+			getchar();
+			ExpireInterestPacketTimer(nodeId,seq);
+			return;
+		}
+
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
 		const vector<string> remoteRoute= ExtractRouteFromName(interest->GetName());
 
@@ -438,7 +468,19 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				getchar();
 			}
 			cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"兴趣树没有发生变化,发送ack"<<endl;
-			SendAckPacket();//发送ack包
+
+
+			//发送ack包
+			//Start a timer and wait
+		/*	vector<uint32_t>::const_iterator idit;
+			double index = distance(pri.begin(), idit);
+			double random = m_uniformRandomVariable->GetInteger(0, 20);
+			Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
+			m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
+					&NavigationRouteHeuristic::SendAckPacket, this);
+
+*/
+			SendAckPacket();
 			DropInterestePacket(interest);
 			return ;
 		}
@@ -450,7 +492,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		idIsInPriorityList = (idit != pri.end());
 
 		cout<<"forwarding.cc优先级列表为:";
-		for(int ii=0;ii<pri.size();++ii)
+		for(size_t ii=0;ii<pri.size();++ii)
 			cout<<pri[ii]<< " ";
 		cout<<endl;
 		cout<<"Forwarding.cc 优先级列表判断为"<<idIsInPriorityList<<endl;
@@ -806,9 +848,11 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	uint32_t sourceId=0;
 	uint32_t nonce=0;
 
+	//记录转发的兴趣包
 	// 1. record the Interest Packet(only record the forwarded packet)
 	m_interestNonceSeen.Put(src->GetNonce(),true);
 
+	//准备兴趣包
 	// 2. prepare the interest
 	Ptr<const Packet> nrPayload=src->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
@@ -836,9 +880,11 @@ void NavigationRouteHeuristic::ForwardInterestPacket(Ptr<Interest> src)
 	Ptr<Interest> interest = Create<Interest> (*src);
 	interest->SetPayload(newPayload);
 
+	//直接转发
 	// 3. Send the interest Packet. Already wait, so no schedule
 	SendInterestPacket(interest);
 
+	//记录转发次数
 	// 4. record the forward times
 	ndn::nrndn::nrUtils::IncreaseInterestForwardCounter(sourceId,nonce);
 }
