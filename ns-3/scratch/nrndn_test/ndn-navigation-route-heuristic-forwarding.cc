@@ -467,7 +467,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				//getchar();
 				forwardNeighbors[nodeId]=true;
 				cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<nodeId<<"  "<<myNodeId<<endl;
-				getchar();
+				//getchar();
 			}
 			cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"兴趣树没有发生变化,发送ack"<<endl;
 
@@ -1140,25 +1140,6 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		m_nbChange_mode=1;//邻居减少
 
 
-		bool lostForwardNeighbor = false;
-		//检测转发邻居map中的邻居是否还在
-		for(auto ite = forwardNeighbors.begin(); ite != forwardNeighbors.end(); )
-		{
-			auto preIte = ite;
-			ite++;
-			if(m_nb.getNb().find(ite->first) == m_nb.getNb().end())
-			{
-				lostForwardNeighbor=true;
-				forwardNeighbors.erase(preIte);
-			}
-		}
-
-		if(lostForwardNeighbor)
-		{
-			cout<<"负责转发的邻居丢失了,需要重发兴趣包"<<endl;
-			getchar();
-		}
-
 	}
 	else
 	{
@@ -1199,11 +1180,35 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	}
 
 
+
+
+
+	bool lostForwardNeighbor = false;
+	//检测转发邻居map中的邻居是否还在
+	for(auto ite = forwardNeighbors.begin(); ite != forwardNeighbors.end(); )
+	{
+		auto preIte = ite;
+		ite++;
+		if(m_nb.getNb().find(ite->first) == m_nb.getNb().end())
+		{
+			lostForwardNeighbor=true;
+			forwardNeighbors.erase(preIte);
+		}
+	}
+
+	if(lostForwardNeighbor)
+	{
+		cout<<"负责转发的邻居丢失了,需要重发兴趣包"<<endl;
+		getchar();
+	}
+
+
+
 	//判断兴趣包的方向
 		pair<bool, double> msgdirection = packetFromDirection(interest);
 
 		//hello信息来自前方，且邻居变化，即前面邻居变化
-		if(msgdirection.second > 0 && m_nbChange_mode>1)
+		if(msgdirection.second > 0 && lostForwardNeighbor)
 		{//
 			m_nbChange_mode=0;
 			//printf("%d收到hello信息来自前方，且邻居发生变化%d\n",m_node->GetId(),m_nbChange_mode);
