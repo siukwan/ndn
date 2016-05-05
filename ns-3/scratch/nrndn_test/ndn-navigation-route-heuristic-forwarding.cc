@@ -1133,11 +1133,32 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		//getchar();
 		m_nbChange_mode=2;//邻居增加
 	}
-	else if(m_preNB.getNb().size()<m_nb.getNb().size())//数量不等，邻居发生变化
+	else if(m_preNB.getNb().size()>m_nb.getNb().size())//数量不等，邻居发生变化
 	{
 		/*cout<<"邻居减少，重发"<<endl;
 		getchar();*/
 		m_nbChange_mode=1;//邻居减少
+
+
+		bool lostForwardNeighbor = false;
+		//检测转发邻居map中的邻居是否还在
+		for(auto ite = forwardNeighbors.begin(); ite != forwardNeighbors.end(); )
+		{
+			auto preIte = ite;
+			ite++;
+			if(m_nb.getNb().find(ite->first) == m_nb.getNb().end())
+			{
+				lostForwardNeighbor=true;
+				forwardNeighbors.erase(preIte);
+			}
+		}
+
+		if(lostForwardNeighbor)
+		{
+			cout<<"负责转发的邻居丢失了,需要重发兴趣包"<<endl;
+			getchar();
+		}
+
 	}
 	else
 	{
