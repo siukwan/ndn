@@ -453,6 +453,8 @@ private:
 	//PIT表在forwarding中
 	Ptr<pit::nrndn::NrPitImpl> m_nrpit; ///< \brief Reference to PIT to which this forwarding strategy is associated
 	Ptr<pit::nrndn::NrInterestTreeImpl> m_nrtree;
+
+	map<int,bool> forwardNeighbors;
 	bool m_firstSendInterest;
 	uint32_t				m_CacheSize;
 

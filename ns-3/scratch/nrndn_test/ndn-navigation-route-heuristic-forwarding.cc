@@ -464,6 +464,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			nrPayload_tmp->PeekHeader( nrheader_tmp);
 			if(m_node->GetId()==nrheader_tmp.getSourceId()&&nrheader.getForwardId()!=999999999)
 			{
+				//getchar();
+				forwardNeighbors[nodeId]=true;
 				cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<nodeId<<"  "<<myNodeId<<endl;
 				getchar();
 			}
