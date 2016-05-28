@@ -321,7 +321,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if(nodeId == myNodeId)
 		{
 			cout<<"forwarding.cc收到自己的兴趣包!!!!!!!!!!!!!!!!"<<myNodeId<<endl;
-			getchar();
+			//getchar();
 		}
 		if(forwardId != 999999999)
 		{
@@ -537,7 +537,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				if(m_node->GetId()==nrheader_tmp.getSourceId()&&nrheader.getForwardId()!=999999999)
 				{
 					cout<<"forwarding.cc"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<endl;
-					getchar();
+					//getchar();
 				}
 
 
