@@ -282,7 +282,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 	if(FORWARD_ACK == interest->GetScope())
 	{
-		cout<<"收到ACK包"<<endl;
+		//cout<<"收到ACK包"<<endl;
 		Ptr<const Packet> nrPayload	= interest->GetPayload();
 		uint32_t nodeId;
 		uint32_t seq;
