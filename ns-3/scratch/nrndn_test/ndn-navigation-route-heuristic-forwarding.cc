@@ -316,7 +316,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		seq=interest->GetNonce();
 		uint32_t myNodeId=m_node->GetId();
 		uint32_t forwardId = nrheader.getForwardId();
-		cout<<"forwarding.cc"<<myNodeId<<"收到的兴趣包"<<nodeId<<endl;
+		//cout<<"forwarding.cc"<<myNodeId<<"收到的兴趣包"<<nodeId<<endl;
 		//getchar();
 		if(nodeId == myNodeId)
 		{
@@ -1199,7 +1199,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 	if(lostForwardNeighbor)
 	{
 		cout<<"负责转发的邻居丢失了,需要重发兴趣包"<<endl;
-		getchar();
+		//getchar();
 	}
 
 
