@@ -388,7 +388,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		{
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
 			cout<<"forwarding.cc后方数据包重复,不再发送!"<<endl;
-			getchar();
+			//getchar();
 			ExpireInterestPacketTimer(nodeId,seq);
 			return;
 		}
