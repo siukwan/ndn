@@ -149,7 +149,7 @@ protected:
 
 	virtual void DoInitialize(void);
 
-void int2Str(long long a)
+string int2Str(long long a)
 {
 	char str[255];
 	sptrintf(str, "%x", a);
