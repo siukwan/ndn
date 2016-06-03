@@ -154,7 +154,7 @@ string int2Str(long long a)
 	char str[255];
 	sptrintf(str, "%x", a);
 	result ="";
-	for(int i=0;i,255;i++)
+	for(int i=0;i<255;i++)
 	{
 		if (str[i] != '\0')
 			result +=str[i];
