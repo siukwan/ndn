@@ -314,6 +314,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		nodeId=nrheader.getSourceId();
 		//获取兴趣的随机编码
 		seq=interest->GetNonce();
+
+		//test
+		cout<<int2Str(seq)<<endl;
+
 		uint32_t myNodeId=m_node->GetId();
 		uint32_t forwardId = nrheader.getForwardId();
 		//cout<<"forwarding.cc"<<myNodeId<<"收到的兴趣包"<<nodeId<<endl;
