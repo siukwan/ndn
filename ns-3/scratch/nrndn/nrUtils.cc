@@ -69,6 +69,8 @@ void nrUtils::SetInterestedNodeSize(uint32_t id,
 		uint32_t signature, uint32_t InterestedNodeSize)
 {
 	msgArrivalCounter[id][signature].InterestedNodeSize=InterestedNodeSize;
+	cout<<'设置感兴趣的节点数量'<<InterestedNodeSize<<endl;
+	getchar();
 }
 
 void nrUtils::IncreaseInterestedNodeCounter(uint32_t id,
