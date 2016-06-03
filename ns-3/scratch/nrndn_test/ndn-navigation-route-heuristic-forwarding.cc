@@ -316,7 +316,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		seq=interest->GetNonce();
 
 		//test
-		cout<<int2Str(seq)<<endl;
+		//cout<<int2Str(seq)<<endl;
+		ofstream ofile;
+		ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
+		ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<endl;
+		ofile.close();
 
 		uint32_t myNodeId=m_node->GetId();
 		uint32_t forwardId = nrheader.getForwardId();
@@ -614,6 +618,14 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	std::vector<uint32_t> newPriorityList;
 	bool IsClearhopCountTag=true;
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
+
+
+	ofstream ofile;
+	ofile.open("../packetfiles/dat"+int2Str(signature),ios::app);
+	ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<endl;
+	ofile.close();
+
+
 	if(isDuplicatedData(nodeId,signature))
 	{
 		//cout<<"OnData重复包"<<endl;
