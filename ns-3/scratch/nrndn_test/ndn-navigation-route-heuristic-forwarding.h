@@ -152,8 +152,8 @@ protected:
 string int2Str(long long a)
 {
 	char str[255];
-	sptrintf(str, "%x", a);
-	result ="";
+	sprintf(str, "%x", a);
+	string result ="";
 	for(int i=0;i<255;i++)
 	{
 		if (str[i] != '\0')
