@@ -1421,6 +1421,7 @@ void NavigationRouteHeuristic::BroadcastStopMessage(Ptr<Data> src)
 					&NavigationRouteHeuristic::SendDataPacket,this,data);
 }
 
+//转发数据包
 void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint32_t> newPriorityList,bool IsClearhopCountTag)
 {
 	if(!m_running) return;
