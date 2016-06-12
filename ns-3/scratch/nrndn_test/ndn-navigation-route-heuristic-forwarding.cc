@@ -318,12 +318,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		//test
 		//cout<<int2Str(seq)<<endl;
 
-		ofstream ofile;
-		ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
-		ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<endl;
-		ofile.close();
-
-
+		/*
+		ofstream ofile2;
+		cout<<"打开文件：../packetfiles/int"<<int2Str(seq)<<endl;
+		ofile2.open("../packetfiles/int"+int2Str(seq),ios::app);
+		ofile2<<Simulator::Now().GetSeconds()<<" "<<nodeId<<endl;
+		ofile2.close();
+		getchar();
+	*/
 		uint32_t myNodeId=m_node->GetId();
 		uint32_t forwardId = nrheader.getForwardId();
 		//cout<<"forwarding.cc"<<myNodeId<<"收到的兴趣包"<<nodeId<<endl;
@@ -362,11 +364,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
+	/*
 	ofstream ofile;
 	ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
 	ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 第一次遇见兴趣包，需要处理"<<endl;
 	ofile.close();
-
+*/
 
 
 	//获取优先列表
@@ -387,11 +390,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			msgdirection.second > 0)// or from front
 	{
 
+		/*
 		ofstream ofile;
 		ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
 		ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 来自其他方向，不转发"<<endl;
 		ofile.close();
-
+*/
 		NS_LOG_DEBUG("Get interest packet from front or other direction");
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
