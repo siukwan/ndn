@@ -345,12 +345,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
-
+/*
 		ofstream ofile;
 		ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
 		ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 兴趣包已经被发送，不再处理"<<endl;
 		ofile.close();
-
+*/
 		if(m_myInterest.find(interest->GetNonce())!=m_myInterest.end() && nodeId==m_node->GetId())
 		{
 			if(Simulator::Now().GetSeconds()-m_myInterest[interest->GetNonce()]<10)
@@ -485,11 +485,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		//兴趣树没有发生变化
 		if(!changeFlag)
 		{
+			/*
 			ofstream ofile;
 			ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
 			ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 兴趣树没发生变化"<<endl;
 			ofile.close();
-
+*/
 			NS_LOG_DEBUG("InterestTree no changed");
 
 			interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),m_node->GetId()));
@@ -546,10 +547,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		if (idIsInPriorityList)
 		{
 
-			ofstream ofile;
-			ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
-			ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 转发的"<<endl;
-			ofile.close();
+
 
 			NS_LOG_DEBUG("Node id is in PriorityList");
 
@@ -593,6 +591,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 						interest);
 
 				cout<<"forwarding.cc"<<myNodeId<<"转发成功"<<nodeId<<endl;
+				ofstream ofile;
+				ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
+				ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 在优先级列表中，转发成功"<<endl;
+				ofile.close();
 			}
 		}
 		//不在优先列表中，则不转发
