@@ -376,6 +376,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(!msgdirection.first || // from other direction
 			msgdirection.second > 0)// or from front
 	{
+
+		ofstream ofile;
+		ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
+		ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 来自其他方向，不转发"<<endl;
+		ofile.close();
+
 		NS_LOG_DEBUG("Get interest packet from front or other direction");
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
@@ -465,6 +471,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		//兴趣树没有发生变化
 		if(!changeFlag)
 		{
+			ofstream ofile;
+			ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
+			ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 兴趣树没发生变化"<<endl;
+			ofile.close();
+
 			NS_LOG_DEBUG("InterestTree no changed");
 
 			interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),m_node->GetId()));
@@ -523,7 +534,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 			ofstream ofile;
 			ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
-			ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<endl;
+			ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 转发的"<<endl;
 			ofile.close();
 
 			NS_LOG_DEBUG("Node id is in PriorityList");
