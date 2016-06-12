@@ -343,6 +343,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
+
+		ofstream ofile;
+		ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
+		ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 兴趣包已经被发送，不再处理"<<endl;
+		ofile.close();
+
 		if(m_myInterest.find(interest->GetNonce())!=m_myInterest.end() && nodeId==m_node->GetId())
 		{
 			if(Simulator::Now().GetSeconds()-m_myInterest[interest->GetNonce()]<10)
@@ -356,6 +362,10 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
+	ofstream ofile;
+	ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
+	ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 第一次遇见兴趣包，需要处理"<<endl;
+	ofile.close();
 
 
 
