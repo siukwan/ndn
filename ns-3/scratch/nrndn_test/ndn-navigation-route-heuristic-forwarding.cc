@@ -317,10 +317,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		//test
 		//cout<<int2Str(seq)<<endl;
+		/*
 		ofstream ofile;
 		ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
 		ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<endl;
 		ofile.close();
+		*/
 
 		uint32_t myNodeId=m_node->GetId();
 		uint32_t forwardId = nrheader.getForwardId();
@@ -518,6 +520,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		if (idIsInPriorityList)
 		{
+
+			ofstream ofile;
+			ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
+			ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<endl;
+			ofile.close();
+
 			NS_LOG_DEBUG("Node id is in PriorityList");
 
 			bool IsPitCoverTheRestOfRoute=PitCoverTheRestOfRoute(remoteRoute);
