@@ -549,6 +549,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				//如果重复
 				if(isDuplicatedInterest(nodeId,seq))
 				{
+					ExpireInterestPacketTimer(nodeId,seq);
 					return;
 				}
 
