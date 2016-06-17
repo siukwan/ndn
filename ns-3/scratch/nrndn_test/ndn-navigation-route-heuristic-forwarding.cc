@@ -559,7 +559,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 				cout<<"forwarding.cc"<<myNodeId<<"转发成功"<<nodeId<<endl;
 				ofstream ofile;
-				ofile.open("../packetfiles/int"+int2Str(interest->GetNonce()),ios::app);
+				ofile.open("../packetfiles/i"+int2Str(interest->GetNonce()),ios::app);
 				ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 在优先级列表中，转发成功"<<endl;
 				ofile.close();
 			}
