@@ -468,6 +468,9 @@ private:
 	Ptr<pit::nrndn::NrPitImpl> m_nrpit; ///< \brief Reference to PIT to which this forwarding strategy is associated
 	Ptr<pit::nrndn::NrInterestTreeImpl> m_nrtree;
 
+	//兴趣包处理划分成多个函数
+	bool  OnInterest_application(Ptr<Face> face, Ptr<Interest> interest);
+
 	map<int,bool> forwardNeighbors;
 	bool m_firstSendInterest;
 	uint32_t				m_CacheSize;
