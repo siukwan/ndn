@@ -454,11 +454,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			*/
 			NS_LOG_DEBUG("InterestTree no changed");
 
-			cout << "forwarding.cc原来的随机码" << interest->GetNonce();
+			//cout << "forwarding.cc原来的随机码" << interest->GetNonce();
 			interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),m_node->GetId()));
 
-			cout << "forwarding.cc SetPayload后的随机码" << interest->GetNonce();
-			getchar();
+			//cout << "forwarding.cc SetPayload后的随机码" << interest->GetNonce();
+			//getchar();
 			Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
 			ndn::nrndn::nrHeader nrheader_tmp;
 			nrPayload_tmp->PeekHeader( nrheader_tmp);
@@ -528,8 +528,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			}
 			else
 			{
+				cout << "forwarding.cc原来的随机码" << interest->GetNonce();
+			
 				interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),m_node->GetId()));
-
+				cout << "forwarding.cc SetPayload后的随机码" << interest->GetNonce();
+				getchar();
 				Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
 				ndn::nrndn::nrHeader nrheader_tmp;
 				nrPayload_tmp->PeekHeader( nrheader_tmp);
@@ -564,7 +567,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		//不在优先列表中，则不转发
 		else
 		{
-			cout<<"forwarding.cc"<<myNodeId<<"不在优先列表中阿阿"<<nodeId<<endl;
+			cout<<"forwarding.cc"<<myNodeId<<"不在优先列表中!!"<<nodeId<<endl;
 			NS_LOG_DEBUG("Node id is not in PriorityList");
 			DropInterestePacket(interest);
 		}
