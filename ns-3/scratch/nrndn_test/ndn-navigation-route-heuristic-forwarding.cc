@@ -241,6 +241,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 bool  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 {
 	//else cout<<"(forwarding.cc)"<<m_node->GetId()<<"邻居发生变化，发送兴趣包"<<endl;
+<<<<<<< HEAD
 	 			//consumer产生兴趣包，在路由层进行转发
 				NS_LOG_DEBUG("Get interest packet from APPLICATION");
 				// This is the source interest from the upper node application (eg, nrConsumer) of itself
@@ -262,6 +263,29 @@ bool  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 				// 3. Then forward the interest packet directly
 				Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 						&NavigationRouteHeuristic::SendInterestPacket,this,interest);
+=======
+	//consumer产生兴趣包，在路由层进行转发
+	NS_LOG_DEBUG("Get interest packet from APPLICATION");
+	// This is the source interest from the upper node application (eg, nrConsumer) of itself
+	// 1.Set the payload
+	interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),999999999));
+
+	Ptr<const Packet> nrPayload	= interest->GetPayload();
+	uint32_t nodeId;
+	//uint32_t seq;
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->PeekHeader( nrheader);
+	//获取发送兴趣包节点的ID
+	nodeId=nrheader.getSourceId();
+	uint32_t myNodeId=m_node->GetId();
+	cout<<"forwarding.cc"<<myNodeId<<"发送应用层的兴趣包"<<nodeId<<endl;
+	// 2. record the Interest Packet
+	m_interestNonceSeen.Put(interest->GetNonce(),true);
+	m_myInterest[interest->GetNonce()]=Simulator::Now().GetSeconds();
+	// 3. Then forward the interest packet directly
+	Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
+						&NavigationRouteHeuristic::SendInterestPacket,this,interest);	
+>>>>>>> 6374ba66ce76d1512393f855c61e70e85bcc85c5
 }
 bool  NavigationRouteHeuristic::OnInterest_ackProcess(Ptr<Interest> interest)
 {
