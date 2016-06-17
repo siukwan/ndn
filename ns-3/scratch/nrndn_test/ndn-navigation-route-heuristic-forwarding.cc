@@ -546,6 +546,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 					//getchar();
 				}
 
+				//如果重复
+				if(isDuplicatedInterest(nodeId,seq))
+				{
+					return;
+				}
 
 				if(nrheader_tmp.getSourceId()!=nrheader_tmp.getForwardId())
 					getchar();
