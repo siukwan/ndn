@@ -310,7 +310,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
-		//Payload是什么，payload时假负载
+		//Payload是什么，payload是假负载
 		Ptr<const Packet> nrPayload	= interest->GetPayload();
 		ndn::nrndn::nrHeader nrheader;
 		nrPayload->PeekHeader( nrheader);
@@ -370,13 +370,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	if(!msgdirection.first || // from other direction
 			msgdirection.second > 0)// or from front
 	{
-
-		/*
-		ofstream ofile;
-		ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
-		ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 来自其他方向，不转发"<<endl;
-		ofile.close();
-*/
 		NS_LOG_DEBUG("Get interest packet from front or other direction");
 		if(!isDuplicatedInterest(nodeId,seq))// Is new packet
 		{
@@ -392,8 +385,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//兴趣包来自后方
 	else// it is from nodes behind
 	{
-
-
 		//如果重复
 		if(isDuplicatedInterest(nodeId,seq))
 		{
@@ -407,7 +398,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		NS_LOG_DEBUG("Get interest packet from nodes behind");
 		const vector<string> remoteRoute= ExtractRouteFromName(interest->GetName());
 
-		cout<<"forwarding.cc"<<myNodeId<<"准备转发兴趣包"<<nodeId<<endl;
+		//cout<<"forwarding.cc"<<myNodeId<<"准备转发兴趣包"<<nodeId<<endl;
 		//getchar();
 
 		//提取兴趣树，并且还原
@@ -441,9 +432,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			flag1=(m_nrtree->MergeInterest(receive_tree->NodeId,receiveRoutes[i],m_sensor->getLane(),flag1));
 			if(flag1)changeFlag=true;
 		}
-	//	cout<<"(forwarding.cc)合并后的兴趣树"<<endl;
-	//	m_nrtree->levelOrder();
-	//	getchar();
+
 
 
 		// Update the PIT here
@@ -453,15 +442,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		//当前所在路段？使用pit的currentlane会存在问题，pit有时候在十字路口，没有把过去的路段删除，直接使用sensor的getlane
 		//string currentLane=m_nrpit->getCurrentLane();
 		string currentLane=m_sensor->getLane();
-		//Update the Interest Tree
-
-
-
-	/*	if(nrheader.getSourceId()!=nrheader.getForwardId())
-			cout<<"forwarding.cc兴趣包源ID"<<nrheader.getSourceId()<<"  转发ID"<<nrheader.getForwardId()<<endl;
-		else
-			cout<<"forwarding.cc收到自己的"<<endl;
-		*/
 
 		//兴趣树没有发生变化
 		if(!changeFlag)
@@ -471,11 +451,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
 			ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 兴趣树没发生变化"<<endl;
 			ofile.close();
-*/
+			*/
 			NS_LOG_DEBUG("InterestTree no changed");
 
+			cout << "forwarding.cc原来的随机码" << interest->GetNonce();
 			interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),m_node->GetId()));
 
+			cout << "forwarding.cc SetPayload后的随机码" << interest->GetNonce();
+			getchar();
 			Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
 			ndn::nrndn::nrHeader nrheader_tmp;
 			nrPayload_tmp->PeekHeader( nrheader_tmp);
