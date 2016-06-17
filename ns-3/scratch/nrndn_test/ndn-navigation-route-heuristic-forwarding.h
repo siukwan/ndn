@@ -469,7 +469,8 @@ private:
 	Ptr<pit::nrndn::NrInterestTreeImpl> m_nrtree;
 
 	//兴趣包处理划分成多个函数
-	bool  OnInterest_application(Ptr<Face> face, Ptr<Interest> interest);
+	bool  OnInterest_application(Ptr<Interest> interest);
+	bool  OnInterest_ackProcess(Ptr<Interest> interest);
 
 	map<int,bool> forwardNeighbors;
 	bool m_firstSendInterest;
