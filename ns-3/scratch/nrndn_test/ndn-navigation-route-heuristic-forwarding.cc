@@ -273,7 +273,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 	if(Face::APPLICATION==face->GetFlags())
 	{
-			OnInterest_application( face, interest)
+			OnInterest_application( face, interest);
 			return;
 	}
 
@@ -308,53 +308,35 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
-	//Payload是什么
+		//Payload是什么，payload时假负载
 		Ptr<const Packet> nrPayload	= interest->GetPayload();
-		uint32_t nodeId;
-		uint32_t seq;
 		ndn::nrndn::nrHeader nrheader;
 		nrPayload->PeekHeader( nrheader);
 		//获取发送兴趣包节点的ID
-		nodeId=nrheader.getSourceId();
+		uint32_t nodeId = nrheader.getSourceId();
 		//获取兴趣的随机编码
-		seq=interest->GetNonce();
-
-		//test
-		//cout<<int2Str(seq)<<endl;
-
-		/*
-		ofstream ofile2;
-		cout<<"打开文件：../packetfiles/int"<<int2Str(seq)<<endl;
-		ofile2.open("../packetfiles/int"+int2Str(seq),ios::app);
-		ofile2<<Simulator::Now().GetSeconds()<<" "<<nodeId<<endl;
-		ofile2.close();
-		getchar();
-	*/
+		uint32_t seq = interest->GetNonce();
+		//获取当前节点的id
 		uint32_t myNodeId=m_node->GetId();
+		//获取兴趣包的转发节点id
 		uint32_t forwardId = nrheader.getForwardId();
-		//cout<<"forwarding.cc"<<myNodeId<<"收到的兴趣包"<<nodeId<<endl;
-		//getchar();
+
 		if(nodeId == myNodeId)
 		{
 			cout<<"forwarding.cc收到自己的兴趣包!!!!!!!!!!!!!!!!"<<myNodeId<<endl;
-			//getchar();
+			getchar();
 		}
 		if(forwardId != 999999999)
 		{
 			//printf("my:%d  src:%d   fwd:%d",myNodeId,nodeId,forwardId);
 			//cout<<endl;
 		}
-	//	cout<<"forwarding.cc:"<<m_node->GetId()<<"收到兴趣包"<<nodeId<<endl;
+
+
 	//如果兴趣包已经被发送了，不再处理兴趣包，使用LRUcache结构
 	//If the interest packet has already been sent, do not proceed the packet
 	if(m_interestNonceSeen.Get(interest->GetNonce()))
 	{
-/*
-		ofstream ofile;
-		ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
-		ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 兴趣包已经被发送，不再处理"<<endl;
-		ofile.close();
-*/
 		if(m_myInterest.find(interest->GetNonce())!=m_myInterest.end() && nodeId==m_node->GetId())
 		{
 			if(Simulator::Now().GetSeconds()-m_myInterest[interest->GetNonce()]<10)
@@ -367,13 +349,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		NS_LOG_DEBUG("The interest packet has already been sent, do not proceed the packet of "<<interest->GetNonce());
 		return;
 	}
-
-	/*
-	ofstream ofile;
-	ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
-	ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 第一次遇见兴趣包，需要处理"<<endl;
-	ofile.close();
-*/
 
 
 	//获取优先列表
