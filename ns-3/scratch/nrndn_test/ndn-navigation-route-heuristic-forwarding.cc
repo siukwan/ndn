@@ -444,7 +444,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		string currentLane=m_sensor->getLane();
 
 		//兴趣树没有发生变化
-		if(0)//!changeFlag)
+		if(!changeFlag)
 		{
 			/*
 			ofstream ofile;
