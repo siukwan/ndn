@@ -273,7 +273,7 @@ bool  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 		flag1=(m_nrtree->MergeInterest(receive_tree->NodeId,receiveRoutes[i],m_sensor->getLane(),flag1));
 		if(flag1)changeFlag=true;
 	}
-
+	interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),999999999));
 	//cout<<"forwarding.cc"<<myNodeId<<"发送应用层的兴趣包"<<nodeId<<endl;
 	// 2. record the Interest Packet
 	m_interestNonceSeen.Put(interest->GetNonce(),true);
