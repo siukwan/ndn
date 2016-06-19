@@ -258,8 +258,23 @@ bool  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 
 	//提取兴趣树，并且还原
 	string receive_tree_str = nrheader.getTree();
-	cout<<receive_tree_str<<endl;
-	getchar();
+	Ptr<pit::nrndn::NrInterestTreeImpl> receive_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
+	receive_tree->root=receive_tree->deserialize_noId(receive_tree_str);
+	receive_tree->NodeId=nodeId;
+	string tmp_curLane=receive_tree->prefix+m_sensor->getLane();
+	receive_tree->root =receive_tree->levelOrderDelete(tmp_curLane);
+	vector<vector<string>> receiveRoutes(0);
+	vector<string> tmpRoutes(0);
+	receive_tree->tree2Routes(receiveRoutes,tmpRoutes,receive_tree->root);
+	bool changeFlag=false;
+	for(uint32_t i=0;i<receiveRoutes.size();++i)
+	{
+		bool flag1=false;
+		flag1=(m_nrtree->MergeInterest(receive_tree->NodeId,receiveRoutes[i],m_sensor->getLane(),flag1));
+		if(flag1)changeFlag=true;
+	}
+	
+	//cout<<"forwarding.cc"<<myNodeId<<"发送应用层的兴趣包"<<nodeId<<endl;
 	// 2. record the Interest Packet
 	m_interestNonceSeen.Put(interest->GetNonce(),true);
 	m_myInterest[interest->GetNonce()]=Simulator::Now().GetSeconds();
