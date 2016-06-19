@@ -255,6 +255,13 @@ bool  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 	//获取发送兴趣包节点的ID
 	nodeId=nrheader.getSourceId();
 	uint32_t myNodeId=m_node->GetId();
+
+	//提取兴趣树，并且还原
+	string receive_tree_str = nrheader.getTree();
+	Ptr<pit::nrndn::NrInterestTreeImpl> receive_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
+	receive_tree->root=receive_tree->deserialize_noId(receive_tree_str);
+
+
 	cout<<"forwarding.cc"<<myNodeId<<"发送应用层的兴趣包"<<nodeId<<endl;
 	// 2. record the Interest Packet
 	m_interestNonceSeen.Put(interest->GetNonce(),true);
