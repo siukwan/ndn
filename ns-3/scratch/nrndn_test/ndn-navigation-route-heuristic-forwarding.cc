@@ -616,6 +616,16 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			return;
 		data->SetPayload(payload);
 
+		ndn::nrndn::nrHeader nrheader;
+		nrPayload->PeekHeader(nrheader);
+		uint32_t nodeId=nrheader.getSourceId();
+		uint32_t signature=data->GetSignature();
+		
+		ofstream ofile;
+		ofile.open("../packetfiles/dat"+int2Str(signature),ios::app);
+		ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 原始发包"<<endl;
+		ofile.close();
+		
 		// 2. record the Data Packet(only record the forwarded packet)
 		m_dataSignatureSeen.Put(data->GetSignature(),true);
 
