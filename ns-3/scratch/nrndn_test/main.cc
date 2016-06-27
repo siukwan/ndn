@@ -868,7 +868,7 @@ void nrndnExample::InstallTraffics()
 		producer->addAccident();
 	}
 	std::cout<<"插入事件：完毕"<<endl;
-
+	getchar();
 	/*
 	uint32_t InsertIndex=10;//for debug only
 	Ptr<ns3::ndn::nrndn::nrProducer> p= DynamicCast<ns3::ndn::nrndn::nrProducer>(
