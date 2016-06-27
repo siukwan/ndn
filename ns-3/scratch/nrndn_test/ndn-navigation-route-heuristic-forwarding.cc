@@ -617,7 +617,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		data->SetPayload(payload);
 
 		ndn::nrndn::nrHeader nrheader;
-		nrPayload->PeekHeader(nrheader);
+		payload->PeekHeader(nrheader);
 		uint32_t nodeId=nrheader.getSourceId();
 		uint32_t signature=data->GetSignature();
 		
