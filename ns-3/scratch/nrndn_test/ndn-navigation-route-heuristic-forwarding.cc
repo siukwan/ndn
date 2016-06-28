@@ -623,6 +623,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	if(Face::APPLICATION & face->GetFlags())
 	{
 		NS_LOG_DEBUG("Get data packet from APPLICATION");
+		cout<<"收到来自应用层的数据包"<<endl;
+		getchar();
 		// This is the source data from the upper node application (eg, nrProducer) of itself
 		// 1.Set the payload
 		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),999999999,data->GetName());
