@@ -616,11 +616,14 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	
 	
 	cout<<"forwarding.cc 节点id："<<m_node->GetId()<<m_running<<": "<<Simulator::Now().GetSeconds()<<" 收到数据包ID:"<<nodeId<<endl;
+	
+	//int iApplication = Face::APPLICATION;
+	//int iFlag = 
 	cout<<"Face::APPLICATION "<<Face::APPLICATION<<endl;
 	cout<<"face->GetFlags()"<<face->GetFlags()<<endl;
 	getchar();
 	if(!m_running) return;
-	if(Face::APPLICATION & face->GetFlags())
+	if(Face::APPLICATION && face->GetFlags())
 	{
 		NS_LOG_DEBUG("Get data packet from APPLICATION");
 		cout<<"收到来自应用层的数据包"<<endl;
