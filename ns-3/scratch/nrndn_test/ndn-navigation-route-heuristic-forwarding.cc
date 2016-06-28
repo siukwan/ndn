@@ -615,7 +615,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 	
 	
-	cout<<"forwarding.cc "<<m_node->GetId()<<": "<<Simulator::Now().GetSeconds()<<" 收到数据包ID:"<<nodeId<<endl;
+	cout<<"forwarding.cc 节点id："<<m_node->GetId()<<m_running<<": "<<Simulator::Now().GetSeconds()<<" 收到数据包ID:"<<nodeId<<endl;
 	getchar();
 	if(!m_running) return;
 	if(Face::APPLICATION & face->GetFlags())
