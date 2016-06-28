@@ -209,7 +209,7 @@ double nrUtils::GetAverageHitRate()
 
 				cout<<"兴趣的节点数量"<<interestedNodeNum<<endl;
 				cout<<"兴趣的节点总数"<<interestedNodeSum<<endl;
-				//getchar();
+				getchar();
 			}
 
 		}
