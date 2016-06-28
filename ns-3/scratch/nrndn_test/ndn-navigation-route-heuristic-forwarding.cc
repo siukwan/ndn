@@ -629,11 +629,13 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		// This is the source data from the upper node application (eg, nrProducer) of itself
 		// 1.Set the payload
 		Ptr<Packet> payload = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),999999999,data->GetName());
-		
+		std::vector<uint32_t> priorityList = GetPriorityListOfDataSource(dataName);
+			if(priorityList.empty())//There is no interested nodes behind
+				cout<<"优先级列表为空"<<endl;
 		cout<<"收到来自应用层的数据包："<<payload->GetSize()<<endl;
 		getchar();
-		//if(!payload->GetSize())
-		//	return;
+		if(!payload->GetSize())
+			return;
 		data->SetPayload(payload);
 
 		ndn::nrndn::nrHeader nrheader;
