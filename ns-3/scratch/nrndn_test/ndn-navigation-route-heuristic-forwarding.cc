@@ -605,6 +605,18 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 {
 	NS_LOG_FUNCTION (this);
+	Ptr<const Packet> nrPayload	= data->GetPayload();
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->PeekHeader(nrheader);
+	uint32_t nodeId=nrheader.getSourceId();
+	uint32_t signature=data->GetSignature();
+	std::vector<uint32_t> newPriorityList;
+	bool IsClearhopCountTag=true;
+	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
+	
+	
+	cout<<"forwarding.cc"<<Simulator::Now().GetSeconds()<<" 收到数据包,ID:"<<nodeId<<endl;
+	getchar();
 	if(!m_running) return;
 	if(Face::APPLICATION & face->GetFlags())
 	{
@@ -647,14 +659,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		return;
 	}*/
 
-	Ptr<const Packet> nrPayload	= data->GetPayload();
-	ndn::nrndn::nrHeader nrheader;
-	nrPayload->PeekHeader(nrheader);
-	uint32_t nodeId=nrheader.getSourceId();
-	uint32_t signature=data->GetSignature();
-	std::vector<uint32_t> newPriorityList;
-	bool IsClearhopCountTag=true;
-	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
+	
 
 
 	ofstream ofile;
