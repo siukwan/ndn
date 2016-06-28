@@ -616,6 +616,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	
 	
 	cout<<"forwarding.cc 节点id："<<m_node->GetId()<<m_running<<": "<<Simulator::Now().GetSeconds()<<" 收到数据包ID:"<<nodeId<<endl;
+	cout<<"Face::APPLICATION "<<Face::APPLICATION<<endl;
+	cout<<"face->GetFlags()"<<face->GetFlags()<<endl;
 	getchar();
 	if(!m_running) return;
 	if(Face::APPLICATION & face->GetFlags())
