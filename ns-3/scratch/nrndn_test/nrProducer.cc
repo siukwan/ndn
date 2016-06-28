@@ -263,7 +263,7 @@ void nrProducer::OnSendingTrafficData()
 	NS_LOG_DEBUG(
 			"node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature());
 	//siukwan add 2016.6.28
-	std::cout<<"nrProducer.cc:"<<Simulator::Now()<<" node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature()<<std::endl;
+	std::cout<<"nrProducer.cc:"<<Simulator::Now().GetSeconds()<<" node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature()<<std::endl;
 	getchar();
 	FwHopCountTag hopCountTag;
 	data->GetPayload()->AddPacketTag(hopCountTag);
