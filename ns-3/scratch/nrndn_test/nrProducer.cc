@@ -278,7 +278,7 @@ void nrProducer::OnSendingTrafficData()
 	nrUtils::SetInterestedNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.second);
 
 	m_face->ReceiveData(data);
-	m_transmittedDatas(data, this, m_face);
+	//m_transmittedDatas(data, this, m_face);
 
 }
 
