@@ -1354,9 +1354,11 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	//设置信息,设置兴趣树
 	nrheader.setTree(m_nrtree_str);
 	nrheader.setForwardId(forwardId);
-
-	cout<<"(forwarding.cc)"<<m_node->GetId()<<"GetNrPayload，源ID:"<<nrheader.getSourceId()<<endl;
-	getchar();
+	if( HeaderHelper::CONTENT_OBJECT_NDNSIM == type)
+	{
+		cout<<"(forwarding.cc)"<<m_node->GetId()<<"GetNrPayload，源ID:"<<nrheader.getSourceId()<<endl;
+		getchar();
+	}
 	nrPayload->AddHeader(nrheader);
 	return nrPayload;
 }
