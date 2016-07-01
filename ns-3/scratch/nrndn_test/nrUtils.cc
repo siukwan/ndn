@@ -65,7 +65,7 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 		idx++;
 	}
 	cout<<"utils:统计结束"<<endl;
-	getchar();
+	//getchar();
 	return std::pair<uint32_t, uint32_t>(nodeSize,interestSize);
 }
 void nrUtils::SetNodeSize(uint32_t id, uint32_t signature,uint32_t nodesize)
