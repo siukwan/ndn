@@ -1339,7 +1339,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 			priorityList = GetPriorityListOfDataSource(dataName);
 			if(priorityList.empty())//There is no interested nodes behind
 			{
-				cout<<"(forwarding.cc)"<<m_node->GetId()<<"优先级列表为空，源ID:"<<nrheader.getSourceId()<<endl;
+				cout<<"(forwarding.cc)"<<m_node->GetId()<<"优先级列表为空"<<endl;
 				getchar();
 				return Create<Packet>();
 			}
