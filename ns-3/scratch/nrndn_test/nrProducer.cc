@@ -343,9 +343,6 @@ bool nrProducer::IsInterestLane(const std::string& lane)
 	const std::vector<std::string>& route = sensor->getNavigationRoute();
 
 	it =std::find(route.begin(),route.end(),currentLane);
-	
-	//不包括当前路段
-	it++;
 
 	it2=std::find(it,route.end(),lane);
 
