@@ -1355,8 +1355,8 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 	nrheader.setTree(m_nrtree_str);
 	nrheader.setForwardId(forwardId);
 
-	//cout<<"(forwarding.cc)"<<m_node->GetId()<<"GetNrPayload，源ID:"<<nrheader.getSourceId()<<endl;
-	//getchar();
+	cout<<"(forwarding.cc)"<<m_node->GetId()<<"GetNrPayload，源ID:"<<nrheader.getSourceId()<<endl;
+	getchar();
 	nrPayload->AddHeader(nrheader);
 	return nrPayload;
 }
