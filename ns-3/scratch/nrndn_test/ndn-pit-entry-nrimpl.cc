@@ -57,6 +57,7 @@ EntryNrImpl::AddIncomingNeighbors(uint32_t id)
 
 void EntryNrImpl::AddNeighborTimeoutEvent(uint32_t id)
 {
+	/*
 	if(m_nbTimeoutEvent.find(id)!=m_nbTimeoutEvent.end())
 	{
 		m_nbTimeoutEvent[id].Cancel();
@@ -66,6 +67,7 @@ void EntryNrImpl::AddNeighborTimeoutEvent(uint32_t id)
 	m_nbTimeoutEvent[id]
 	                   = Simulator::Schedule(m_infaceTimeout,
 	                		   &EntryNrImpl::CleanExpiredIncomingNeighbors,this,id);
+							   */
 }
 
 void EntryNrImpl::CleanExpiredIncomingNeighbors(uint32_t id)
