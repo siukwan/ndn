@@ -208,12 +208,12 @@ bool NrPitImpl::UpdatePitByInterestTree(Ptr<pit::nrndn::NrInterestTreeImpl>&rece
 			//std::cout<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" ";
 		}
 	}
-	if( id == 15)
+	/*if( id == 15)
 	{
 		cout<<"\n(pit-impl.cc)添加后"<<id<<endl;
 		showPit();
 		getchar();
-	}
+	}*/
 	//NS_LOG_UNCOND("update pit:"<<os.str());
 	NS_LOG_DEBUG("update pit:"<<os.str());
 	return true;
