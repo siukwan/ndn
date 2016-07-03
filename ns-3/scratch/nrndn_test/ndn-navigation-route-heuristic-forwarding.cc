@@ -252,10 +252,11 @@ void  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 	//uint32_t seq;
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader( nrheader);
-	//获取发送兴趣包节点的ID
-	nodeId=nrheader.getSourceId();
-	uint32_t myNodeId=m_node->GetId();
 /*
+	//获取发送兴趣包节点的ID
+	nodeId = nrheader.getSourceId();
+	uint32_t myNodeId=m_node->GetId();
+
 	//提取兴趣树，并且还原
 	string receive_tree_str = nrheader.getTree();
 	Ptr<pit::nrndn::NrInterestTreeImpl> receive_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
@@ -404,200 +405,192 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 	//兴趣包来自后方
 	// it is from nodes behind
-	
-		//如果重复
-		if(isDuplicatedInterest(nodeId,seq))
+
+	//如果重复
+	if(isDuplicatedInterest(nodeId,seq))
+	{
+		NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
+		cout<<"forwarding.cc后方数据包重复,不再发送!"<<endl;
+		//getchar();
+		ExpireInterestPacketTimer(nodeId,seq);
+		return;
+	}
+
+	NS_LOG_DEBUG("Get interest packet from nodes behind");
+	const vector<string> remoteRoute= ExtractRouteFromName(interest->GetName());
+
+	//cout<<"forwarding.cc"<<myNodeId<<"准备转发兴趣包"<<nodeId<<endl;
+	//getchar();
+
+	//提取兴趣树，并且还原
+	string receive_tree_str = nrheader.getTree();
+	Ptr<pit::nrndn::NrInterestTreeImpl> receive_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
+	//cout<<"(forwarding.cc)"<<m_node->GetId()<<"接收得到来自节点："<<nodeId<<"解序列化:"<<nrheader.getTree()<<endl;
+	receive_tree->root=receive_tree->deserialize_noId(receive_tree_str);
+	receive_tree->NodeId=nodeId;
+	//cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
+	//receive_tree->levelOrder();
+	string tmp_curLane=receive_tree->prefix+m_sensor->getLane();
+	//cout<<"(forwarding.cc)所在路段为："<<tmp_curLane<<"\ndelete后的兴趣树："<<endl;
+
+	//找到当前路段，把当前路段作为根结点，其余的删除
+	receive_tree->root =receive_tree->levelOrderDelete(tmp_curLane);
+	//receive_tree->levelOrder();
+	//getchar();
+	vector<vector<string>> receiveRoutes(0);
+	vector<string> tmpRoutes(0);
+	receive_tree->tree2Routes(receiveRoutes,tmpRoutes,receive_tree->root);
+
+
+	//cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
+	//receive_tree->levelOrder();
+	bool changeFlag=false;
+	for(uint32_t i=0;i<receiveRoutes.size();++i)
+	{
+		bool flag1=false;
+		//cout<<"(forwarding.cc)合并的节点："<<receiveNode[i]<<endl;
+		flag1=(m_nrtree->MergeInterest(receive_tree->NodeId,receiveRoutes[i],m_sensor->getLane(),flag1));
+		if(flag1)changeFlag=true;
+	}
+
+	// Update the PIT here
+	//更新PIT表
+	//m_nrpit->UpdatePit(remoteRoute, nodeId);
+	m_nrpit->UpdatePitByInterestTree(receive_tree,nodeId);
+	//当前所在路段？使用pit的currentlane会存在问题，pit有时候在十字路口，没有把过去的路段删除，直接使用sensor的getlane
+	//string currentLane=m_nrpit->getCurrentLane();
+	string currentLane = m_sensor->getLane();
+
+	//兴趣树没有发生变化
+	if(!changeFlag)
+	{
+		/*
+		ofstream ofile;
+		ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
+		ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 兴趣树没发生变化"<<endl;
+		ofile.close();
+		*/
+		NS_LOG_DEBUG("InterestTree no changed");
+
+		//cout << "forwarding.cc原来的随机码" << interest->GetNonce();
+		interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),m_node->GetId()));
+
+		//cout << "forwarding.cc SetPayload后的随机码" << interest->GetNonce();
+		//getchar();
+		Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
+		ndn::nrndn::nrHeader nrheader_tmp;
+		nrPayload_tmp->PeekHeader( nrheader_tmp);
+		if(m_node->GetId() == nrheader_tmp.getSourceId() && nrheader.getForwardId() != 999999999)
 		{
-			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
-			cout<<"forwarding.cc后方数据包重复,不再发送!"<<endl;
 			//getchar();
-			ExpireInterestPacketTimer(nodeId,seq);
+			forwardNeighbors[nodeId]=true;
+			cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<nodeId<<"  "<<myNodeId<<endl;
+			//getchar();
+		}
+		cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"兴趣树没有发生变化,发送ack"<<endl;
+
+		//发送ack包
+		//Start a timer and wait
+		vector<uint32_t>::const_iterator idit;
+		idit = find(pri.begin(), pri.end(), m_node->GetId());
+		bool idIsInPriorityList = (idit != pri.end());
+		double index;
+		//在优先级列表中,则设置响应的等待时间
+		if(idIsInPriorityList)
+			index = distance(pri.begin(), idit);
+		else//不在优先级列表中时,也要设置等待时间
+			index = pri.size()+1;
+	
+		double random = m_uniformRandomVariable->GetInteger(0, 20);
+		Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
+		m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
+					&NavigationRouteHeuristic::SendAckPacket, this);
+	
+		//SendAckPacket();
+		DropInterestePacket(interest);
+		return ;
+	}
+
+	//evaluate whether receiver's id is in sender's priority list
+	bool idIsInPriorityList=true;
+	vector<uint32_t>::const_iterator idit;
+	idit = find(pri.begin(), pri.end(), m_node->GetId());
+	idIsInPriorityList = (idit != pri.end());
+	
+	cout<<"forwarding.cc优先级列表为:";
+	for(size_t ii=0;ii<pri.size();++ii)
+		cout<<pri[ii]<< " ";
+	cout<<endl;
+	cout<<"Forwarding.cc 优先级列表判断为"<<idIsInPriorityList<<endl;
+	//evaluate end
+	idIsInPriorityList=true;
+		
+	if (idIsInPriorityList)
+	{
+		NS_LOG_DEBUG("Node id is in PriorityList");
+		
+		bool IsPitCoverTheRestOfRoute=PitCoverTheRestOfRoute(remoteRoute);
+
+		NS_LOG_DEBUG("IsPitCoverTheRestOfRoute?"<<IsPitCoverTheRestOfRoute);
+		if(NoFwStop)
+			IsPitCoverTheRestOfRoute = false;
+		
+		if (IsPitCoverTheRestOfRoute)
+		{
+			BroadcastStopMessage(interest);
 			return;
 		}
-
-		NS_LOG_DEBUG("Get interest packet from nodes behind");
-		const vector<string> remoteRoute= ExtractRouteFromName(interest->GetName());
-
-		//cout<<"forwarding.cc"<<myNodeId<<"准备转发兴趣包"<<nodeId<<endl;
-		//getchar();
-
-		//提取兴趣树，并且还原
-		string receive_tree_str = nrheader.getTree();
-		Ptr<pit::nrndn::NrInterestTreeImpl> receive_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
-		//cout<<"(forwarding.cc)"<<m_node->GetId()<<"接收得到来自节点："<<nodeId<<"解序列化:"<<nrheader.getTree()<<endl;
-		receive_tree->root=receive_tree->deserialize_noId(receive_tree_str);
-		receive_tree->NodeId=nodeId;
-		//cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
-		//receive_tree->levelOrder();
-		string tmp_curLane=receive_tree->prefix+m_sensor->getLane();
-		//cout<<"(forwarding.cc)所在路段为："<<tmp_curLane<<"\ndelete后的兴趣树："<<endl;
-
-		//找到当前路段，把当前路段作为根结点，其余的删除
-		receive_tree->root =receive_tree->levelOrderDelete(tmp_curLane);
-		//receive_tree->levelOrder();
-		//getchar();
-		vector<vector<string>> receiveRoutes(0);
-		vector<string> tmpRoutes(0);
-		receive_tree->tree2Routes(receiveRoutes,tmpRoutes,receive_tree->root);
-
-
-
-		//cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
-		//receive_tree->levelOrder();
-		bool changeFlag=false;
-		for(uint32_t i=0;i<receiveRoutes.size();++i)
+		else
 		{
-			bool flag1=false;
-			//cout<<"(forwarding.cc)合并的节点："<<receiveNode[i]<<endl;
-			flag1=(m_nrtree->MergeInterest(receive_tree->NodeId,receiveRoutes[i],m_sensor->getLane(),flag1));
-			if(flag1)changeFlag=true;
-		}
-
-
-
-		// Update the PIT here
-		//更新PIT表
-		//m_nrpit->UpdatePit(remoteRoute, nodeId);
-		m_nrpit->UpdatePitByInterestTree(receive_tree,nodeId);
-		//当前所在路段？使用pit的currentlane会存在问题，pit有时候在十字路口，没有把过去的路段删除，直接使用sensor的getlane
-		//string currentLane=m_nrpit->getCurrentLane();
-		string currentLane = m_sensor->getLane();
-
-		//兴趣树没有发生变化
-		if(!changeFlag)
-		{
-			/*
-			ofstream ofile;
-			ofile.open("../packetfiles/int"+int2Str(seq),ios::app);
-			ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 兴趣树没发生变化"<<endl;
-			ofile.close();
-			*/
-			NS_LOG_DEBUG("InterestTree no changed");
-
 			//cout << "forwarding.cc原来的随机码" << interest->GetNonce();
+		
 			interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),m_node->GetId()));
-
 			//cout << "forwarding.cc SetPayload后的随机码" << interest->GetNonce();
 			//getchar();
 			Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
 			ndn::nrndn::nrHeader nrheader_tmp;
 			nrPayload_tmp->PeekHeader( nrheader_tmp);
-			if(m_node->GetId() == nrheader_tmp.getSourceId() && nrheader.getForwardId() != 999999999)
+
+			cout<<"forwarding.cc我的ID"<<m_node->GetId()<<"  转发前的ID"<<nrheader.getForwardId()<<"  原始ID为"<<
+					nrheader_tmp.getSourceId()<<"   转发后的ID"<<nrheader_tmp.getForwardId()<<endl;
+
+			if(m_node->GetId() == nrheader_tmp.getSourceId() && nrheader.getForwardId()!=999999999)
 			{
-				//getchar();
-				forwardNeighbors[nodeId]=true;
-				cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<nodeId<<"  "<<myNodeId<<endl;
+				cout<<"forwarding.cc"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<endl;
 				//getchar();
 			}
-			cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"兴趣树没有发生变化,发送ack"<<endl;
 
+			//如果重复
+			if(isDuplicatedInterest(nodeId,seq))
+			{
+				ExpireInterestPacketTimer(nodeId,seq);
+				return;
+			}
 
-			//发送ack包
+			if(nrheader_tmp.getSourceId()!=nrheader_tmp.getForwardId())
+				getchar();
 			//Start a timer and wait
-			vector<uint32_t>::const_iterator idit;
-			idit = find(pri.begin(), pri.end(), m_node->GetId());
-			bool idIsInPriorityList = (idit != pri.end());
-			double index;
-			//在优先级列表中,则设置响应的等待时间
-			if(idIsInPriorityList)
-				index = distance(pri.begin(), idit);
-			else//不在优先级列表中时,也要设置等待时间
-				index = pri.size()+1;
-
+			double index = distance(pri.begin(), idit);
 			double random = m_uniformRandomVariable->GetInteger(0, 20);
 			Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
 			m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
-						&NavigationRouteHeuristic::SendAckPacket, this);
-
-			//SendAckPacket();
-			DropInterestePacket(interest);
-			return ;
-		}
-
-		//evaluate whether receiver's id is in sender's priority list
-		bool idIsInPriorityList=true;
-		vector<uint32_t>::const_iterator idit;
-		idit = find(pri.begin(), pri.end(), m_node->GetId());
-		idIsInPriorityList = (idit != pri.end());
-
-		cout<<"forwarding.cc优先级列表为:";
-		for(size_t ii=0;ii<pri.size();++ii)
-			cout<<pri[ii]<< " ";
-		cout<<endl;
-		cout<<"Forwarding.cc 优先级列表判断为"<<idIsInPriorityList<<endl;
-		//evaluate end
-		idIsInPriorityList=true;
-
-		if (idIsInPriorityList)
-		{
-
-			NS_LOG_DEBUG("Node id is in PriorityList");
-
-			bool IsPitCoverTheRestOfRoute=PitCoverTheRestOfRoute(remoteRoute);
-
-			NS_LOG_DEBUG("IsPitCoverTheRestOfRoute?"<<IsPitCoverTheRestOfRoute);
-			if(NoFwStop)
-				IsPitCoverTheRestOfRoute = false;
-
-			if (IsPitCoverTheRestOfRoute)
-			{
-				BroadcastStopMessage(interest);
-				return;
-			}
-			else
-			{
-				//cout << "forwarding.cc原来的随机码" << interest->GetNonce();
-			
-				interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),m_node->GetId()));
-				//cout << "forwarding.cc SetPayload后的随机码" << interest->GetNonce();
-				//getchar();
-				Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
-				ndn::nrndn::nrHeader nrheader_tmp;
-				nrPayload_tmp->PeekHeader( nrheader_tmp);
-
-				cout<<"forwarding.cc我的ID"<<m_node->GetId()<<"  转发前的ID"<<nrheader.getForwardId()<<"  原始ID为"<<
-						nrheader_tmp.getSourceId()<<"   转发后的ID"<<nrheader_tmp.getForwardId()<<endl;
-
-				if(m_node->GetId() == nrheader_tmp.getSourceId() && nrheader.getForwardId()!=999999999)
-				{
-					cout<<"forwarding.cc"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<endl;
-					//getchar();
-				}
-
-				//如果重复
-				if(isDuplicatedInterest(nodeId,seq))
-				{
-					ExpireInterestPacketTimer(nodeId,seq);
-					return;
-				}
-
-				if(nrheader_tmp.getSourceId()!=nrheader_tmp.getForwardId())
-					getchar();
-				//Start a timer and wait
-				double index = distance(pri.begin(), idit);
-				double random = m_uniformRandomVariable->GetInteger(0, 20);
-				Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
-				m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
-						&NavigationRouteHeuristic::ForwardInterestPacket, this,
-						interest);
-
-				cout<<"forwarding.cc"<<myNodeId<<"转发成功"<<nodeId<<endl;
-				ofstream ofile;
-				ofile.open("../packetfiles/i"+int2Str(interest->GetNonce()),ios::app);
-				ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 在优先级列表中，转发成功"<<endl;
-				ofile.close();
-			}
-		}
-		//不在优先列表中，则不转发
-		else
-		{
-			cout<<"forwarding.cc"<<myNodeId<<"不在优先列表中!!"<<nodeId<<endl;
-			NS_LOG_DEBUG("Node id is not in PriorityList");
-			DropInterestePacket(interest);
-		}
-
+					&NavigationRouteHeuristic::ForwardInterestPacket, this,
+					interest);
 	
-
+			cout<<"forwarding.cc"<<myNodeId<<"转发成功"<<nodeId<<endl;
+			ofstream ofile;
+			ofile.open("../packetfiles/i"+int2Str(interest->GetNonce()),ios::app);
+			ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 在优先级列表中，转发成功"<<endl;
+			ofile.close();
+		}
+	}
+	//不在优先列表中，则不转发
+	else
+	{
+		cout<<"forwarding.cc"<<myNodeId<<"不在优先列表中!!"<<nodeId<<endl;
+		NS_LOG_DEBUG("Node id is not in PriorityList");
+		DropInterestePacket(interest);
+	}
 }
 
 
