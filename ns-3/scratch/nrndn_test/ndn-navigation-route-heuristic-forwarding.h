@@ -151,6 +151,10 @@ protected:
 
 string int2Str(long long a)
 {
+	ostringstream oss;
+	oss << a;
+	return oss.str();
+	/*
 	char str[255];
 	sprintf(str, "%ll", a);
 	string result ="";
@@ -162,6 +166,7 @@ string int2Str(long long a)
 			break;
 	}
 	return result;
+	*/
 }
 
 
@@ -469,8 +474,8 @@ private:
 	Ptr<pit::nrndn::NrInterestTreeImpl> m_nrtree;
 
 	//兴趣包处理划分成多个函数
-	bool  OnInterest_application(Ptr<Interest> interest);
-	bool  OnInterest_ackProcess(Ptr<Interest> interest);
+	void  OnInterest_application(Ptr<Interest> interest);
+	void  OnInterest_ackProcess(Ptr<Interest> interest);
 
 	map<int,bool> forwardNeighbors;
 	bool m_firstSendInterest;
