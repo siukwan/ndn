@@ -384,8 +384,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	}
 
 	//If it is not a stop message, prepare to forward:
-	pair<bool, double> msgdirection =
-			packetFromDirection(interest);
+	pair<bool, double> msgdirection = packetFromDirection(interest);
 	if(!msgdirection.first || // from other direction
 			msgdirection.second > 0)// or from front
 	{
@@ -400,10 +399,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			NS_LOG_DEBUG("Get interest packet from front or other direction and it is old packet");
 			ExpireInterestPacketTimer(nodeId,seq);
 		}
+		return ;
 	}
+	
 	//兴趣包来自后方
-	else// it is from nodes behind
-	{
+	// it is from nodes behind
+	
 		//如果重复
 		if(isDuplicatedInterest(nodeId,seq))
 		{
@@ -595,7 +596,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			DropInterestePacket(interest);
 		}
 
-	}
+	
 
 }
 
