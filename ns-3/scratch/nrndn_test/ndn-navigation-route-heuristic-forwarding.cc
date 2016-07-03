@@ -311,8 +311,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 	if(Face::APPLICATION==face->GetFlags())
 	{
-			OnInterest_application( interest);
-			return;
+		OnInterest_application( interest);
+		return;
 	}
 
 	//如果它是个心跳包
@@ -329,29 +329,29 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
-		//Payload是什么，payload是假负载
-		Ptr<const Packet> nrPayload	= interest->GetPayload();
-		ndn::nrndn::nrHeader nrheader;
-		nrPayload->PeekHeader( nrheader);
-		//获取发送兴趣包节点的ID
-		uint32_t nodeId = nrheader.getSourceId();
-		//获取兴趣的随机编码
-		uint32_t seq = interest->GetNonce();
-		//获取当前节点的id
-		uint32_t myNodeId=m_node->GetId();
-		//获取兴趣包的转发节点id
-		uint32_t forwardId = nrheader.getForwardId();
+	//Payload是什么，payload是假负载
+	Ptr<const Packet> nrPayload	= interest->GetPayload();
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->PeekHeader( nrheader);
+	//获取发送兴趣包节点的ID
+	uint32_t nodeId = nrheader.getSourceId();
+	//获取兴趣的随机编码
+	uint32_t seq = interest->GetNonce();
+	//获取当前节点的id
+	uint32_t myNodeId=m_node->GetId();
+	//获取兴趣包的转发节点id
+	uint32_t forwardId = nrheader.getForwardId();
 
-		if(nodeId == myNodeId)
-		{
-			cout<<"forwarding.cc收到自己的兴趣包!!!!!!!!!!!!!!!!"<<myNodeId<<endl;
-			getchar();
-		}
-		if(forwardId != 999999999)
-		{
-			//printf("my:%d  src:%d   fwd:%d",myNodeId,nodeId,forwardId);
-			//cout<<endl;
-		}
+	if(nodeId == myNodeId)
+	{
+		cout<<"forwarding.cc收到自己的兴趣包!!!!!!!!!!!!!!!!"<<myNodeId<<endl;
+		getchar();
+	}
+	if(forwardId != 999999999)
+	{
+		//printf("my:%d  src:%d   fwd:%d",myNodeId,nodeId,forwardId);
+		//cout<<endl;
+	}
 
 
 	//如果兴趣包已经被发送了，不再处理兴趣包，使用LRUcache结构
@@ -481,7 +481,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
 			ndn::nrndn::nrHeader nrheader_tmp;
 			nrPayload_tmp->PeekHeader( nrheader_tmp);
-			if(m_node->GetId()==nrheader_tmp.getSourceId()&&nrheader.getForwardId()!=999999999)
+			if(m_node->GetId() == nrheader_tmp.getSourceId() && nrheader.getForwardId() != 999999999)
 			{
 				//getchar();
 				forwardNeighbors[nodeId]=true;
@@ -529,8 +529,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 		if (idIsInPriorityList)
 		{
-
-
 
 			NS_LOG_DEBUG("Node id is in PriorityList");
 
