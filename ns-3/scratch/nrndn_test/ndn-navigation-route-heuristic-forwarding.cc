@@ -460,7 +460,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		m_nrpit->UpdatePitByInterestTree(receive_tree,nodeId);
 		//当前所在路段？使用pit的currentlane会存在问题，pit有时候在十字路口，没有把过去的路段删除，直接使用sensor的getlane
 		//string currentLane=m_nrpit->getCurrentLane();
-		string currentLane=m_sensor->getLane();
+		string currentLane = m_sensor->getLane();
 
 		//兴趣树没有发生变化
 		if(!changeFlag)
@@ -557,7 +557,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 				cout<<"forwarding.cc我的ID"<<m_node->GetId()<<"  转发前的ID"<<nrheader.getForwardId()<<"  原始ID为"<<
 						nrheader_tmp.getSourceId()<<"   转发后的ID"<<nrheader_tmp.getForwardId()<<endl;
 
-				if(m_node->GetId()==nrheader_tmp.getSourceId()&&nrheader.getForwardId()!=999999999)
+				if(m_node->GetId() == nrheader_tmp.getSourceId() &&n rheader.getForwardId()!=999999999)
 				{
 					cout<<"forwarding.cc"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<endl;
 					//getchar();
