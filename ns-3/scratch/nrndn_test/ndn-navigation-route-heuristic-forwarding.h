@@ -152,7 +152,7 @@ protected:
 string int2Str(long long a)
 {
 	char str[255];
-	sprintf(str, "%x", a);
+	sprintf(str, "%ll", a);
 	string result ="";
 	for(int i=0;i<255;i++)
 	{

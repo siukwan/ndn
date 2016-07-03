@@ -238,7 +238,7 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 }
 
 
-bool  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
+void  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 {
 	//else cout<<"(forwarding.cc)"<<m_node->GetId()<<"邻居发生变化，发送兴趣包"<<endl;
 	//consumer产生兴趣包，在路由层进行转发
@@ -255,7 +255,7 @@ bool  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 	//获取发送兴趣包节点的ID
 	nodeId=nrheader.getSourceId();
 	uint32_t myNodeId=m_node->GetId();
-
+/*
 	//提取兴趣树，并且还原
 	string receive_tree_str = nrheader.getTree();
 	Ptr<pit::nrndn::NrInterestTreeImpl> receive_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
@@ -273,7 +273,7 @@ bool  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 		flag1=(m_nrtree->MergeInterest(receive_tree->NodeId,receiveRoutes[i],m_sensor->getLane(),flag1));
 		if(flag1)changeFlag=true;
 	}
-	
+	*/
 	//cout<<"forwarding.cc"<<myNodeId<<"发送应用层的兴趣包"<<nodeId<<endl;
 	// 2. record the Interest Packet
 	m_interestNonceSeen.Put(interest->GetNonce(),true);
@@ -282,7 +282,7 @@ bool  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 	Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
 						&NavigationRouteHeuristic::SendInterestPacket,this,interest);	
 }
-bool  NavigationRouteHeuristic::OnInterest_ackProcess(Ptr<Interest> interest)
+void  NavigationRouteHeuristic::OnInterest_ackProcess(Ptr<Interest> interest)
 {
 			//cout<<"收到ACK包"<<endl;
 			Ptr<const Packet> nrPayload	= interest->GetPayload();
