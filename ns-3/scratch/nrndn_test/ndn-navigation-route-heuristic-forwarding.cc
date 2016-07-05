@@ -543,7 +543,6 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		else
 		{
 			//cout << "forwarding.cc原来的随机码" << interest->GetNonce();
-		
 			interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),m_node->GetId()));
 			//cout << "forwarding.cc SetPayload后的随机码" << interest->GetNonce();
 			//getchar();
