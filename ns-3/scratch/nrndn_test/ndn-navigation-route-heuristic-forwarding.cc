@@ -560,13 +560,13 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			}
 
 			//如果重复
-			if(isDuplicatedInterest(nodeId,seq))
+			if(isDuplicatedInterest(nodeId, seq))
 			{
-				ExpireInterestPacketTimer(nodeId,seq);
+				ExpireInterestPacketTimer(nodeId, seq);
 				return;
 			}
 
-			if(nrheader_tmp.getSourceId()!=nrheader_tmp.getForwardId())
+			if(nrheader_tmp.getSourceId() != nrheader_tmp.getForwardId())
 				getchar();
 			//Start a timer and wait
 			double index = distance(pri.begin(), idit);
