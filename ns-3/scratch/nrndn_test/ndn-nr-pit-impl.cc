@@ -215,6 +215,7 @@ bool NrPitImpl::UpdatePitByInterestTree(Ptr<pit::nrndn::NrInterestTreeImpl>&rece
 		getchar();
 	}*/
 	//NS_LOG_UNCOND("update pit:"<<os.str());
+	
 	NS_LOG_DEBUG("update pit:"<<os.str());
 	return true;
 }
