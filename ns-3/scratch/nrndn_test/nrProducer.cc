@@ -127,7 +127,7 @@ void nrProducer::laneChange(std::string oldLane, std::string newLane)
 	NS_LOG_INFO ("Lane change of node "<<GetNode()->GetId()
 			<<" : move from " << oldLane << " to " << newLane );
 	this->SetAttribute("Prefix", StringValue('/' + newLane));
-	cout<<"nrproducer.cc: lanechange"<<endl;
+	cout<<"nrproducer.cc: lanechange id:"<<GetNode()->GetId()<<endl;
 	getchar();
 	//if(m_face)
 	//{
