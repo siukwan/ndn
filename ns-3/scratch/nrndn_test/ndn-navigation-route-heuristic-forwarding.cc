@@ -620,7 +620,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		if(priorityList.empty())//There is no interested nodes behind
 			cout<<"优先级列表为空"<<endl;
 		cout<<data->GetName()<<" 收到来自应用层的数据包："<<payload->GetSize()<<endl;
-		getchar();
+		//getchar();
 		if(!payload->GetSize())
 			return;
 		data->SetPayload(payload);
@@ -643,7 +643,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				&NavigationRouteHeuristic::SendDataPacket, this, data);
 
 		cout<<"应用层的数据包事件设置成功"<<endl;
-		getchar();
+		//getchar();
 		// 4. Although it is from itself, include into the receive record
 		NotifyUpperLayer(data);
 
