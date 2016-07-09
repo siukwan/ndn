@@ -159,7 +159,7 @@ void NrInterestTreeImpl::updateNowRoot(string currentLane)
 	cout<<"(ndn-InterestTree)更新所在的路段："<<currentLane<<endl;
 	root = levelOrderDelete(currentLane);
 	cout<<"(ndn-InterestTree)更新当前节点，路段为："<<root->lane<<endl;
-	//getchar();
+	getchar();
 }
 
 //层序删除，以找出在第三层或以上的路径，即当前路径不在root的孩子节点，在其更深层次的孩子节点中
