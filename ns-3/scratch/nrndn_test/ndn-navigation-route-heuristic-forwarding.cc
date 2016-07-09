@@ -721,7 +721,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	else// This data packet is 1) NOT on the navigation route of the local node
 		//					or 2) and it is from location in front of it along the navigation route
 	{
-		if(isDuplicatedData(nodeId,signature))
+		if(0) //isDuplicatedData(nodeId,signature))
 		{
 			if(priorityListIt==pri.end())
 			{
