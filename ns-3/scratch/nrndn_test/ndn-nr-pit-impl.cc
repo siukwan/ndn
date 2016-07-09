@@ -166,6 +166,7 @@ bool NrPitImpl::UpdatePitByInterestTree(Ptr<pit::nrndn::NrInterestTreeImpl>&rece
 	cout<<"(pit-impl.cc)删除后"<<id<<endl;
 	showPit();
 	*/
+	
 	std::ostringstream os;
 	//进行广度优先搜索，把兴趣树的所有节点都放到set里面
 	set<string> tree_set;
