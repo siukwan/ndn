@@ -675,7 +675,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	{
 		//cout<<"OnData重复包2......................."<<endl;
 		NS_LOG_DEBUG("The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
-		return;
+		//return;
 	}
 
 	//Deal with the stop message first. Stop message contains an empty priority list
@@ -782,7 +782,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 						IsClearhopCountTag=false;
 					}
 				}
-				newPriorityList=GetPriorityListOfDataForwarderDisinterestd(pri);
+				newPriorityList = GetPriorityListOfDataForwarderDisinterestd(pri);
 			}
 			else
 			{
