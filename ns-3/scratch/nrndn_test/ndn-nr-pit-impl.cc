@@ -406,6 +406,7 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 	{
 		//std::cout<<"旧路段不在头部:"<<"oldLane:"<<(oldLane)<<" newLane:"<<uriConvertToString((*it)->GetInterest()->GetName().get(0).toUri())<<std::endl;
 
+
 		//遍历整个Pit
 		std::vector<Ptr<Entry> >::iterator itTraversal;
 		itTraversal =m_pitContainer.begin();
