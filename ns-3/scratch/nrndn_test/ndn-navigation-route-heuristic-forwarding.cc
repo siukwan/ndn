@@ -729,11 +729,11 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	else// This data packet is 1) NOT on the navigation route of the local node
 		//					or 2) and it is from location in front of it along the navigation route
 	{
-		cout<<"forward.cc 数据包在的道路header："<<nrheader.getLane()<<" 当前节点所在道路："<<m_sensor->getLane()<<endl;
-		if(isDuplicatedData(nodeId,signature) /*&& nrheader.getLane() == m_sensor->getLane()*/)
+		//cout<<"forward.cc 数据包在的道路header："<<nrheader.getLane()<<" 当前节点所在道路："<<m_sensor->getLane()<<endl;
+		if(isDuplicatedData(nodeId,signature) && nrheader.getLane() == m_sensor->getLane())
 		{
-			cout<<"重复丢弃"<<endl;
-			getchar();
+			//cout<<"重复丢弃"<<endl;
+			//getchar();
 			//不在优先级列表中
 			if(priorityListIt==pri.end())
 			{
@@ -749,8 +749,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		}
 		else
 		{
-			cout<<"进行转发"<<endl;
-			getchar();
+			//cout<<"进行转发"<<endl;
+			//getchar();
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			if (!Will)
 			{
