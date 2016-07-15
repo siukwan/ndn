@@ -41,7 +41,7 @@ nrHeader::nrHeader(const uint32_t& sourceId,const double& x,const double& y,cons
 		m_y(y),
 		m_priorityList(priorityList),
 		m_tree(tree),
-		m_lane("")
+		m_lane("none")
 {
 	// TODO Auto-generated constructor stub
 
