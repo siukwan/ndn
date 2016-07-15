@@ -490,7 +490,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<nodeId<<"  "<<myNodeId<<endl;
 			//getchar();
 		}
-		cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"兴趣树没有发生变化,发送ack"<<endl;
+		//cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"兴趣树没有发生变化,发送ack"<<endl;
 
 		//发送ack包
 		//Start a timer and wait
