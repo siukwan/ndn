@@ -611,7 +611,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	
 	
 	//cout<<"forwarding.cc 节点id："<<m_node->GetId()<<m_running<<": "<<Simulator::Now().GetSeconds()<<" 收到数据包ID:"<<nodeId<<endl;
-	cout<<"forwarding.cc 当前节点："<<m_node->GetId()<<" 原始节点："<<nodeId<<"  转发节点："<<forwardId<<endl;
+	//cout<<"forwarding.cc 当前节点："<<m_node->GetId()<<" 原始节点："<<nodeId<<"  转发节点："<<forwardId<<endl;
 	//getchar();
 	if(!m_running) return;
 	if(Face::APPLICATION && face->GetFlags())
@@ -729,8 +729,11 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	else// This data packet is 1) NOT on the navigation route of the local node
 		//					or 2) and it is from location in front of it along the navigation route
 	{
-		if(isDuplicatedData(nodeId,signature))
+		//cout<<"forward.cc 数据包在的道路header："<<nrheader.getLane()<<" 当前节点所在道路："<<m_sensor->getLane()<<endl;
+		if(isDuplicatedData(nodeId,signature) && nrheader.getLane() == m_sensor->getLane())
 		{
+			//cout<<"重复丢弃"<<endl;
+			//getchar();
 			//不在优先级列表中
 			if(priorityListIt==pri.end())
 			{
@@ -746,6 +749,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		}
 		else
 		{
+			//cout<<"进行转发"<<endl;
+			//getchar();
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			if (!Will)
 			{
@@ -846,7 +851,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					sendInterval = (MilliSeconds(random) + ( index + m_gap ) * m_timeSlot);
 			}
 
-			//Ptr<Packet> payload22 = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),m_node->GetId(),data->GetName());
+			//Ptr<Packet> payload22 = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),m_node->GetId(),data->GetName(), false);
 			//data->SetPayload(payload22);
 			
 			m_sendingDataEvent[nodeId][signature]=
@@ -1324,7 +1329,7 @@ vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 	return result;
 }
 
-Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload,uint32_t forwardId, const Name& dataName /*= *((Name*)NULL) */)
+Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload,uint32_t forwardId, const Name& dataName/* = *((Name*)NULL)*/)
 {
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
@@ -1357,18 +1362,29 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		}
 	}
 
-	const double& x = m_sensor->getX();
-	const double& y = m_sensor->getY();
-	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
-	//设置信息,设置兴趣树
-	nrheader.setTree(m_nrtree_str);
-	nrheader.setForwardId(forwardId);
+	//if(type == HeaderHelper::INTEREST_NDNSIM || original)
+	//{
+		const double& x = m_sensor->getX();
+		const double& y = m_sensor->getY();
+		ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
+		//设置信息,设置兴趣树
+		nrheader.setTree(m_nrtree_str);
+		nrheader.setForwardId(forwardId);
+		nrPayload->AddHeader(nrheader);
+	//}
+	/*
 	if( HeaderHelper::CONTENT_OBJECT_NDNSIM == type)
 	{
+		
+		ndn::nrndn::nrHeader nrheader;
+		srcPayload->PeekHeader(nrheader);
+		nrheader.setForwardId(forwardId);
+		nrPayload->AddHeader(nrheader);
 		cout<<"(forwarding.cc)"<<m_node->GetId()<<"GetNrPayload，源ID:"<<nrheader.getSourceId()<<endl;
 		getchar();
 	}
-	nrPayload->AddHeader(nrheader);
+	
+	*/
 	return nrPayload;
 }
 
@@ -1510,6 +1526,10 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	// 	2.1 setup nrheader, source id do not change
 	nrheader.setX(x);
 	nrheader.setY(y);
+	nrheader.setForwardId(m_node->GetId());
+	nrheader.setLane(m_sensor->getLane());
+	//cout<<"forwarding.cc转发数据包，当前道路为"<<nrheader.getLane()<<endl;
+	//getchar();
 	nrheader.setPriorityList(newPriorityList);
 	nrPayload->AddHeader(nrheader);
 

@@ -111,6 +111,14 @@ public:
 		m_tree = t;
 		m_treesize=t.size();
 	}
+	std::string getLane() const
+	{
+		return m_lane;
+	}
+	void setLane(std::string lane)
+	{
+		m_lane = lane;
+	}
 	//\}
 
 private:
@@ -122,6 +130,7 @@ private:
 				  	m_priorityList;//\(forwarder)	priority list indicating the gap between transmitting
 	uint32_t m_treesize;
 	std::string m_tree;
+	std::string m_lane;
 
 
 };
