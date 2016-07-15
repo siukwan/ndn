@@ -103,7 +103,7 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 
 void EntryNrImpl::CleanAllNodes()
 {
-	incomingnb.clear();
+	m_incomingnbs.clear();
 }
 //cout表项内容
 void EntryNrImpl::listPitEntry()
