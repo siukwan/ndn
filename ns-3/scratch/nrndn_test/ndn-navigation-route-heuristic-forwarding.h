@@ -235,7 +235,7 @@ private:
 	 * @param dataName  the data name of the Packet. If it is an interest packet, just give empty reference: *((Name*)NULL)
 	 * \return	Payload packet
 	 */
-	Ptr<Packet> GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload,uint32_t forwardId,const Name& dataName = *((Name*)NULL), bool original = true);
+	Ptr<Packet> GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload,uint32_t forwardId,const Name& dataName = *((Name*)NULL), bool original =true);
 
 	/**
 	  * \brief	Process hello message
