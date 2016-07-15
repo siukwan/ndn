@@ -846,8 +846,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					sendInterval = (MilliSeconds(random) + ( index + m_gap ) * m_timeSlot);
 			}
 
-			//Ptr<Packet> payload22 = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),m_node->GetId(),data->GetName());
-			//data->SetPayload(payload22);
+			Ptr<Packet> payload22 = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),m_node->GetId(),data->GetName());
+			data->SetPayload(payload22);
 			
 			m_sendingDataEvent[nodeId][signature]=
 					Simulator::Schedule(sendInterval,
@@ -1341,6 +1341,8 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		}
 	case HeaderHelper::CONTENT_OBJECT_NDNSIM:
 		{
+			if (forwardId != 999999999)
+				break; 
 			priorityList = GetPriorityListOfDataSource(dataName);
 			if(priorityList.empty())//There is no interested nodes behind
 			{
@@ -1357,18 +1359,29 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		}
 	}
 
-	const double& x = m_sensor->getX();
-	const double& y = m_sensor->getY();
-	ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
-	//设置信息,设置兴趣树
-	nrheader.setTree(m_nrtree_str);
-	nrheader.setForwardId(forwardId);
+	if(type == HeaderHelper::INTEREST_NDNSIM)
+	{
+		const double& x = m_sensor->getX();
+		const double& y = m_sensor->getY();
+		ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
+		//设置信息,设置兴趣树
+		nrheader.setTree(m_nrtree_str);
+		nrheader.setForwardId(forwardId);
+		nrPayload->AddHeader(nrheader);
+	}
+	
 	if( HeaderHelper::CONTENT_OBJECT_NDNSIM == type)
 	{
+		
+		ndn::nrndn::nrHeader nrheader;
+		srcPayload->PeekHeader(nrheader);
+		nrheader.setForwardId(forwardId);
+		nrPayload->AddHeader(nrheader);
 		cout<<"(forwarding.cc)"<<m_node->GetId()<<"GetNrPayload，源ID:"<<nrheader.getSourceId()<<endl;
 		getchar();
 	}
-	nrPayload->AddHeader(nrheader);
+	
+	
 	return nrPayload;
 }
 
