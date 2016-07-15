@@ -1341,7 +1341,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		}
 	case HeaderHelper::CONTENT_OBJECT_NDNSIM:
 		{
-			if (dataName == null)
+			if (dataName == *((Name*)NULL))
 				break; 
 			priorityList = GetPriorityListOfDataSource(dataName);
 			if(priorityList.empty())//There is no interested nodes behind
