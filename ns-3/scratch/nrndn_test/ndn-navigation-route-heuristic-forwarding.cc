@@ -846,8 +846,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					sendInterval = (MilliSeconds(random) + ( index + m_gap ) * m_timeSlot);
 			}
 
-			Ptr<Packet> payload22 = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),m_node->GetId(),data->GetName());
-			data->SetPayload(payload22);
+			//Ptr<Packet> payload22 = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),m_node->GetId(),data->GetName());
+			//data->SetPayload(payload22);
 			
 			m_sendingDataEvent[nodeId][signature]=
 					Simulator::Schedule(sendInterval,
