@@ -161,11 +161,13 @@ bool NrPitImpl::UpdatePitByInterestTree(Ptr<pit::nrndn::NrInterestTreeImpl>&rece
 		//删除指定id的邻居
 		Ptr<EntryNrImpl> pitEntry_siu = DynamicCast<EntryNrImpl>(*pit);
 		pitEntry_siu->CleanPITNeighbors(id);
+		//改为清空所有节点
+		pitEntry_siu->CleanAllNodes();
 	}
 	
 	cout<<"(pit-impl.cc)删除后"<<id<<endl;
 	showPit();
-	getchar();
+	//getchar();
 	
 	std::ostringstream os;
 	//进行广度优先搜索，把兴趣树的所有节点都放到set里面
@@ -209,6 +211,10 @@ bool NrPitImpl::UpdatePitByInterestTree(Ptr<pit::nrndn::NrInterestTreeImpl>&rece
 			//std::cout<<uriConvertToString((*pit)->GetInterest()->GetName().toUri())<<" ";
 		}
 	}
+	cout<<"(pit-impl.cc)updateByTree增加后"<<id<<endl;
+	showPit();
+	getchar();
+	
 	/*if( id == 15)
 	{
 		cout<<"\n(pit-impl.cc)添加后"<<id<<endl;

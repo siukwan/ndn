@@ -100,6 +100,11 @@ void EntryNrImpl::CleanPITNeighbors(uint32_t id)
 	if (incomingnb != m_incomingnbs.end())
 		m_incomingnbs.erase(incomingnb);
 }
+
+void EntryNrImpl::CleanAllNodes()
+{
+	incomingnb.clear();
+}
 //cout表项内容
 void EntryNrImpl::listPitEntry()
 {
