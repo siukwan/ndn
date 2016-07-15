@@ -668,12 +668,13 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<endl;
 	ofile.close();
 
-
+	/*
 	if(isDuplicatedData(nodeId,signature))
 	{
 		//cout<<"OnData重复包"<<endl;
 	}
-
+	*/
+	//已经被发送了，不用再转发
 	if(m_dataSignatureSeen.Get(data->GetSignature()))
 	{
 		//cout<<"OnData重复包2......................."<<endl;
@@ -694,6 +695,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			nrheader.getX(), nrheader.getY(),
 			m_sensor->getNavigationRoute());
 	std::vector<uint32_t>::const_iterator priorityListIt;
+	
+	//找出当前节点是否在优先级列表中
 	priorityListIt = find(pri.begin(),pri.end(),m_node->GetId());
 
 	if(msgdirection.first
@@ -726,11 +729,13 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	{
 		if(isDuplicatedData(nodeId,signature))
 		{
+			//不在优先级列表中
 			if(priorityListIt==pri.end())
 			{
 				ExpireDataPacketTimer(nodeId,signature);
 				return;
 			}
+			//在优先级列表中
 			else
 			{
 				DropDataPacket(data);
@@ -742,6 +747,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			Ptr<pit::Entry> Will = WillInterestedData(data);
 			if (!Will)
 			{
+				//不在优先级列表中
 				if (priorityListIt == pri.end())
 				{
 					DropDataPacket(data);
