@@ -846,7 +846,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					sendInterval = (MilliSeconds(random) + ( index + m_gap ) * m_timeSlot);
 			}
 
-			Ptr<Packet> payload22 = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),m_node->GetId(),data->GetName());
+			Ptr<Packet> payload22 = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),m_node->GetId(),data->GetName(), false);
 			data->SetPayload(payload22);
 			
 			m_sendingDataEvent[nodeId][signature]=
@@ -1324,7 +1324,7 @@ vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 	return result;
 }
 
-Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload,uint32_t forwardId, const Name& dataName/* = *((Name*)NULL)*/)
+Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload,uint32_t forwardId, const Name& dataName/* = *((Name*)NULL)*/, bool original)
 {
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
@@ -1341,7 +1341,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		}
 	case HeaderHelper::CONTENT_OBJECT_NDNSIM:
 		{
-
+			if (!original) break;
 			priorityList = GetPriorityListOfDataSource(dataName);
 			if(priorityList.empty())//There is no interested nodes behind
 			{
