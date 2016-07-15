@@ -730,7 +730,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		//					or 2) and it is from location in front of it along the navigation route
 	{
 		cout<<"forward.cc 数据包在的道路header："<<nrheader.getLane()<<" 当前节点所在道路："<<m_sensor->getLane()<<endl;
-		if(isDuplicatedData(nodeId,signature) && nrheader.getLane() == m_sensor->getLane())
+		if(isDuplicatedData(nodeId,signature) /*&& nrheader.getLane() == m_sensor->getLane()*/)
 		{
 			cout<<"重复丢弃"<<endl;
 			getchar();
