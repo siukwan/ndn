@@ -1522,6 +1522,7 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	// 	2.1 setup nrheader, source id do not change
 	nrheader.setX(x);
 	nrheader.setY(y);
+	nrheader.setForwardId(m_node->GetId());
 	nrheader.setPriorityList(newPriorityList);
 	nrPayload->AddHeader(nrheader);
 
