@@ -1358,7 +1358,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		}
 	}
 
-	if(type == HeaderHelper::INTEREST_NDNSIM)
+	if(type == HeaderHelper::INTEREST_NDNSIM || original)
 	{
 		const double& x = m_sensor->getX();
 		const double& y = m_sensor->getY();
