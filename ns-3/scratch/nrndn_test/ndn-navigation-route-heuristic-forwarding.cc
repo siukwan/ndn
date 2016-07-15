@@ -1325,7 +1325,7 @@ vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 }
 
 Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, 
-			Ptr<const Packet> srcPayload,uint32_t forwardId, const Name& dataName /*= *((Name*)NULL) */, original = true)
+			Ptr<const Packet> srcPayload,uint32_t forwardId, const Name& dataName /*= *((Name*)NULL) */, bool original = true)
 {
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
