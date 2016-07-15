@@ -226,9 +226,11 @@ bool NrPitImpl::UpdatePitByInterestTree(Ptr<pit::nrndn::NrInterestTreeImpl>&rece
 //小锟添加，通过兴趣树更新PIT表
 bool NrPitImpl::UpdatePitByInterestTree2(Ptr<pit::nrndn::NrInterestTreeImpl>&receivetree)
 {
+	
+	/*
 	cout<<"(pit-impl.cc)更新前"<<endl;
 	showPit();
-	
+	*/
 	m_pitContainer.clear();
 	
 	std::ostringstream os;
@@ -276,11 +278,11 @@ bool NrPitImpl::UpdatePitByInterestTree2(Ptr<pit::nrndn::NrInterestTreeImpl>&rec
 		count2=0;
 		level++;
 	}
-
+/*
 	cout<<"(pit-impl.cc)更新后后后"<<endl;
 	showPit();
 	getchar();
-	
+*/	
 	/*if( id == 15)
 	{
 		cout<<"\n(pit-impl.cc)添加后"<<id<<endl;
