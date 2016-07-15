@@ -127,10 +127,11 @@ void nrProducer::laneChange(std::string oldLane, std::string newLane)
 	NS_LOG_INFO ("Lane change of node "<<GetNode()->GetId()
 			<<" : move from " << oldLane << " to " << newLane );
 	this->SetAttribute("Prefix", StringValue('/' + newLane));
+	/*
 	cout<<"nrproducer.cc: Lane change of node "<<GetNode()->GetId()
 		<<" : move from " << oldLane << " to " << newLane <<endl;
 	getchar();
-	
+	*/
 	//道路改变需要删除pit相应的face
 	//首先要处理兴趣树
 	
