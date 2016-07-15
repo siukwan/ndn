@@ -107,6 +107,7 @@ public:
    */
   bool UpdatePit(const std::vector<std::string>& route,const uint32_t& id);
   bool UpdatePitByInterestTree(Ptr<pit::nrndn::NrInterestTreeImpl>&receivetree,const uint32_t& id);
+  bool UpdatePitByInterestTree2(Ptr<pit::nrndn::NrInterestTreeImpl>&receivetree);
   void showPit();
   void laneChange(std::string oldLane, std::string newLane);
 

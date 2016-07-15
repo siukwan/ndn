@@ -222,6 +222,77 @@ bool NrPitImpl::UpdatePitByInterestTree(Ptr<pit::nrndn::NrInterestTreeImpl>&rece
 	return true;
 }
 
+
+//小锟添加，通过兴趣树更新PIT表
+bool NrPitImpl::UpdatePitByInterestTree2(Ptr<pit::nrndn::NrInterestTreeImpl>&receivetree)
+{
+	cout<<"(pit-impl.cc)更新前"<<endl;
+	showPit();
+	
+	m_pitContainer.clear();
+	
+	std::ostringstream os;
+	//进行广度优先搜索，把兴趣树的所有节点都放到set里面
+	set<string> tree_set;
+	if(receivetree->root == NULL)
+		return false;
+	queue<InterestTreeNode*> q;
+	q.push(receivetree->root);
+	int count1=1;
+	int count2=0;
+	int level=0;
+	while(!q.empty())
+	{
+		for(int i=0;i<count1;i++)
+		{
+			InterestTreeNode* head=q.front();
+			q.pop();
+			tree_set.insert(head->lane);
+			
+			Ptr<Name> name = ns3::Create<Name>(head->lane);
+			Ptr<Interest> interest=ns3::Create<Interest> ();
+			interest->SetName				(name);
+			interest->SetInterestLifetime	(Time::Max());//never expire
+			//Create a fake FIB entry(if not ,L3Protocol::RemoveFace will have problem when using pitEntry->GetFibEntry)
+			Ptr<fib::Entry> fibEntry=ns3::Create<fib::Entry>(Ptr<Fib>(0),Ptr<Name>(0));
+			Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,m_cleanInterval) ;
+			m_pitContainer.push_back(entry);
+			
+			Ptr<EntryNrImpl> pitEntry_siu = DynamicCast<EntryNrImpl>(m_pitContainer.back());
+			
+			for(auto ite = head->NodeId.begin(); ite != head->NodeId.end(); ite++)
+			{
+				pitEntry_siu->AddIncomingNeighbors(ite->first);
+			}
+			
+			map<string, InterestTreeNode* >::iterator ite = head->child.begin();
+			for(;ite!=head->child.end();ite++)
+			{
+				count2++;
+				q.push(ite->second);
+			}
+		}
+		count1=count2;
+		count2=0;
+		level++;
+	}
+
+	cout<<"(pit-impl.cc)更新后后后"<<endl;
+	showPit();
+	getchar();
+	
+	/*if( id == 15)
+	{
+		cout<<"\n(pit-impl.cc)添加后"<<id<<endl;
+		showPit();
+		getchar();
+	}*/
+	//NS_LOG_UNCOND("update pit:"<<os.str());
+	
+	NS_LOG_DEBUG("update pit:"<<os.str());
+	return true;
+}
+
 void
 NrPitImpl::DoDispose ()
 {
