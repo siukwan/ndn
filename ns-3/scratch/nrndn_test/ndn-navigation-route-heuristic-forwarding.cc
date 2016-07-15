@@ -603,14 +603,16 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader(nrheader);
 	uint32_t nodeId=nrheader.getSourceId();
+	uint32_t forwardId = nrheader.getForwardId();
 	uint32_t signature=data->GetSignature();
 	std::vector<uint32_t> newPriorityList;
 	bool IsClearhopCountTag=true;
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 	
 	
-	cout<<"forwarding.cc 节点id："<<m_node->GetId()<<m_running<<": "<<Simulator::Now().GetSeconds()<<" 收到数据包ID:"<<nodeId<<endl;
-	
+	//cout<<"forwarding.cc 节点id："<<m_node->GetId()<<m_running<<": "<<Simulator::Now().GetSeconds()<<" 收到数据包ID:"<<nodeId<<endl;
+	cout<<"forwarding.cc 当前节点："<<m_node->GetId()<<" 原始节点："<<nodeId<<"  转发节点："<<forwardId<<endl;
+	getchar();
 	if(!m_running) return;
 	if(Face::APPLICATION && face->GetFlags())
 	{
@@ -844,6 +846,9 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					sendInterval = (MilliSeconds(random) + ( index + m_gap ) * m_timeSlot);
 			}
 
+			Ptr<Packet> payload22 = GetNrPayload(HeaderHelper::CONTENT_OBJECT_NDNSIM,data->GetPayload(),m_node->GetId(),data->GetName());
+			data->SetPayload(payload22);
+			
 			m_sendingDataEvent[nodeId][signature]=
 					Simulator::Schedule(sendInterval,
 					&NavigationRouteHeuristic::ForwardDataPacket, this, data,
