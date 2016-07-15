@@ -1358,8 +1358,8 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		}
 	}
 
-	if(type == HeaderHelper::INTEREST_NDNSIM || original)
-	{
+	//if(type == HeaderHelper::INTEREST_NDNSIM || original)
+	//{
 		const double& x = m_sensor->getX();
 		const double& y = m_sensor->getY();
 		ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
@@ -1367,8 +1367,8 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		nrheader.setTree(m_nrtree_str);
 		nrheader.setForwardId(forwardId);
 		nrPayload->AddHeader(nrheader);
-	}
-	
+	//}
+	/*
 	if( HeaderHelper::CONTENT_OBJECT_NDNSIM == type)
 	{
 		
@@ -1380,7 +1380,7 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		getchar();
 	}
 	
-	
+	*/
 	return nrPayload;
 }
 
