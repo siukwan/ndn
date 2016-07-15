@@ -1324,7 +1324,7 @@ vector<string> NavigationRouteHeuristic::ExtractRouteFromName(const Name& name)
 	return result;
 }
 
-Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload,uint32_t forwardId, const Name& dataName/* = *((Name*)NULL)*/, bool original)
+Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload,uint32_t forwardId, const Name& dataName/* = *((Name*)NULL)*/)
 {
 	NS_LOG_INFO("Get nr payload, type:"<<type);
 	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
@@ -1341,7 +1341,6 @@ Ptr<Packet> NavigationRouteHeuristic::GetNrPayload(HeaderHelper::Type type, Ptr<
 		}
 	case HeaderHelper::CONTENT_OBJECT_NDNSIM:
 		{
-			if (!original) break;
 			priorityList = GetPriorityListOfDataSource(dataName);
 			if(priorityList.empty())//There is no interested nodes behind
 			{

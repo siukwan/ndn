@@ -40,7 +40,8 @@ nrHeader::nrHeader(const uint32_t& sourceId,const double& x,const double& y,cons
 		m_x(x),
 		m_y(y),
 		m_priorityList(priorityList),
-		m_tree(tree)
+		m_tree(tree),
+		m_lane("")
 {
 	// TODO Auto-generated constructor stub
 
@@ -82,6 +83,7 @@ uint32_t nrHeader::GetSerializedSize() const
 	//2016.1.17增加兴趣树的大小：
 	size += sizeof(uint32_t);//兴趣树的大小
 	size += m_tree.size();
+	size += m_lane.size();
 	return size;
 }
 
@@ -101,6 +103,15 @@ void nrHeader::Serialize(Buffer::Iterator start) const
 		//std::cout<<(int)(m_tree[j])<<" "<<std::endl;
 		//需要强制转换每一个char为uint8_t才能成功序列化和反序列化
 		uint8_t tmp = (uint8_t )(m_tree[j]);
+		i.Write((uint8_t*)&tmp,sizeof(tmp));
+	}
+
+	//2016年7月16日，小锟添加，当前道路的序列化
+	i.WriteHtonU32(m_lane.size());
+	for(uint32_t j=0;j<m_lane.size();++j)
+	{
+		//需要强制转换每一个char为uint8_t才能成功序列化和反序列化
+		uint8_t tmp = (uint8_t )(m_lane[j]);
 		i.Write((uint8_t*)&tmp,sizeof(tmp));
 	}
 
@@ -130,7 +141,18 @@ uint32_t nrHeader::Deserialize(Buffer::Iterator start)
 		m_tree+=(char)a;
 		//std::cout<<a;
 	}
-	//i.Read((uint8_t*)&m_tree,treesize);
+	
+	uint32_t lanesize  = i.ReadNtohU32();
+	m_lane="";
+	for(uint32_t j = 0;j<lanesize;++j)
+	{//还原树
+		uint8_t a;
+		i.Read((uint8_t*)&a,sizeof(a));
+		m_lane+=(char)a;
+		//std::cout<<a;
+	}
+	
+	
 	uint32_t size  = i.ReadNtohU32();
 	for (uint32_t p = 0; p < size; p++)
 	{
