@@ -859,6 +859,13 @@ void nrndnExample::InstallTraffics()
 	SeedManager::SetSeed(1234);
 	UniformVariable rnd(0,nodes.GetN());
 	std::cout<<"插入事件："<<accidentNum<<endl;
+	
+	ofstream ofile;
+	ofile.open("../data.txt");
+	
+	ofile<<"插入事件："<<accidentNum<<endl;
+	ofile.close();
+	
 	for(uint32_t i=0;i<accidentNum;++i)
 	{
 		uint32_t index=rnd.GetValue();

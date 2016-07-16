@@ -867,10 +867,6 @@ void nrndnExample::InstallTraffics()
 	std::cout<<"插入事件："<<accidentNum<<endl;
 	
 	
-	ofstream ofile;
-	ofile.open("../data.txt");
-	ofile<<"插入事件："<<accidentNum<<endl;
-	ofile.close();
 	
 	for(uint32_t i=0;i<accidentNum;++i)
 	{
