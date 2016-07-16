@@ -272,7 +272,12 @@ void nrProducer::OnSendingTrafficData()
 			"node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature());
 	//siukwan add 2016.6.28
 	std::cout<<"nrProducer.cc:"<<Simulator::Now().GetSeconds()<<" node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature()<<std::endl;
-	getchar();
+	//getchar();
+	
+	ofstream ofile;
+	ofile.open("../data.txt",ios::app);
+	ofile<<<<"nrProducer.cc:"<<Simulator::Now().GetSeconds()<<" node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature();
+	ofile.close();
 	FwHopCountTag hopCountTag;
 	data->GetPayload()->AddPacketTag(hopCountTag);
 

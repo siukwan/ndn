@@ -49,7 +49,12 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 	NodeContainer c =NodeContainer::GetGlobal();
 	NodeContainer::Iterator it;
 	int idx = 0;
+	
+	ofstream ofile;
+	ofile.open("../data.txt",ios::app);
+	
 	cout<<"感兴趣的节点：";
+	ofile<<"感兴趣的节点：";
 	for(it=c.Begin();it!=c.End();++it)
 	{
 		Ptr<Application> app=(*it)->GetApplication(appIndex["ns3::ndn::nrndn::nrProducer"]);
@@ -61,10 +66,13 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 		{	
 			++interestSize;
 			cout<<idx<<" ";
+			ofile<<idx<<" ";
 		}
 		idx++;
 	}
 	cout<<"utils:统计结束"<<endl;
+	
+	ofile.close();
 	//getchar();
 	return std::pair<uint32_t, uint32_t>(nodeSize,interestSize);
 }
