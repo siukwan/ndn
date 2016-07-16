@@ -91,7 +91,11 @@ void nrUtils::SetInterestedNodeSize(uint32_t id,
 void nrUtils::IncreaseInterestedNodeCounter(uint32_t id,
 		uint32_t signature)
 {
-	msgArrivalCounter[id][signature].InterestedNodeReceiveCounter++;
+	if(MessageArrivalMapCheck[id][signature] == false)
+	{
+		MessageArrivalMapCheck[id][signature] = true;
+		msgArrivalCounter[id][signature].InterestedNodeReceiveCounter++;
+	}
 }
 
 void nrUtils::IncreaseDisinterestedNodeCounter(uint32_t id,
@@ -226,10 +230,10 @@ ofstream ofile;
 				result.push_back(hitRate);
 
 
-				cout<<it2->first<<"兴趣的节点数量"<<interestedNodeNum<<endl;
-				cout<<"兴趣的节点总数"<<interestedNodeSum<<endl;
-				ofile<<it2->first<<"兴趣的节点数量"<<interestedNodeNum<<endl;
-				ofile<<"兴趣的节点总数"<<interestedNodeSum<<endl<<endl;
+				cout<<it2->first<<" 感兴趣节点数量"<<interestedNodeNum<<endl;
+				cout<<it2->first<<" 兴趣的节点总数"<<interestedNodeSum<<endl;
+				ofile<<it2->first<<" 感兴趣节点数量"<<interestedNodeNum<<endl;
+				ofile<<it2->first<<" 兴趣的节点总数"<<interestedNodeSum<<endl<<endl;
 				getchar();
 			}
 

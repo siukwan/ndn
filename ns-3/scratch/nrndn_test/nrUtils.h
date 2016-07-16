@@ -65,6 +65,7 @@ public:
 	typedef std::unordered_map<uint32_t, std::unordered_map<uint32_t,std::vector<double> > > TransmissionDelayMap;
 	typedef std::unordered_map<uint32_t, std::unordered_map<uint32_t,uint32_t > > ForwardCounterMap;
 	typedef std::unordered_map<uint32_t, std::unordered_map<uint32_t,MsgAttribute> >    MessageArrivalMap;
+	typedef std::unordered_map<uint32_t, std::unordered_map<uint32_t,bool> >    MessageArrivalMapCheck;
 
 	//1. Arrival Condition
 	static MessageArrivalMap msgArrivalCounter;
