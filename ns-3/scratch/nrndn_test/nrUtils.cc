@@ -55,6 +55,7 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 	ofile.open("../data.txt",ios::app);
 	
 	cout<<"感兴趣的节点：";
+	
 	ofile<<"感兴趣的节点：";
 	for(it=c.Begin();it!=c.End();++it)
 	{
