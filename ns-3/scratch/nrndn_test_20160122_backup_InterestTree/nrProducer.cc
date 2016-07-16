@@ -264,11 +264,6 @@ void nrProducer::OnSendingTrafficData()
 	NS_LOG_DEBUG(
 			"node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature());
 	//siukwan add 2015.8.28
-	
-	ofstream ofile;
-	ofile.open("../data.txt",ios::app);
-	ofile<<"siu:"<<"node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature()<<std::endl;
-	ofile.close();
 	std::cout<<"siu:"<<"node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature()<<std::endl;
 
 	FwHopCountTag hopCountTag;
