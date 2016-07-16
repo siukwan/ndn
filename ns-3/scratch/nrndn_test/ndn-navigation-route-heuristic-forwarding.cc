@@ -520,11 +520,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	idit = find(pri.begin(), pri.end(), m_node->GetId());
 	idIsInPriorityList = (idit != pri.end());
 	
+	/*
 	cout<<"forwarding.cc优先级列表为:";
 	for(size_t ii=0;ii<pri.size();++ii)
 		cout<<pri[ii]<< " ";
 	cout<<endl;
 	cout<<"Forwarding.cc 优先级列表判断为"<<idIsInPriorityList<<endl;
+	*/
+	
 	//evaluate end
 	idIsInPriorityList=true;
 		
@@ -552,13 +555,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
 			ndn::nrndn::nrHeader nrheader_tmp;
 			nrPayload_tmp->PeekHeader( nrheader_tmp);
-
+				
+			/*
 			cout<<"forwarding.cc我的ID"<<m_node->GetId()<<"  转发前的ID"<<nrheader.getForwardId()<<"  原始ID为"<<
 					nrheader_tmp.getSourceId()<<"   转发后的ID"<<nrheader_tmp.getForwardId()<<endl;
-
+			*/
 			if(m_node->GetId() == nrheader_tmp.getSourceId() && nrheader.getForwardId()!=999999999)
 			{
-				cout<<"forwarding.cc"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<endl;
+				//cout<<"forwarding.cc"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<endl;
 				//getchar();
 			}
 
