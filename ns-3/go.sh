@@ -5,9 +5,9 @@ if [ $# != 1 ];then
 	program_name="nrndn_test";
 else
 	program_name="nrndn_20160126_easonOriginal";
+fi
 
 program_name2="nrndn_test_20160716_backup";
-fi
 
 #定义时间变量
 git_date=$(date)
