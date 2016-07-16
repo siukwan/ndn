@@ -180,7 +180,7 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 		return root;
 	}
 	//cout<<curLane<<endl;
-	InterestTreeNode*result=NULL;
+	InterestTreeNode* result = NULL;
 	queue<InterestTreeNode*> q;
 	int count1=1;
 	int count2=0;
@@ -194,8 +194,8 @@ InterestTreeNode* NrInterestTreeImpl::levelOrderDelete(string curLane)
 			q.pop();
 			if(head->lane == curLane)
 			{
-				result=head;
-				found =true;
+				result = head;
+				found = true;
 				continue;
 			}
 			else
