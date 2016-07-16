@@ -20,6 +20,7 @@ namespace nrndn
 using namespace std;
 
 nrUtils::MessageArrivalMap nrUtils::msgArrivalCounter;
+nrUtils::MessageArrivalMapCheck nrUtils::msgArrivalCounterCheck;
 nrUtils::ForwardCounterMap nrUtils::forwardCounter;
 nrUtils::ForwardCounterMap nrUtils::interestForwardCounter;
 nrUtils::TransmissionDelayMap nrUtils::TransmissionDelayRecord;
