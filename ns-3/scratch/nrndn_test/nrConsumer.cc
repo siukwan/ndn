@@ -242,7 +242,7 @@ void nrConsumer::OnData(Ptr<const Data> data)
 
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();
 	nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);
-	if(IsInterestData(data->GetName()))
+	if(IsInterestData2(data->GetName(), nrheader.getX(), nrheader.getY()))
 		nrUtils::IncreaseInterestedNodeCounter(nodeId, signature, m_node->GetId());
 	else
 		nrUtils::IncreaseDisinterestedNodeCounter(nodeId, signature, m_node->GetId());
@@ -303,6 +303,39 @@ bool nrConsumer::IsInterestData(const Name& name)
 	it2=std::find(it,route.end(),name.get(0).toUri());
 
 	return (it2!=route.end());
+}
+
+bool nrConsumer::IsInterestData2(const Name& name, x, y)
+{
+	std::vector<std::string> result;
+	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
+	const std::string& currentLane = sensor->getLane();
+	std::vector<std::string>::const_iterator it;
+	std::vector<std::string>::const_iterator it2;
+	const std::vector<std::string>& route = sensor->getNavigationRoute();
+
+	it =std::find(route.begin(),route.end(),currentLane);
+
+	it2=std::find(it,route.end(),name.get(0).toUri());
+
+	//return (it2!=route.end());
+	
+	/不感兴趣
+	if(it2 == route.end())
+		return false;
+	else
+	{
+		pair<bool, double> dataDirection = sensor->getDistanceWith(x, y, sensor->getNavigationRoute());
+		//x,y是数据包产生的车的位置
+		//方向在produce的后面，则感兴趣
+		if(dataDirection.first
+			&&dataDirection.second<0)
+			return false;
+		else
+			return true;
+		
+	}
+	
 }
 
 } /* namespace nrndn */
