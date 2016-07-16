@@ -62,6 +62,11 @@ public:
   /// Report results
   void Report ();
 
+  uint32_t getMethod()
+  {
+	  return method;
+  }
+
 private:
   ///\name parameters
   //\{
@@ -128,6 +133,7 @@ private:
 
   //accuracyRate: among all the nodes received, how many are interested
   double accuracyRate;
+  double disinterestRate;
   double arrivalRate;
   double averageForwardTimes;
   double averageInterestForwardTimes;
@@ -135,7 +141,6 @@ private:
   uint32_t SumForwardTimes;
 
 
-  double disinterestRate;
 
   bool noFwStop;
 
@@ -176,7 +181,11 @@ int main (int argc, char **argv)
 	nrndnExample test;
 	if (!test.Configure(argc, argv))
 		NS_FATAL_ERROR("Configuration failed. Aborted.");
-
+	if(test.getMethod() == 3)
+	{
+		cout<<"编译完成，退出程序"<<endl;
+		return 0;
+	}
 	test.Run();
 	test.Report();
 	return 0;
@@ -213,7 +222,7 @@ nrndnExample::nrndnExample () :
   averageDelay(0),
   SumForwardTimes(0),
   noFwStop(true),
-  TTLMax(1),
+  TTLMax(10),
   virtualPayloadSize(1024)
 {
 	//os =  std::cout;
@@ -377,11 +386,26 @@ void nrndnExample::RunCDSSim()
 void
 nrndnExample::Report ()
 {
-
+	string method_cout="";
+	switch(method)
+	{
+	case 0:
+		method_cout="RunNrndnSim()";
+		break;
+	case 1:
+		method_cout="RunDistSim() ";
+		break;
+	case 2:
+		method_cout="RunCDSSim()  ";
+		break;
+	default:
+		method_cout="Undefine method";
+		break;
+	}
 	gettimeofday(&EndTime, NULL);
 	TimeUse = 1000000*(EndTime.tv_sec-StartTime.tv_sec)+EndTime.tv_usec-StartTime.tv_usec;
 	TimeUse/=1000;
-	NS_LOG_UNCOND ("Report data outputs here");
+	NS_LOG_UNCOND (method_cout+":report data outputs here");
 	time(&endTime);
 	tm *timeOut;
 	timeOut=localtime(&startTime);
@@ -396,40 +420,10 @@ nrndnExample::Report ()
 	cout<<timeOut->tm_year+1900<<"-"<<timeOut->tm_mon+1<<"-"<<timeOut->tm_mday<<" "<<timeOut->tm_hour<<":"<<timeOut->tm_min<<":"<<timeOut->tm_sec<<endl;
 
 	std::cout<<"(main.cc)Report data outputs here\n";
-	std::cout<<"(main.cc)运行方法是：";
-	switch(method)
-	{
-	case 0:
-		std::cout<<"RunNrndnSim()\n";
-		break;
-	case 1:
-		std::cout<<"RunDistSim()\n";
-		break;
-	case 2:
-		std::cout<<"RunCDSSim()\n";
-		break;
-	default:
-		cout<<"Undefine method"<<endl;
-		break;
-	}
+	std::cout<<"(main.cc)运行方法是："<<method_cout<<endl;
 	//1. get statistic first
 	getStatistic();
-	os<<"(main.cc)method:";
-	switch(method)
-	{
-	case 0:
-		os<<"RunNrndnSim()\n";
-		break;
-	case 1:
-		os<<"RunDistSim()\n";
-		break;
-	case 2:
-		os<<"RunCDSSim()\n";
-		break;
-	default:
-		os<<"Undefine method\n"<<endl;
-		break;
-	}
+	os<<"(main.cc)method:"<<method_cout<<endl;
 
 	os<<"(main.cc)accidentNum:"<<accidentNum<<endl;
 	os<<"(main.cc)transRange:"<<transRange<<endl;
@@ -562,7 +556,7 @@ nrndnExample::LoadTraffic()
 	size = mobility->GetNodeSize();
 	std::cout<<"节点size："<<size<<std::endl;
 
-	accidentNum=size*4;
+	accidentNum = size * 1;
 	std::cout<<"(main.cc)修改accidentNum为size的4倍"<<accidentNum<<std::endl;
 
 }
@@ -865,9 +859,6 @@ void nrndnExample::InstallTraffics()
 	SeedManager::SetSeed(1234);
 	UniformVariable rnd(0,nodes.GetN());
 	std::cout<<"插入事件："<<accidentNum<<endl;
-	
-	
-	
 	for(uint32_t i=0;i<accidentNum;++i)
 	{
 		uint32_t index=rnd.GetValue();
@@ -876,7 +867,8 @@ void nrndnExample::InstallTraffics()
 		NS_ASSERT(producer);
 		producer->addAccident();
 	}
-
+	std::cout<<"插入事件：完毕"<<endl;
+	getchar();
 	/*
 	uint32_t InsertIndex=10;//for debug only
 	Ptr<ns3::ndn::nrndn::nrProducer> p= DynamicCast<ns3::ndn::nrndn::nrProducer>(

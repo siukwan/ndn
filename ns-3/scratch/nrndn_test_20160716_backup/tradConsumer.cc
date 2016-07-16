@@ -86,9 +86,9 @@ void tradConsumer::OnData(Ptr<const Data> data)
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();
 	nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);
 	if(IsInterestData(data->GetName()))
-		nrUtils::IncreaseInterestedNodeCounter(nodeId, signature, m_node->GetId());
+		nrUtils::IncreaseInterestedNodeCounter(nodeId,signature);
 	else
-		nrUtils::IncreaseDisinterestedNodeCounter(nodeId, signature, m_node->GetId());
+		nrUtils::IncreaseDisinterestedNodeCounter(nodeId,signature);
 }
 
 bool tradConsumer::IsInterestData(const Name& name)

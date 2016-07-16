@@ -20,7 +20,6 @@ namespace nrndn
 using namespace std;
 
 nrUtils::MessageArrivalMap nrUtils::msgArrivalCounter;
-nrUtils::MessageArrivalMapCheck nrUtils::msgArrivalCounterCheck;
 nrUtils::ForwardCounterMap nrUtils::forwardCounter;
 nrUtils::ForwardCounterMap nrUtils::interestForwardCounter;
 nrUtils::TransmissionDelayMap nrUtils::TransmissionDelayRecord;
@@ -50,12 +49,7 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 	NodeContainer c =NodeContainer::GetGlobal();
 	NodeContainer::Iterator it;
 	int idx = 0;
-	
-	ofstream ofile;
-	ofile.open("../data.txt",ios::app);
-	
 	cout<<"感兴趣的节点：";
-	ofile<<"感兴趣的节点：";
 	for(it=c.Begin();it!=c.End();++it)
 	{
 		Ptr<Application> app=(*it)->GetApplication(appIndex["ns3::ndn::nrndn::nrProducer"]);
@@ -67,14 +61,10 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 		{	
 			++interestSize;
 			cout<<idx<<" ";
-			ofile<<idx<<" ";
 		}
 		idx++;
 	}
-	ofile<<endl;
 	cout<<"utils:统计结束"<<endl;
-	
-	ofile.close();
 	//getchar();
 	return std::pair<uint32_t, uint32_t>(nodeSize,interestSize);
 }
@@ -90,17 +80,13 @@ void nrUtils::SetInterestedNodeSize(uint32_t id,
 }
 
 void nrUtils::IncreaseInterestedNodeCounter(uint32_t id,
-		uint32_t signature, uint32_t interestId)
+		uint32_t signature)
 {
-	if(msgArrivalCounterCheck[id][signature][interestId] == false)
-	{
-		msgArrivalCounterCheck[id][signature][interestId] = true;
-		msgArrivalCounter[id][signature].InterestedNodeReceiveCounter++;
-	}
+	msgArrivalCounter[id][signature].InterestedNodeReceiveCounter++;
 }
 
 void nrUtils::IncreaseDisinterestedNodeCounter(uint32_t id,
-		uint32_t signature, uint32_t interestId)
+		uint32_t signature)
 {
 	msgArrivalCounter[id][signature].DisinterestedNodeReceiveCounter++;
 }
@@ -215,8 +201,7 @@ double nrUtils::GetAverageHitRate()
 	MessageArrivalMap::iterator it1;
 	std::unordered_map<uint32_t,MsgAttribute>::iterator it2;
 	vector<double> result;
-ofstream ofile;
-	ofile.open("../data.txt",ios::app);
+
 	for (it1 = msgArrivalCounter.begin(); it1 != msgArrivalCounter.end(); ++it1)
 	{
 		for (it2 = it1->second.begin(); it2 != it1->second.end(); ++it2)
@@ -230,17 +215,13 @@ ofstream ofile;
 				double hitRate = interestedNodeNum / interestedNodeSum;
 				result.push_back(hitRate);
 
-
-				cout<<it2->first<<" 感兴趣节点数量"<<interestedNodeNum<<endl;
-				cout<<it2->first<<" 兴趣的节点总数"<<interestedNodeSum<<endl;
-				ofile<<it2->first<<" 感兴趣节点数量"<<interestedNodeNum<<endl;
-				ofile<<it2->first<<" 兴趣的节点总数"<<interestedNodeSum<<endl<<endl;
+				cout<<"兴趣的节点数量"<<interestedNodeNum<<endl;
+				cout<<"兴趣的节点总数"<<interestedNodeSum<<endl;
 				getchar();
 			}
 
 		}
 	}
-	ofile.close();
 
 	return GetAverage(result);
 }
