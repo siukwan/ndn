@@ -305,7 +305,7 @@ bool nrConsumer::IsInterestData(const Name& name)
 	return (it2!=route.end());
 }
 
-bool nrConsumer::IsInterestData2(const Name& name, x, y)
+bool nrConsumer::IsInterestData2(const Name& name, double x, double y)
 {
 	std::vector<std::string> result;
 	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
@@ -320,7 +320,7 @@ bool nrConsumer::IsInterestData2(const Name& name, x, y)
 
 	//return (it2!=route.end());
 	
-	/不感兴趣
+	//不感兴趣
 	if(it2 == route.end())
 		return false;
 	else
