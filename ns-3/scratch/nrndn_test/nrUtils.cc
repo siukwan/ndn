@@ -226,9 +226,9 @@ ofstream ofile;
 				result.push_back(hitRate);
 
 
-				cout<<"兴趣的节点数量"<<interestedNodeNum<<endl;
+				cout<<it2->first<<"兴趣的节点数量"<<interestedNodeNum<<endl;
 				cout<<"兴趣的节点总数"<<interestedNodeSum<<endl;
-				ofile<<"兴趣的节点数量"<<interestedNodeNum<<endl;
+				ofile<<it2->first<<"兴趣的节点数量"<<interestedNodeNum<<endl;
 				ofile<<"兴趣的节点总数"<<interestedNodeSum<<endl<<endl;
 				getchar();
 			}
