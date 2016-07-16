@@ -276,7 +276,7 @@ void nrProducer::OnSendingTrafficData()
 	
 	ofstream ofile;
 	ofile.open("../data.txt",ios::app);
-	ofile<<"nrProducer.cc:"<<Simulator::Now().GetSeconds()<<" node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature();
+	ofile<<"nrProducer.cc:"<<Simulator::Now().GetSeconds()<<" node("<< GetNode()->GetId() <<")\t sending Traffic Data: " << data->GetName ()<<" \tsignature:"<<data->GetSignature()<<std::endl<<'\n';
 	ofile.close();
 	FwHopCountTag hopCountTag;
 	data->GetPayload()->AddPacketTag(hopCountTag);
@@ -317,7 +317,11 @@ void nrProducer::setContentStore(std::string prefix)
 
 void nrProducer::addAccident()
 {
+	ofstream ofile;
+	ofile.open("../data.txt",ios::app);
 	std::cout<<"siu:"<<GetNode()->GetId()<<"addAccident"<<endl;
+	
+	ofile<<"siu:"<<GetNode()->GetId()<<"addAccident"<<endl;
 	double start= m_startTime.GetSeconds();
 	double end	= m_stopTime.GetSeconds();
 	double mean=start+(end-start)/2;
@@ -338,7 +342,9 @@ void nrProducer::addAccident()
 	}
 	NS_LOG_DEBUG(m_node->GetId()<<" add accident at "<<t);
 	std::cout<<"siu:"<<m_node->GetId()<<" add accident at "<<t<<endl;
-
+	ofile<<"siu:"<<m_node->GetId()<<" add accident at "<<t<<endl;
+	ofile.close();
+	
 	return;
 }
 bool nrProducer::IsActive()
