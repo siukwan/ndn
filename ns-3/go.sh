@@ -5,6 +5,8 @@ if [ $# != 1 ];then
 	program_name="nrndn_test";
 else
 	program_name="nrndn_20160126_easonOriginal";
+
+program_name2="nrndn_test_20160716_backup";
 fi
 
 #定义时间变量
@@ -22,15 +24,16 @@ mkdir ~/tmp/$file_name
 cd ~/ndn/ns-3/
 #先进行编译
 ./waf --run "$program_name --method=3"
+./waf --run "$program_name2 --method=3"
 
 #后台运行ndn
 ./waf --run "$program_name --method=0" > ~/tmp/$file_name/ndn_record.txt &
 #后台运行dis
 sleep 4
-./waf --run "$program_name --method=1" > ~/tmp/$file_name/dis_record.txt &
+./waf --run "$program_name2 --method=1" > ~/tmp/$file_name/dis_record.txt &
 #后台运行cds
 sleep 4
-./waf --run "$program_name --method=2" > ~/tmp/$file_name/cds_record.txt &
+./waf --run "$program_name2 --method=2" > ~/tmp/$file_name/cds_record.txt &
 
 #等待后台程序结束
 wait
