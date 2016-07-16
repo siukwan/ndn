@@ -626,6 +626,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 			cout<<"优先级列表为空"<<endl;
 		cout<<data->GetName()<<" 收到来自应用层的数据包："<<payload->GetSize()<<endl;
 		//getchar();
+		
+		ns3::ndn::nrndn::nrUtils::IncreaseInterestedNodeCounter(m_node->GetId(), data->GetSignature(), m_node->GetId());
 		if(!payload->GetSize())
 			return;
 		data->SetPayload(payload);
@@ -643,7 +645,6 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		// 2. record the Data Packet(only record the forwarded packet)
 		m_dataSignatureSeen.Put(data->GetSignature(),true);
 		
-		ns3::ndn::nrndn::nrUtils::IncreaseInterestedNodeCounter(nodeId, signature, m_node->GetId());
 		
 		// 3. Then forward the data packet directly
 		Simulator::Schedule(
