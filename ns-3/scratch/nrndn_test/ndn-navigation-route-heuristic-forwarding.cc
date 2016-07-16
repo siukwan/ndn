@@ -345,8 +345,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 	if(nodeId == myNodeId)
 	{
-		cout<<"forwarding.cc收到自己的兴趣包!!!!!!!!!!!!!!!!"<<myNodeId<<endl;
-		getchar();
+		//cout<<"forwarding.cc收到自己的兴趣包!!!!!!!!!!!!!!!!"<<myNodeId<<endl;
+		//getchar();
 	}
 	if(forwardId != 999999999)
 	{
@@ -363,7 +363,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		{
 			if(Simulator::Now().GetSeconds()-m_myInterest[interest->GetNonce()]<10)
 			{//10秒之内W
-					cout<<"(forwarding.cc)"<<m_node->GetId()<<"收到自己("<<nodeId<<")发的兴趣包"<<nrheader.getForwardId()<<"："<<interest->GetNonce()<<"   "<<m_myInterest[interest->GetNonce()]<<endl;
+					//cout<<"(forwarding.cc)"<<m_node->GetId()<<"收到自己("<<nodeId<<")发的兴趣包"<<nrheader.getForwardId()<<"："<<interest->GetNonce()<<"   "<<m_myInterest[interest->GetNonce()]<<endl;
 					//getchar();
 			}
 		}
@@ -1277,7 +1277,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 
 	if(lostForwardNeighbor)
 	{
-		cout<<"负责转发的邻居丢失了,需要重发兴趣包"<<endl;
+		//cout<<"负责转发的邻居丢失了,需要重发兴趣包"<<endl;
 		//getchar();
 	}
 
