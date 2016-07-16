@@ -345,8 +345,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 	if(nodeId == myNodeId)
 	{
-		cout<<"forwarding.cc收到自己的兴趣包!!!!!!!!!!!!!!!!"<<myNodeId<<endl;
-		getchar();
+		//cout<<"forwarding.cc收到自己的兴趣包!!!!!!!!!!!!!!!!"<<myNodeId<<endl;
+		//getchar();
 	}
 	if(forwardId != 999999999)
 	{
@@ -363,7 +363,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		{
 			if(Simulator::Now().GetSeconds()-m_myInterest[interest->GetNonce()]<10)
 			{//10秒之内W
-					cout<<"(forwarding.cc)"<<m_node->GetId()<<"收到自己("<<nodeId<<")发的兴趣包"<<nrheader.getForwardId()<<"："<<interest->GetNonce()<<"   "<<m_myInterest[interest->GetNonce()]<<endl;
+					//cout<<"(forwarding.cc)"<<m_node->GetId()<<"收到自己("<<nodeId<<")发的兴趣包"<<nrheader.getForwardId()<<"："<<interest->GetNonce()<<"   "<<m_myInterest[interest->GetNonce()]<<endl;
 					//getchar();
 			}
 		}
@@ -487,7 +487,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		{
 			//getchar();
 			forwardNeighbors[nodeId]=true;
-			cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<nodeId<<"  "<<myNodeId<<endl;
+			//cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<nodeId<<"  "<<myNodeId<<endl;
 			//getchar();
 		}
 		//cout<<"forwarding.cc!changeFlag"<<m_node->GetId()<<"兴趣树没有发生变化,发送ack"<<endl;
@@ -520,11 +520,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	idit = find(pri.begin(), pri.end(), m_node->GetId());
 	idIsInPriorityList = (idit != pri.end());
 	
+	/*
 	cout<<"forwarding.cc优先级列表为:";
 	for(size_t ii=0;ii<pri.size();++ii)
 		cout<<pri[ii]<< " ";
 	cout<<endl;
 	cout<<"Forwarding.cc 优先级列表判断为"<<idIsInPriorityList<<endl;
+	*/
+	
 	//evaluate end
 	idIsInPriorityList=true;
 		
@@ -552,13 +555,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			Ptr<const Packet> nrPayload_tmp	= interest->GetPayload();
 			ndn::nrndn::nrHeader nrheader_tmp;
 			nrPayload_tmp->PeekHeader( nrheader_tmp);
-
+				
+			/*
 			cout<<"forwarding.cc我的ID"<<m_node->GetId()<<"  转发前的ID"<<nrheader.getForwardId()<<"  原始ID为"<<
 					nrheader_tmp.getSourceId()<<"   转发后的ID"<<nrheader_tmp.getForwardId()<<endl;
-
+			*/
 			if(m_node->GetId() == nrheader_tmp.getSourceId() && nrheader.getForwardId()!=999999999)
 			{
-				cout<<"forwarding.cc"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<endl;
+				//cout<<"forwarding.cc"<<m_node->GetId()<<"收到自己的ID！！！！！！！"<<endl;
 				//getchar();
 			}
 
@@ -734,7 +738,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		//					or 2) and it is from location in front of it along the navigation route
 	{
 		//cout<<"forward.cc 数据包在的道路header："<<nrheader.getLane()<<" 当前节点所在道路："<<m_sensor->getLane()<<endl;
-		if(isDuplicatedData(nodeId,signature) && nrheader.getLane() == m_sensor->getLane())
+		if(isDuplicatedData(nodeId,signature) /*&& nrheader.getLane() == m_sensor->getLane()*/)
 		{
 			//cout<<"重复丢弃"<<endl;
 			//getchar();
@@ -1277,7 +1281,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 
 	if(lostForwardNeighbor)
 	{
-		cout<<"负责转发的邻居丢失了,需要重发兴趣包"<<endl;
+		//cout<<"负责转发的邻居丢失了,需要重发兴趣包"<<endl;
 		//getchar();
 	}
 

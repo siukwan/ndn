@@ -67,7 +67,7 @@ public:
 	 * \brief Decide whether a lane is interested
 	 */
 	bool IsInterestLane(const std::string& lane);
-
+	bool IsInterestLane2(const std::string& lane, double x, double y);
 	void ScheduleAccident(double Time);
 
 protected:

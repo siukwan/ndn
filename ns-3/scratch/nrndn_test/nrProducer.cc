@@ -284,7 +284,7 @@ void nrProducer::OnSendingTrafficData()
 	//找出当前时刻，感兴趣节点的总数
 	std::pair<uint32_t, uint32_t> size_InterestSize =
 				nrUtils::GetNodeSizeAndInterestNodeSize(GetNode()->GetId(),
-						data->GetSignature(), m_prefix.get(0).toUri());
+						data->GetSignature(), m_prefix.get(0).toUri(), m_sensor->getX(), m_sensor->getY());
 						
 	//设置节点数量，感兴趣的节点总数
 	nrUtils::SetNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.first);
@@ -367,6 +367,40 @@ bool nrProducer::IsInterestLane(const std::string& lane)
 
 	return (it2!=route.end());
 }
+
+bool nrProducer::IsInterestLane2(const std::string& lane, double x, double y)
+{
+	std::vector<std::string> result;
+	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
+	const std::string& currentLane = sensor->getLane();
+	std::vector<std::string>::const_iterator it;
+	std::vector<std::string>::const_iterator it2;
+	const std::vector<std::string>& route = sensor->getNavigationRoute();
+
+	it =std::find(route.begin(),route.end(),currentLane);
+
+	it2=std::find(it,route.end(),lane);
+
+	//return (it2!=route.end());
+	
+	//不感兴趣
+	if(it2 == route.end())
+		return false;
+	else
+	{
+		pair<bool, double> dataDirection = sensor->getDistanceWith(x, y, sensor->getNavigationRoute());
+		//x,y是数据包产生的车的位置
+		//方向在produce的后面，则感兴趣
+		if(dataDirection.first
+			&&dataDirection.second<0)
+			return false;
+		else
+			return true;
+		
+	}
+	
+}
+
 
 } /* namespace nrndn */
 } /* namespace ndn */

@@ -43,7 +43,7 @@ nrUtils::~nrUtils()
 }
 
 std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
-		uint32_t id, uint32_t signature, const std::string& lane)
+		uint32_t id, uint32_t signature, const std::string& lane, double x, double y)
 {
 	uint32_t nodeSize = 0;
 	uint32_t interestSize=0;
@@ -55,6 +55,7 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 	ofile.open("../data.txt",ios::app);
 	
 	cout<<"感兴趣的节点：";
+	
 	ofile<<"感兴趣的节点：";
 	for(it=c.Begin();it!=c.End();++it)
 	{
@@ -63,7 +64,8 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 		NS_ASSERT(producer);
 		if(producer->IsActive())
 			++nodeSize;
-		if(producer->IsInterestLane(lane))
+		
+		if(producer->IsInterestLane2(lane, x, y))
 		{	
 			++interestSize;
 			cout<<idx<<" ";
@@ -72,9 +74,9 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 		idx++;
 	}
 	ofile<<endl;
+	ofile.close();
 	cout<<"utils:统计结束"<<endl;
 	
-	ofile.close();
 	//getchar();
 	return std::pair<uint32_t, uint32_t>(nodeSize,interestSize);
 }
