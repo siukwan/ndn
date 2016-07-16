@@ -145,6 +145,7 @@ void NrInterestTreeImpl::levelOrder()
 		level++;
 		cout<<endl;
 	}
+	cout<<"(InterestTree)层序遍历结束"<<endl;
 	//getchar();
 }
 

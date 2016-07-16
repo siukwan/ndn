@@ -1,11 +1,24 @@
 #!/bin/bash
 
-#参数个数为1(第一个参数为程序的名字)，则默认是nrndn_test
-if [ $# != 1 ];then
-	program_name="nrndn_test";
-else
-	program_name="nrndn_20160126_easonOriginal";
-fi
+
+dataNum=0
+usage()
+{
+	echo "Usage: `basename $0` -d [dataNum]"
+}
+
+while getopts :qd:l: OPTION
+do
+	case $OPTION in
+			d) dataNum=$OPTARG
+			;;
+	esac
+done
+echo $dataNum
+usage
+
+program_name="nrndn_test";
+
 
 program_name2="nrndn_test_20160716_backup";
 
@@ -27,13 +40,13 @@ cd ~/ndn/ns-3/
 ./waf --run "$program_name2 --method=3"
 
 #后台运行ndn
-./waf --run "$program_name --method=0" > ~/tmp/$file_name/ndn_record.txt &
+./waf --run "$program_name --accidentNum=$dataNum --method=0" > ~/tmp/$file_name/ndn_record.txt &
 #后台运行dis
 sleep 4
-./waf --run "$program_name2 --method=1" > ~/tmp/$file_name/dis_record.txt &
+./waf --run "$program_name2 --accidentNum=$dataNum --method=1" > ~/tmp/$file_name/dis_record.txt &
 #后台运行cds
 sleep 4
-./waf --run "$program_name2 --method=2" > ~/tmp/$file_name/cds_record.txt &
+./waf --run "$program_name2 --accidentNum=$dataNum --method=2" > ~/tmp/$file_name/cds_record.txt &
 
 #等待后台程序结束
 wait

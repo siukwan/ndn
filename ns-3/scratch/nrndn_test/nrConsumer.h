@@ -80,6 +80,7 @@ protected:
 	  OnInterest (Ptr<const Interest> interest);
 
 	  bool IsInterestData(const Name& name);
+	  bool IsInterestData2(const Name& name, double x, double y);
 private:
 	  typedef ConsumerCbr super;
 	  Ptr<NodeSensor> m_sensor;
