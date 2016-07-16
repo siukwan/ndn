@@ -65,7 +65,7 @@ public:
 	typedef std::unordered_map<uint32_t, std::unordered_map<uint32_t,std::vector<double> > > TransmissionDelayMap;
 	typedef std::unordered_map<uint32_t, std::unordered_map<uint32_t,uint32_t > > ForwardCounterMap;
 	typedef std::unordered_map<uint32_t, std::unordered_map<uint32_t,MsgAttribute> >    MessageArrivalMap;
-	typedef std::unordered_map<uint32_t, std::unordered_map<uint32_t,bool> >    MessageArrivalMapCheck;
+	typedef std::unordered_map<uint32_t, std::unordered_map<uint32_t,std::unordered_map<uint32_t,bool> > >    MessageArrivalMapCheck;
 
 	//1. Arrival Condition
 	static MessageArrivalMap msgArrivalCounter;
@@ -73,8 +73,8 @@ public:
 	static std::pair<uint32_t, uint32_t> GetNodeSizeAndInterestNodeSize(uint32_t id,uint32_t signature, const std::string& lane);
 	static void SetNodeSize(uint32_t id, uint32_t signature,uint32_t nodesize);
 	static void SetInterestedNodeSize(uint32_t id,uint32_t signature,uint32_t InterestedNodeSize);
-	static void IncreaseInterestedNodeCounter(uint32_t id,uint32_t signature);
-	static void IncreaseDisinterestedNodeCounter(uint32_t id,uint32_t signature);
+	static void IncreaseInterestedNodeCounter(uint32_t id,uint32_t signature, uint32_t interestId);
+	static void IncreaseDisinterestedNodeCounter(uint32_t id,uint32_t signature, uint32_t interestId);
 
 	//2. forward times
 	static ForwardCounterMap forwardCounter;

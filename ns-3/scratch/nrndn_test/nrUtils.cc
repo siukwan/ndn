@@ -90,17 +90,17 @@ void nrUtils::SetInterestedNodeSize(uint32_t id,
 }
 
 void nrUtils::IncreaseInterestedNodeCounter(uint32_t id,
-		uint32_t signature)
+		uint32_t signature, uint32_t interestId)
 {
-	if(msgArrivalCounterCheck[id][signature] == false)
+	if(msgArrivalCounterCheck[id][signature][interestId] == false)
 	{
-		msgArrivalCounterCheck[id][signature] = true;
+		msgArrivalCounterCheck[id][signature][interestId] = true;
 		msgArrivalCounter[id][signature].InterestedNodeReceiveCounter++;
 	}
 }
 
 void nrUtils::IncreaseDisinterestedNodeCounter(uint32_t id,
-		uint32_t signature)
+		uint32_t signature, uint32_t interestId)
 {
 	msgArrivalCounter[id][signature].DisinterestedNodeReceiveCounter++;
 }

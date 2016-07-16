@@ -642,6 +642,9 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		
 		// 2. record the Data Packet(only record the forwarded packet)
 		m_dataSignatureSeen.Put(data->GetSignature(),true);
+		
+		nrUtils::IncreaseInterestedNodeCounter(nodeId, signature, m_node->GetId());
+		
 		// 3. Then forward the data packet directly
 		Simulator::Schedule(
 				MilliSeconds(m_uniformRandomVariable->GetInteger(0, 100)),

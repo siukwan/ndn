@@ -243,9 +243,9 @@ void nrConsumer::OnData(Ptr<const Data> data)
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();
 	nrUtils::InsertTransmissionDelayItem(nodeId,signature,delay);
 	if(IsInterestData(data->GetName()))
-		nrUtils::IncreaseInterestedNodeCounter(nodeId,signature);
+		nrUtils::IncreaseInterestedNodeCounter(nodeId, signature, m_node->GetId());
 	else
-		nrUtils::IncreaseDisinterestedNodeCounter(nodeId,signature);
+		nrUtils::IncreaseDisinterestedNodeCounter(nodeId, signature, m_node->GetId());
 	//NS_LOG_UNCOND("At time "<<Simulator::Now().GetSeconds()<<":"<<m_node->GetId()<<"\treceived data "<<name.toUri()<<" from "<<nodeId<<"\tSignature "<<signature);
 }
 
