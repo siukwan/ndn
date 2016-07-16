@@ -96,6 +96,7 @@ void nrUtils::IncreaseInterestedNodeCounter(uint32_t id,
 {
 	if(msgArrivalCounterCheck[id][signature][interestId] == false)
 	{
+		cout<<"感兴趣统计:id"<<id<<" sig"<<signature<<" interest"<<interestId<<" size:"<<msgArrivalCounterCheck[id][signature].size()<<endl;
 		msgArrivalCounterCheck[id][signature][interestId] = true;
 		msgArrivalCounter[id][signature].InterestedNodeReceiveCounter++;
 	}
