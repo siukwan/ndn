@@ -368,6 +368,40 @@ bool nrProducer::IsInterestLane(const std::string& lane)
 	return (it2!=route.end());
 }
 
+bool nrProducer::IsInterestLane2(const std::string& lane, double x, double y)
+{
+	std::vector<std::string> result;
+	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
+	const std::string& currentLane = sensor->getLane();
+	std::vector<std::string>::const_iterator it;
+	std::vector<std::string>::const_iterator it2;
+	const std::vector<std::string>& route = sensor->getNavigationRoute();
+
+	it =std::find(route.begin(),route.end(),currentLane);
+
+	it2=std::find(it,route.end(),lane);
+
+	return (it2!=route.end());
+	
+	//不感兴趣
+	if(it2 == route.end())
+		return false;
+	else
+	{
+		pair<bool, double> dataDirection = sensor->getDistanceWith(x, y, sensor->getNavigationRoute());
+		//x,y是数据包产生的车的位置
+		//方向在produce的后面，则感兴趣
+		if(dataDirection.first
+			&&dataDirection.second<0)
+			return false;
+		else
+			return true;
+		
+	}
+	
+}
+
+
 } /* namespace nrndn */
 } /* namespace ndn */
 } /* namespace ns3 */

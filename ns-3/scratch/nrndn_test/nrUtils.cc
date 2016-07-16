@@ -63,7 +63,8 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 		NS_ASSERT(producer);
 		if(producer->IsActive())
 			++nodeSize;
-		if(producer->IsInterestLane(lane))
+		
+		if(producer->IsInterestLane2(lane, m_sensor->getX(), m_sensor->getY()))
 		{	
 			++interestSize;
 			cout<<idx<<" ";
@@ -72,9 +73,9 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 		idx++;
 	}
 	ofile<<endl;
+	ofile.close();
 	cout<<"utils:统计结束"<<endl;
 	
-	ofile.close();
 	//getchar();
 	return std::pair<uint32_t, uint32_t>(nodeSize,interestSize);
 }
