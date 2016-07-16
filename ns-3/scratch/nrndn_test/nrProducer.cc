@@ -284,7 +284,7 @@ void nrProducer::OnSendingTrafficData()
 	//找出当前时刻，感兴趣节点的总数
 	std::pair<uint32_t, uint32_t> size_InterestSize =
 				nrUtils::GetNodeSizeAndInterestNodeSize(GetNode()->GetId(),
-						data->GetSignature(), m_prefix.get(0).toUri());
+						data->GetSignature(), m_prefix.get(0).toUri(), m_sensor->getX(), m_sensor->getY());
 						
 	//设置节点数量，感兴趣的节点总数
 	nrUtils::SetNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.first);
