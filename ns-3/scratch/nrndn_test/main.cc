@@ -210,7 +210,7 @@ nrndnExample::nrndnExample () :
   flood(false),
   transRange(300),
   HelloLogEnable(true),
-  accidentNum(200),//默认3
+  accidentNum(0),//默认3
   method(0),
   interestFrequency(0.1),//本来是1秒1次,0.0001是10000秒一次
   hitRate(0),
@@ -556,8 +556,9 @@ nrndnExample::LoadTraffic()
 	size = mobility->GetNodeSize();
 	std::cout<<"节点size："<<size<<std::endl;
 
-	accidentNum = size * 1;
-	std::cout<<"(main.cc)修改accidentNum为size的4倍"<<accidentNum<<std::endl;
+	if( accidentNum == 0 )
+		accidentNum = size * 1;
+	std::cout<<"(main.cc)修改accidentNum:"<<accidentNum<<std::endl;
 
 }
 
