@@ -210,7 +210,8 @@ double nrUtils::GetAverageHitRate()
 	MessageArrivalMap::iterator it1;
 	std::unordered_map<uint32_t,MsgAttribute>::iterator it2;
 	vector<double> result;
-
+ofstream ofile;
+	ofile.open("../data.txt",ios::app);
 	for (it1 = msgArrivalCounter.begin(); it1 != msgArrivalCounter.end(); ++it1)
 	{
 		for (it2 = it1->second.begin(); it2 != it1->second.end(); ++it2)
@@ -224,13 +225,17 @@ double nrUtils::GetAverageHitRate()
 				double hitRate = interestedNodeNum / interestedNodeSum;
 				result.push_back(hitRate);
 
+
 				cout<<"兴趣的节点数量"<<interestedNodeNum<<endl;
 				cout<<"兴趣的节点总数"<<interestedNodeSum<<endl;
+				ofile<<"兴趣的节点数量"<<interestedNodeNum<<endl;
+				ofile<<"兴趣的节点总数"<<interestedNodeSum<<endl<<endl;
 				getchar();
 			}
 
 		}
 	}
+	ofile.close();
 
 	return GetAverage(result);
 }
