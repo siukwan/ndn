@@ -69,6 +69,7 @@ public:
 
 	//1. Arrival Condition
 	static MessageArrivalMap msgArrivalCounter;
+	static MessageArrivalMapCheck msgArrivalCounterCheck;
 	static std::pair<uint32_t, uint32_t> GetNodeSizeAndInterestNodeSize(uint32_t id,uint32_t signature, const std::string& lane);
 	static void SetNodeSize(uint32_t id, uint32_t signature,uint32_t nodesize);
 	static void SetInterestedNodeSize(uint32_t id,uint32_t signature,uint32_t InterestedNodeSize);

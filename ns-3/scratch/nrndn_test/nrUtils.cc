@@ -91,9 +91,9 @@ void nrUtils::SetInterestedNodeSize(uint32_t id,
 void nrUtils::IncreaseInterestedNodeCounter(uint32_t id,
 		uint32_t signature)
 {
-	if(MessageArrivalMapCheck[id][signature] == false)
+	if(msgArrivalCounterCheck[id][signature] == false)
 	{
-		MessageArrivalMapCheck[id][signature] = true;
+		msgArrivalCounterCheck[id][signature] = true;
 		msgArrivalCounter[id][signature].InterestedNodeReceiveCounter++;
 	}
 }
