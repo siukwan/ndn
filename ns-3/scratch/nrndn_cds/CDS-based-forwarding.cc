@@ -176,7 +176,7 @@ void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 	if(!m_running) return;
 	if(INTEREST_MESSAGE == interest->GetScope())
 	{
-		cout<<m_node->GetId()<<"发送兴趣包"<<Simulator::Now().GetSeconds()<<endl;
+		//cout<<m_node->GetId()<<"发送兴趣包"<<Simulator::Now().GetSeconds()<<endl;
 		OnInterest_application( interest);
 		return;
 	}
@@ -491,6 +491,7 @@ void CDSBasedForwarding::CreateInterestPacket()
 	NeighborList::const_iterator nbit;
 	for(nbit=nblist.begin();nbit!=nblist.end();++nbit)
 		OneHopNeighborList.push_back(nbit->first);
+	cout<<"OneHopNeighborList size:"<<OneHopNeighborList.size()<<endl;
 
 	Ptr<Packet> newPayload	= Create<Packet> ();
 	ndn::nrndn::nrHeader mprHeader;
@@ -509,12 +510,15 @@ void CDSBasedForwarding::CreateInterestPacket()
 	pInterest->SetScope(INTEREST_MESSAGE);	// The flag indicate it is hello message
 	pInterest->SetName(name); //interest name is lane;
 	
-	cout<<m_node->GetId()<<"生成并发送兴趣包"<<Simulator::Now().GetSeconds()<<endl;
-	getchar();
+	//cout<<m_node->GetId()<<"生成并发送兴趣包"<<Simulator::Now().GetSeconds()<<endl;
+	//getchar();
 	//发送兴趣包
 	SendInterestPacket(pInterest);
+	
+	float fDelay = m_uniformRandomVariable->GetInteger(0,100) * 1.0 / 1000.0;
+	
 	//1秒后继续调用这个函数
-	Simulator::Schedule (Seconds (1.0), &CDSBasedForwarding::CreateInterestPacket, this);
+	Simulator::Schedule (Seconds (1.0 + fDelay), &CDSBasedForwarding::CreateInterestPacket, this);
 }
 
 void CDSBasedForwarding::CalculateMPR()
