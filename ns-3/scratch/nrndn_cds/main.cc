@@ -675,6 +675,7 @@ void nrndnExample::InstallDistNdnStack()
 void nrndnExample::InstallCDSNdnStack()
 {
   NS_LOG_INFO("Installing CDS NDN stack");
+  cout<<"Installing CDS NDN stack"<<endl;
   ndn::StackHelper ndnHelper;
   ndnHelper.SetForwardingStrategy (
       "ns3::ndn::fw::nrndn::CDSBasedForwarding");
@@ -911,6 +912,7 @@ void nrndnExample::InstallDistApplications()
 void nrndnExample::InstallCDSApplications()
 {
 	NS_LOG_INFO ("Installing CDS Applications");
+	cout<<"Installing CDS Applications"<<endl;
 	ndn::AppHelper consumerHelper ("ns3::ndn::nrndn::tradConsumer");
 	consumerHelper.SetAttribute ("PayloadSize", UintegerValue (virtualPayloadSize));
 	consumerHelper.Install(nodes);
