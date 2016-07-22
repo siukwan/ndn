@@ -122,9 +122,9 @@ Ptr<Packet> CDSBasedForwarding::GetNrPayload(HeaderHelper::Type type, Ptr<const 
 	{
 	case HeaderHelper::INTEREST_NDNSIM:
 		{
-			priorityList = GetPriorityList();
+			//priorityList = GetPriorityList();
 			//兴趣包才设置兴趣树的序列化，加入到header
-			m_nrtree_str = m_nrtree->serialize_noId();
+			//m_nrtree_str = m_nrtree->serialize_noId();
 			break;
 		}
 	default:
