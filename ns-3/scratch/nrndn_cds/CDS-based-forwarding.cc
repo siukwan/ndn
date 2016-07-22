@@ -492,7 +492,7 @@ void CDSBasedForwarding::CreateInterestPacket()
 	for(nbit=nblist.begin();nbit!=nblist.end();++nbit)
 		OneHopNeighborList.push_back(nbit->first);
 	cout<<"OneHopNeighborList size:"<<OneHopNeighborList.size()<<endl;
-
+	cout<<"m_mpr size"<<m_mpr.size()<<endl;
 	Ptr<Packet> newPayload	= Create<Packet> ();
 	
 	ndn::nrndn::nrHeader mprHeader;
@@ -515,7 +515,7 @@ void CDSBasedForwarding::CreateInterestPacket()
 	//cout<<m_node->GetId()<<"生成并发送兴趣包"<<Simulator::Now().GetSeconds()<<endl;
 	//getchar();
 	//发送兴趣包
-	SendInterestPacket(pInterest);
+	//SendInterestPacket(pInterest);
 	
 	float fDelay = m_uniformRandomVariable->GetInteger(0,100) * 1.0 / 1000.0;
 	
