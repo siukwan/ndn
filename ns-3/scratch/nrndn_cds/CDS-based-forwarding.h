@@ -108,6 +108,9 @@ public:
 		INTEREST_MESSAGE =3,
 	};
 	void  OnInterest_application(Ptr<Interest> interest);
+	ndn::nrndn::cache::LRUCache<uint32_t,bool>
+							m_interestNonceSeen;///< \brief record the randomly-genenerated bytestring that is used to detect and discard duplicate Interest messages
+	
 protected:
 	virtual bool
 	DoPropagateInterest(Ptr<Face> inFace, Ptr<const Interest> interest,

@@ -12,6 +12,7 @@
 #include "ndn-pit-entry-nrimpl.h"
 #include "nrUtils.h"
 
+#include "LRUCache.h"
 #include "ns3/core-module.h"
 #include "ns3/ptr.h"
 #include "ns3/ndn-interest.h"
