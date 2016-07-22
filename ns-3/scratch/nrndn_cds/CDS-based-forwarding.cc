@@ -479,10 +479,35 @@ void CDSBasedForwarding::SendInterestPacket(Ptr<Interest> interest)
 void CDSBasedForwarding::CreateInterestPacket()
 {
 	
+	const double& x		= m_sensor->getX();
+	const double& y		= m_sensor->getY();
+	const string& LaneName=m_sensor->getLane();
+	//1.setup name
+	Ptr<Name> name = ns3::Create<Name>('/'+LaneName);
+
+	//2. setup payload
+	vector<uint32_t> OneHopNeighborList;
+	const NeighborList& nblist=m_nb.getNb();
+	NeighborList::const_iterator nbit;
+	for(nbit=nblist.begin();nbit!=nblist.end();++nbit)
+		OneHopNeighborList.push_back(nbit->first);
+
+	Ptr<Packet> newPayload	= Create<Packet> ();
+	ndn::nrndn::nrHeader mprHeader;
+	mprHeader.setPriorityList(m_mpr);
+	newPayload->AddHeader(mprHeader);
+
+	ndn::nrndn::nrHeader nrheader;
+	nrheader.setX(x);
+	nrheader.setY(y);
+	nrheader.setSourceId(m_node->GetId());
+	nrheader.setPriorityList(OneHopNeighborList);
+	newPayload->AddHeader(nrheader);
+	
 	//生成兴趣包
 	Ptr<Interest> pInterest	= Create<Interest> (newPayload);
 	pInterest->SetScope(INTEREST_MESSAGE);	// The flag indicate it is hello message
-	pInterest->SetName("name_interest"); //interest name is lane;
+	pInterest->SetName(name); //interest name is lane;
 	
 	cout<<m_node->GetId()<<"生成并发送兴趣包"<<Simulator::Now().GetSeconds()<<endl;
 	getchar();
