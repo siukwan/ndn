@@ -274,7 +274,7 @@ nrndnExample::Configure (int argc, char **argv)
 
 void nrndnExample::Run()
 {
-	std::cout<<"运行方法是："<<method<<std::endl;
+	std::cout<<"运行方法是...："<<method<<std::endl;
 	switch(method)
 	{
 	case 0:
