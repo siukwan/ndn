@@ -111,7 +111,7 @@ public:
 	ndn::nrndn::cache::LRUCache<uint32_t,bool>
 							m_interestNonceSeen;///< \brief record the randomly-genenerated bytestring that is used to detect and discard duplicate Interest messages
 	Ptr<Packet> GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload,uint32_t forwardId, const Name& dataName = *((Name*)NULL));
-
+	void CreateInterestPacket();
 protected:
 	virtual bool
 	DoPropagateInterest(Ptr<Face> inFace, Ptr<const Interest> interest,
