@@ -112,6 +112,39 @@ void CDSBasedForwarding::Stop()
 }
 
 
+Ptr<Packet> CDSBasedForwarding::GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload,uint32_t forwardId, const Name& dataName/* = *((Name*)NULL)*/)
+{
+	NS_LOG_INFO("Get nr payload, type:"<<type);
+	Ptr<Packet> nrPayload = Create<Packet>(*srcPayload);
+	std::vector<uint32_t> priorityList;
+	string m_nrtree_str="";
+	switch (type)
+	{
+	case HeaderHelper::INTEREST_NDNSIM:
+		{
+			priorityList = GetPriorityList();
+			//兴趣包才设置兴趣树的序列化，加入到header
+			m_nrtree_str = m_nrtree->serialize_noId();
+			break;
+		}
+	default:
+		{
+			NS_ASSERT_MSG(false, "unrecognize packet type");
+			break;
+		}
+	}
+
+		const double& x = m_sensor->getX();
+		const double& y = m_sensor->getY();
+		ndn::nrndn::nrHeader nrheader(m_node->GetId(), x, y, priorityList);
+		//设置信息,设置兴趣树
+		//nrheader.setTree(m_nrtree_str);
+		nrheader.setForwardId(forwardId);
+		nrPayload->AddHeader(nrheader);
+	return nrPayload;
+}
+
+
 void  CDSBasedForwarding::OnInterest_application(Ptr<Interest> interest)
 {
 	//consumer产生兴趣包，在路由层进行转发
@@ -127,11 +160,14 @@ void  CDSBasedForwarding::OnInterest_application(Ptr<Interest> interest)
 	nrPayload->PeekHeader( nrheader);
 	// 2. record the Interest Packet
 	m_interestNonceSeen.Put(interest->GetNonce(),true);
-	m_myInterest[interest->GetNonce()]=Simulator::Now().GetSeconds();
+	//m_myInterest[interest->GetNonce()]=Simulator::Now().GetSeconds();
 	// 3. Then forward the interest packet directly
 	Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
-						&NavigationRouteHeuristic::SendInterestPacket,this,interest);	
+						&CDSBasedForwarding::SendInterestPacket,this,interest);	
 }
+
+
+
 
 void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 {
