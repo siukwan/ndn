@@ -497,7 +497,7 @@ void CDSBasedForwarding::CreateInterestPacket()
 	
 	ndn::nrndn::nrHeader mprHeader;
 	mprHeader.setPriorityList(m_mpr);
-	newPayload->AddHeader(mprHeader);
+	//newPayload->AddHeader(mprHeader);
 
 /*
 	ndn::nrndn::nrHeader nrheader;
