@@ -268,7 +268,7 @@ void nrConsumer::DoInitialize(void)
 		//cout<<"(consumer.cc)m_nbChange_mode"<<*m_nbChange_mode<<endl;
 		//getchar();
 	}
-	else if (m_forwardingStrategy == 2 )
+	else
 		ScheduleNextPacket();
 	if (m_sensor == 0)
 	{
