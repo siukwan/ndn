@@ -107,7 +107,7 @@ public:
 		HELLO_MESSAGE = 2,
 		INTEREST_MESSAGE =3,
 	};
-
+	void  OnInterest_application(Ptr<Interest> interest);
 protected:
 	virtual bool
 	DoPropagateInterest(Ptr<Face> inFace, Ptr<const Interest> interest,

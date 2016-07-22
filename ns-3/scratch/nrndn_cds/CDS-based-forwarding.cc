@@ -110,11 +110,37 @@ void CDSBasedForwarding::Stop()
 	m_nb.CancelTimer();
 }
 
+
+void  CDSBasedForwarding::OnInterest_application(Ptr<Interest> interest)
+{
+	//consumer产生兴趣包，在路由层进行转发
+	NS_LOG_DEBUG("Get interest packet from APPLICATION");
+	// This is the source interest from the upper node application (eg, nrConsumer) of itself
+	// 1.Set the payload
+	interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),999999999));
+
+	Ptr<const Packet> nrPayload	= interest->GetPayload();
+	uint32_t nodeId;
+	//uint32_t seq;
+	ndn::nrndn::nrHeader nrheader;
+	nrPayload->PeekHeader( nrheader);
+	// 2. record the Interest Packet
+	m_interestNonceSeen.Put(interest->GetNonce(),true);
+	m_myInterest[interest->GetNonce()]=Simulator::Now().GetSeconds();
+	// 3. Then forward the interest packet directly
+	Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
+						&NavigationRouteHeuristic::SendInterestPacket,this,interest);	
+}
+
 void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 {
 	if(!m_running) return;
-
-	if(HELLO_MESSAGE==interest->GetScope())
+	if(Face::APPLICATION==face->GetFlags())
+	{
+		OnInterest_application( interest);
+		return;
+	}
+	else if(HELLO_MESSAGE==interest->GetScope())
 	{
 		ProcessHello(interest);
 	}
