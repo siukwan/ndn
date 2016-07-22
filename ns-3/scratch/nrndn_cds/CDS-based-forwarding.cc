@@ -71,7 +71,8 @@ CDSBasedForwarding::CDSBasedForwarding():
 			m_runningCounter(0),
 			m_HelloLogEnable(true),
 			m_state(dominatee)
-{
+{	
+
 	// TODO Auto-generated constructor stub
 	m_htimer.SetFunction (&CDSBasedForwarding::HelloTimerExpire, this);
 	m_nb.SetCallback (MakeCallback (&CDSBasedForwarding::FindBreaksLinkToNextHop, this));

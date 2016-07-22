@@ -265,11 +265,11 @@ void nrConsumer::DoInitialize(void)
 		NS_ASSERT_MSG(forwardingStrategy,"nrConsumer::DoInitialize cannot find ns3::ndn::fw::ForwardingStrategy");
 		m_forwardingStrategy = DynamicCast<fw::nrndn::NavigationRouteHeuristic>(forwardingStrategy);
 		m_nbChange_mode=&(m_forwardingStrategy->m_nbChange_mode);
-		//cout<<"(consumer.cc)m_nbChange_mode"<<*m_nbChange_mode<<endl;
-		//getchar();
+		cout<<"(consumer.cc)m_nbChange_mode"<<*m_nbChange_mode<<endl;
+		getchar();
 	}
 	
-	ScheduleNextPacket();
+	//ScheduleNextPacket();
 	if (m_sensor == 0)
 	{
 		m_sensor =  m_node->GetObject<ndn::nrndn::NodeSensor>();
