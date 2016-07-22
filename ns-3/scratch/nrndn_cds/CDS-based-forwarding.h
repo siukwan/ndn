@@ -105,6 +105,7 @@ public:
 	enum
 	{
 		HELLO_MESSAGE = 2,
+		INTEREST_MESSAGE =3,
 	};
 
 protected:
