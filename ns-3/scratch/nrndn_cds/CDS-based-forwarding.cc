@@ -475,6 +475,16 @@ void CDSBasedForwarding::SendInterestPacket(Ptr<Interest> interest)
 	}
 }
 
+void CDSBasedForwarding::CreateInterestPacket()
+{
+	Ptr<Interest> pInterest;
+	//生成兴趣包
+	
+	//发送兴趣包
+	SendInterestPacket(pInterest)
+	//1秒后继续调用这个函数
+}
+
 void CDSBasedForwarding::CalculateMPR()
 {
 	if(!m_running) return;

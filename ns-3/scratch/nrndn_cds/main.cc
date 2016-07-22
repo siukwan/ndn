@@ -913,10 +913,10 @@ void nrndnExample::InstallCDSApplications()
 {
 	NS_LOG_INFO ("Installing CDS Applications");
 	cout<<"Installing CDS Applications"<<endl;
-	ndn::AppHelper consumerHelper ("ns3::ndn::nrndn::nrConsumer");//nrConsumer  //tradConsumer
+	ndn::AppHelper consumerHelper ("ns3::ndn::nrndn::tradConsumer");//nrConsumer  //tradConsumer
 	consumerHelper.SetAttribute ("PayloadSize", UintegerValue (virtualPayloadSize));
 	consumerHelper.Install(nodes);
-	nrUtils::appIndex["ns3::ndn::nrndn::nrConsumer"]=0;
+	nrUtils::appIndex["ns3::ndn::nrndn::tradConsumer"]=0;
 
 	ndn::AppHelper producerHelper ("ns3::ndn::nrndn::nrProducer");
 	producerHelper.Install(nodes);
@@ -927,8 +927,8 @@ void nrndnExample::InstallCDSApplications()
 	{
 		double start=mobility->GetStartTime((*i)->GetId());
 		double stop =mobility->GetStopTime ((*i)->GetId());
-		(*i)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrConsumer"])->SetAttribute("StartTime",TimeValue (Seconds (start)));
-		(*i)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrConsumer"])->SetAttribute("StopTime", TimeValue (Seconds (stop )));
+		(*i)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::tradConsumer"])->SetAttribute("StartTime",TimeValue (Seconds (start)));
+		(*i)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::tradConsumer"])->SetAttribute("StopTime", TimeValue (Seconds (stop )));
 
 		(*i)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"])->SetAttribute("StartTime",TimeValue (Seconds (start)));
 		(*i)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"])->SetAttribute("StopTime", TimeValue (Seconds (stop )));
