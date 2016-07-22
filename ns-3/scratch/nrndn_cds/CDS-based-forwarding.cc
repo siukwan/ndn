@@ -494,17 +494,19 @@ void CDSBasedForwarding::CreateInterestPacket()
 	cout<<"OneHopNeighborList size:"<<OneHopNeighborList.size()<<endl;
 
 	Ptr<Packet> newPayload	= Create<Packet> ();
+	
 	ndn::nrndn::nrHeader mprHeader;
 	mprHeader.setPriorityList(m_mpr);
 	newPayload->AddHeader(mprHeader);
 
+/*
 	ndn::nrndn::nrHeader nrheader;
 	nrheader.setX(x);
 	nrheader.setY(y);
 	nrheader.setSourceId(m_node->GetId());
 	nrheader.setPriorityList(OneHopNeighborList);
 	newPayload->AddHeader(nrheader);
-	
+	*/
 	//生成兴趣包
 	Ptr<Interest> pInterest	= Create<Interest> (newPayload);
 	pInterest->SetScope(INTEREST_MESSAGE);	// The flag indicate it is hello message
