@@ -268,6 +268,8 @@ void nrConsumer::DoInitialize(void)
 		//cout<<"(consumer.cc)m_nbChange_mode"<<*m_nbChange_mode<<endl;
 		//getchar();
 	}
+	else if (m_forwardingStrategy == 2 )
+		ScheduleNextPacket();
 	if (m_sensor == 0)
 	{
 		m_sensor =  m_node->GetObject<ndn::nrndn::NodeSensor>();
