@@ -112,8 +112,6 @@ public:
 							m_interestNonceSeen;///< \brief record the randomly-genenerated bytestring that is used to detect and discard duplicate Interest messages
 	Ptr<Packet> GetNrPayload(HeaderHelper::Type type, Ptr<const Packet> srcPayload,uint32_t forwardId, const Name& dataName = *((Name*)NULL));
 	void CreateInterestPacket();
-		//Provides uniform random variables.
-	Ptr<UniformRandomVariable> m_uniformRandomVariable;
 protected:
 	virtual bool
 	DoPropagateInterest(Ptr<Face> inFace, Ptr<const Interest> interest,
