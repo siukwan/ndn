@@ -176,7 +176,7 @@ void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 	if(Face::APPLICATION==face->GetFlags())
 	{
 		cout<<m_node->GetId()<<"发送兴趣包"<<Simulator::Now().GetSeconds()<<endl;
-		OnInterest_application( interest);
+		//OnInterest_application( interest);
 		return;
 	}
 	else if(HELLO_MESSAGE==interest->GetScope())
