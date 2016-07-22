@@ -481,7 +481,7 @@ void CDSBasedForwarding::CreateInterestPacket()
 	//生成兴趣包
 	
 	//发送兴趣包
-	SendInterestPacket(pInterest)
+	SendInterestPacket(pInterest);
 	//1秒后继续调用这个函数
 }
 
