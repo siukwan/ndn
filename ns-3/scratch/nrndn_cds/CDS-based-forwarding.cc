@@ -492,7 +492,7 @@ void CDSBasedForwarding::CreateInterestPacket()
 	for(nbit=nblist.begin();nbit!=nblist.end();++nbit)
 		OneHopNeighborList.push_back(nbit->first);
 	cout<<"OneHopNeighborList size:"<<OneHopNeighborList.size()<<endl;
-
+	cout<<"m_mpr size"<<m_mpr.size()<<endl;
 	Ptr<Packet> newPayload	= Create<Packet> ();
 	
 	ndn::nrndn::nrHeader mprHeader;
