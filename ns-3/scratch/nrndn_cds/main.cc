@@ -284,12 +284,14 @@ void nrndnExample::Run()
 		RunDistSim();
 		break;
 	case 2:
+		cout<<"运行cds"<<endl;
 		RunCDSSim();
 		break;
 	default:
 		cout<<"Undefine method"<<endl;
 		break;
 	}
+	cout<<"test"<<endl;
 }
 
 void
