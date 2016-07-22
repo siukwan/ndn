@@ -159,7 +159,7 @@ void  CDSBasedForwarding::OnInterest_application(Ptr<Interest> interest)
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader( nrheader);
 	// 2. record the Interest Packet
-	m_interestNonceSeen.Put(interest->GetNonce(),true);
+	//m_interestNonceSeen.Put(interest->GetNonce(),true);
 	//m_myInterest[interest->GetNonce()]=Simulator::Now().GetSeconds();
 	// 3. Then forward the interest packet directly
 	Simulator::Schedule(MilliSeconds(m_uniformRandomVariable->GetInteger(0,100)),
