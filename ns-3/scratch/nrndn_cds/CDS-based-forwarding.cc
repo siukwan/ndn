@@ -515,7 +515,7 @@ void CDSBasedForwarding::CreateInterestPacket()
 	//cout<<m_node->GetId()<<"生成并发送兴趣包"<<Simulator::Now().GetSeconds()<<endl;
 	//getchar();
 	//发送兴趣包
-	//SendInterestPacket(pInterest);
+	SendInterestPacket(pInterest);
 	
 	float fDelay = m_uniformRandomVariable->GetInteger(0,100) * 1.0 / 1000.0;
 	
