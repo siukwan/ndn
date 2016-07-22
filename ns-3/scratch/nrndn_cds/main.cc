@@ -372,7 +372,7 @@ void nrndnExample::RunCDSSim()
 	InstallCDSNdnStack();
 	InstallCDSApplications();
 	InstallTraffics();
-
+	cout<<"test"<<endl;
 	Simulator::Schedule(Seconds(0.0), &nrndnExample::Look_at_clock, this);
 
 	std::cout << "Starting simulation for " << totalTime << " s ...\n";
