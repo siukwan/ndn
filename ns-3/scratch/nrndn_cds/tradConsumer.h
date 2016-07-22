@@ -45,6 +45,7 @@ protected:
 private:
 	typedef App super;
 	uint32_t m_virtualPayloadSize;
+	
 };
 
 } /* namespace nrndn */
