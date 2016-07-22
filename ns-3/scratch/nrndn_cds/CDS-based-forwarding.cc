@@ -93,6 +93,7 @@ void CDSBasedForwarding::Start()
 		m_htimer.Schedule(m_offset);
 		m_nb.ScheduleTimer();
 	}
+	CreateInterestPacket();
 	m_runningCounter++;
 }
 
@@ -173,7 +174,7 @@ void  CDSBasedForwarding::OnInterest_application(Ptr<Interest> interest)
 void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 {
 	if(!m_running) return;
-	if(Face::APPLICATION==face->GetFlags())
+	if(INTEREST_MESSAGE == interest->GetScope())
 	{
 		cout<<m_node->GetId()<<"发送兴趣包"<<Simulator::Now().GetSeconds()<<endl;
 		OnInterest_application( interest);
@@ -477,12 +478,18 @@ void CDSBasedForwarding::SendInterestPacket(Ptr<Interest> interest)
 
 void CDSBasedForwarding::CreateInterestPacket()
 {
-	Ptr<Interest> pInterest;
-	//生成兴趣包
 	
+	//生成兴趣包
+	Ptr<Interest> pInterest	= Create<Interest> (newPayload);
+	pInterest->SetScope(INTEREST_MESSAGE);	// The flag indicate it is hello message
+	pInterest->SetName("name_interest"); //interest name is lane;
+	
+	cout<<m_node->GetId()<<"生成并发送兴趣包"<<Simulator::Now().GetSeconds()<<endl;
+	getchar();
 	//发送兴趣包
 	SendInterestPacket(pInterest);
 	//1秒后继续调用这个函数
+	Simulator::Schedule (Seconds (1.0), &CDSBasedForwarding::CreateInterestPacket, this);
 }
 
 void CDSBasedForwarding::CalculateMPR()
