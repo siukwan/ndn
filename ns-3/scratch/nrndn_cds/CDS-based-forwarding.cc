@@ -479,6 +479,7 @@ void CDSBasedForwarding::SendInterestPacket(Ptr<Interest> interest)
 void CDSBasedForwarding::CreateInterestPacket()
 {
 	
+	if(!m_running) return;
 	//const double& x		= m_sensor->getX();
 	//const double& y		= m_sensor->getY();
 	const string& LaneName=m_sensor->getLane();
