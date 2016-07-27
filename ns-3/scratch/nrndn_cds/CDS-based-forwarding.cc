@@ -520,7 +520,7 @@ void CDSBasedForwarding::CreateInterestPacket()
 	
 	float fDelay = m_uniformRandomVariable->GetInteger(0,100) * 1.0 / 1000.0;
 	
-	//1秒后继续调用这个函数
+	//1秒后继续调用这个函数//
 	Simulator::Schedule (Seconds (1.0 + fDelay), &CDSBasedForwarding::CreateInterestPacket, this);
 }
 
