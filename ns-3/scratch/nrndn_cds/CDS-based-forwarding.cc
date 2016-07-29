@@ -206,11 +206,14 @@ void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 		m_mapInterestLane[remoteRoute[i]] = true;
 		//cout<<remoteRoute[i]<<" ";
 	}
+	/*
 	for(auto ite = m_mapInterestLane.begin(); ite != m_mapInterestLane.end(); ++ite)
 	{
 		cout<<ite->first<<" ";
 	}
 	cout<<endl;
+	
+	*/
 	//getchar();
 	
 	/*
@@ -257,6 +260,13 @@ void CDSBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 		}
 		
 		cout<<"数据包中的路段"<<sOriginalName<<endl;
+		
+		for(auto ite = m_mapInterestLane.begin(); ite != m_mapInterestLane.end(); ++ite)
+		{
+			cout<<ite->first<<" ";
+		}
+		cout<<endl;
+		
 		if( m_mapInterestLane[sOriginalName] )
 			cout<<"对这个路感兴趣"<<endl;
 		getchar();
