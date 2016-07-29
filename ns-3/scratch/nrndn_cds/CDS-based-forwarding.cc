@@ -70,7 +70,8 @@ CDSBasedForwarding::CDSBasedForwarding():
 			m_running(false),
 			m_runningCounter(0),
 			m_HelloLogEnable(true),
-			m_state(dominatee)
+			m_state(dominatee),
+			m_iClearCount(0)
 {	
 
 	// TODO Auto-generated constructor stub
@@ -185,6 +186,26 @@ void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 	{
 		ProcessHello(interest);
 	}
+	if( m_state != dominator )
+	{//不是支配者，直接返回
+		return;
+	}
+	//判断是否一跳邻居
+	Ptr<const Packet> nrPayload	= interest->GetPayload();
+	Ptr<Packet> ReceivedPacket = nrPayload->Copy();
+	ndn::nrndn::nrHeader nrheader;
+	ndn::nrndn::nrHeader mprheader;
+	ReceivedPacket->RemoveHeader(nrheader);
+	ReceivedPacket->RemoveHeader(mprheader);
+
+	uint32_t uRecId= nrheader.getSourceId();
+	const vector<string> remoteRoute= ExtractRouteFromName(interest->GetName());
+	cout<<"forwarding.cc 收到"<<uRecId<<endl;
+	for(uint32_t i = 0; i < remoteRoute.size(); ++i)
+	{
+		cout<<remoteRoute[i]<<" ";
+	}
+	getchar();
 	/*
 	else
 		NS_ASSERT_MSG(false,
@@ -482,6 +503,17 @@ void CDSBasedForwarding::CreateInterestPacket()
 {
 	
 	if(!m_running) return;
+	m_iClearCount++;
+	if(m_iClearCount >= 3)
+	{
+		m_iClearCount = 0;
+		if (m_mapInterestLane.size() != 0)
+		{
+			m_mapInterestLane.clear();
+			cout<<"forwarding.cc 3秒清空一次"<<endl;
+		}
+	}
+	
 	//const double& x		= m_sensor->getX();
 	//const double& y		= m_sensor->getY();
 	const string& LaneName=m_sensor->getLane();
