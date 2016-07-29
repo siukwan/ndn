@@ -525,7 +525,7 @@ void CDSBasedForwarding::CreateInterestPacket()
 			break;
 	}
 	
-	string sName = "";
+	string sName = "/" ＋ LaneName;
 	
 	for(; uSearchIdx < route.size(); ++uSearchIdx)
 	{
