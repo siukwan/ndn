@@ -256,7 +256,7 @@ void CDSBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 			sOriginalName += sDataName[0][i];
 		}
 		
-		cout<<sOriginalName<<endl;
+		cout<<"数据包中的路段"<<sOriginalName<<endl;
 		if( m_mapInterestLane[sOriginalName] )
 			cout<<"对这个路感兴趣"<<endl;
 		getchar();
