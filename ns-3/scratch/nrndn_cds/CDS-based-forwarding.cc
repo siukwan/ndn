@@ -155,6 +155,7 @@ void  CDSBasedForwarding::OnInterest_application(Ptr<Interest> interest)
 	// 1.Set the payload
 	interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),999999999));
 
+	interest->SetScope(99999);	// The flag indicate it is hello message
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	uint32_t nodeId;
 	//uint32_t seq;
@@ -519,7 +520,7 @@ void CDSBasedForwarding::CreateInterestPacket()
 	//发送兴趣包
 	//SendInterestPacket(pInterest);
 	
-	float fDelay = m_uniformRandomVariable->GetInteger(0,100) * 1.0 / 1000.0;
+	float fDelay = 0 ;//m_uniformRandomVariable->GetInteger(0,100) * 1.0 / 1000.0;
 	
 	//1秒后继续调用这个函数//
 	Simulator::Schedule (Seconds (1.0 + fDelay), &CDSBasedForwarding::CreateInterestPacket, this);
