@@ -249,11 +249,11 @@ void CDSBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 		}
 		
 		//检查map中是否存在，对这个是否感兴趣
-		string sDataName = data->GetName();
+		vector<string> sDataName = ExtractRouteFromName(data->GetName());
 		string sOriginalName = "";
-		for(uint32_t i = 1; i < sDataName.size(); ++i)
+		for(uint32_t i = 1; i < sDataName[0].size(); ++i)
 		{
-			sOriginalName += sDataName[i];
+			sOriginalName += sDataName[0][i];
 		}
 		
 		cout<<sOriginalName<<endl;
