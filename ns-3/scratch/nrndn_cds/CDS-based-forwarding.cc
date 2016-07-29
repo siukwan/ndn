@@ -517,8 +517,23 @@ void CDSBasedForwarding::CreateInterestPacket()
 	const double& x		= m_sensor->getX();
 	const double& y		= m_sensor->getY();
 	const string& LaneName=m_sensor->getLane();
+	const vector<string>& route  = m_sensor->getNavigationRoute();
+	uint32_t uSearchIdx = 0;
+	for(uSearchIdx = 0; uSearchIdx < route.size(); ++uSearchIdx )
+	{
+		if ( LaneName == route[uSearchIdx])
+			break;
+	}
+	
+	string sName = "";
+	
+	for(; uSearchIdx < route.size(); ++uSearchIdx)
+	{
+		sName += "/" + route[uSearchIdx];
+	}
+	
 	//1.setup name
-	Ptr<Name> name = ns3::Create<Name>('/'+LaneName);
+	Ptr<Name> name = ns3::Create<Name>(sName);
 
 	//2. setup payload
 	vector<uint32_t> OneHopNeighborList;
