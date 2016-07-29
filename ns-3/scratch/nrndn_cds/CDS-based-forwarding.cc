@@ -210,6 +210,7 @@ void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 	{
 		cout<<ite->first<<" ";
 	}
+	getchar();
 	
 	/*
 	else
