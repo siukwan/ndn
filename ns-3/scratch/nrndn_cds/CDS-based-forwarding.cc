@@ -193,10 +193,11 @@ void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 	//判断是否一跳邻居
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	Ptr<Packet> ReceivedPacket = nrPayload->Copy();
+	
 	ndn::nrndn::nrHeader nrheader;
 	ndn::nrndn::nrHeader mprheader;
 	ReceivedPacket->RemoveHeader(nrheader);
-	ReceivedPacket->RemoveHeader(mprheader);
+	//ReceivedPacket->RemoveHeader(mprheader);
 
 	uint32_t uRecId= nrheader.getSourceId();
 	const vector<string> remoteRoute= ExtractRouteFromName(interest->GetName());
@@ -592,17 +593,17 @@ void CDSBasedForwarding::CreateInterestPacket()
 	Ptr<Packet> newPayload	= Create<Packet> ();
 	
 	ndn::nrndn::nrHeader mprHeader;
-	mprHeader.setPriorityList(m_mpr);
+	//mprHeader.setPriorityList(m_mpr);
 	//newPayload->AddHeader(mprHeader);
 
-/*
+
 	ndn::nrndn::nrHeader nrheader;
 	nrheader.setX(x);
 	nrheader.setY(y);
 	nrheader.setSourceId(m_node->GetId());
-	nrheader.setPriorityList(OneHopNeighborList);
+	//nrheader.setPriorityList(OneHopNeighborList);
 	newPayload->AddHeader(nrheader);
-	*/
+	
 	//生成兴趣包
 	Ptr<Interest> pInterest	= Create<Interest> (newPayload);
 	pInterest->SetScope(INTEREST_MESSAGE);	// The flag indicate it is hello message
