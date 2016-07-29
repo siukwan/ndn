@@ -210,7 +210,8 @@ void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 	{
 		cout<<ite->first<<" ";
 	}
-	getchar();
+	cout<<endl;
+	//getchar();
 	
 	/*
 	else
@@ -246,7 +247,11 @@ void CDSBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 			payload->AddHeader(nrheader);
 			data->SetPayload(payload);
 		}
-
+		
+		//检查map中是否存在，对这个是否感兴趣
+		cout<<data->GetName()<<endl;
+		getchar();
+		
 		// Forward the data packet directly
 		Simulator::Schedule(
 				MilliSeconds(m_uniformRandomVariable->GetInteger(0, 100)),
