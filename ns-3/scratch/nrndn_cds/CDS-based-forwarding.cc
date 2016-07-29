@@ -249,7 +249,16 @@ void CDSBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 		}
 		
 		//检查map中是否存在，对这个是否感兴趣
-		cout<<data->GetName()<<endl;
+		string sDataName = data->GetName();
+		string sOriginalName = "";
+		for(uint32_t i = 1; i < sDataName.size(); ++i)
+		{
+			sOriginalName += sDataName[i];
+		}
+		
+		cout<<sOriginalName<<endl;
+		if( m_mapInterestLane[sOriginalName] )
+			cout<<"对这个路感兴趣"<<endl;
 		getchar();
 		
 		// Forward the data packet directly
