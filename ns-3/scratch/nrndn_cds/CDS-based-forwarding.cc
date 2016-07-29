@@ -264,14 +264,17 @@ void CDSBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 		}
 		cout<<endl;
 		
+		//感兴趣才转发
 		if( m_mapInterestLane[sOriginalName] )
-			cout<<"对这个路感兴趣"<<endl;
-		getchar();
+		{
+				cout<<"对这个路感兴趣"<<endl;
+		//getchar();
 		
 		// Forward the data packet directly
 		Simulator::Schedule(
 				MilliSeconds(m_uniformRandomVariable->GetInteger(0, 100)),
 				&CDSBasedForwarding::ForwardDataPacket, this, data);
+		}
 	}
 
 	NotifyUpperLayer(data);
