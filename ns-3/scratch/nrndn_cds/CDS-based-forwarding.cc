@@ -185,10 +185,11 @@ void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 	{
 		ProcessHello(interest);
 	}
+	/*
 	else
 		NS_ASSERT_MSG(false,
 				"Not suppose to receive Interest Packet, except for HELLO message");
-
+	*/
 	return;
 }
 
