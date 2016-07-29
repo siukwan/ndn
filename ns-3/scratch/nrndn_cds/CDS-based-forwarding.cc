@@ -513,6 +513,7 @@ void CDSBasedForwarding::CreateInterestPacket()
 	pInterest->SetScope(INTEREST_MESSAGE);	// The flag indicate it is hello message
 	pInterest->SetName(name); //interest name is lane;
 	
+	
 	//cout<<m_node->GetId()<<"生成并发送兴趣包"<<Simulator::Now().GetSeconds()<<endl;
 	//getchar();
 	//发送兴趣包
