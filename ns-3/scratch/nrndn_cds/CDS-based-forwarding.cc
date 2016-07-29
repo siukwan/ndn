@@ -514,8 +514,8 @@ void CDSBasedForwarding::CreateInterestPacket()
 		}
 	}
 	
-	//const double& x		= m_sensor->getX();
-	//const double& y		= m_sensor->getY();
+	const double& x		= m_sensor->getX();
+	const double& y		= m_sensor->getY();
 	const string& LaneName=m_sensor->getLane();
 	//1.setup name
 	Ptr<Name> name = ns3::Create<Name>('/'+LaneName);
