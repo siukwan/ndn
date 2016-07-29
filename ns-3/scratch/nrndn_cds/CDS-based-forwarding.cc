@@ -200,12 +200,17 @@ void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 
 	uint32_t uRecId= nrheader.getSourceId();
 	const vector<string> remoteRoute= ExtractRouteFromName(interest->GetName());
-	cout<<"forwarding.cc 收到"<<uRecId<<endl;
+	cout<<"forwarding.cc "<<m_node->GetId() << "收到"<<uRecId<<endl;
 	for(uint32_t i = 0; i < remoteRoute.size(); ++i)
 	{
-		cout<<remoteRoute[i]<<" ";
+		m_mapInterestLane[remoteRoute[i]] = true;
+		//cout<<remoteRoute[i]<<" ";
 	}
-	getchar();
+	for(auto ite = m_mapInterestLane.begin(); ite != m_mapInterestLane.end(); ++ite)
+	{
+		cout<<ite->first<<" ";
+	}
+	
 	/*
 	else
 		NS_ASSERT_MSG(false,
