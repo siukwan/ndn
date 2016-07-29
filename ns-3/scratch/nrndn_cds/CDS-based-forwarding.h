@@ -257,6 +257,9 @@ private:
 	state m_state; //\brief the status of the node
 
 	std::vector<uint32_t> m_mpr;//MPR list
+	
+	std::map<string,bool> m_mapInterestLane;
+	int m_iClearCount;
 };
 
 } /* namespace nrndn */
