@@ -517,6 +517,22 @@ void CDSBasedForwarding::CreateInterestPacket()
 		{
 			m_mapInterestLane.clear();
 			cout<<"forwarding.cc 3秒清空一次"<<endl;
+			//添加自身感兴趣的道路
+			const string& LaneName=m_sensor->getLane();
+			const vector<string>& route  = m_sensor->getNavigationRoute();
+			uint32_t uSearchIdx = 0;
+			for(uSearchIdx = 0; uSearchIdx < route.size(); ++uSearchIdx )
+			{
+				if ( LaneName == route[uSearchIdx])
+					break;
+			}
+			
+			m_mapInterestLane[LaneName] = true;
+			
+			for(; uSearchIdx < route.size(); ++uSearchIdx)
+			{
+				m_mapInterestLane[route[uSearchIdx]] = true;
+			}
 		}
 	}
 	
