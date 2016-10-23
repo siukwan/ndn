@@ -211,7 +211,7 @@ void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 		OneHopNeighborList.push_back(nbit->first);
 	
 	bool isOneHopNb = false;
-	for(utin32_t i = 0; i < OneHopNeighborList.size(); ++i)
+	for(uint32_t i = 0; i < OneHopNeighborList.size(); ++i)
 	{
 		if(uRecId == OneHopNeighborList[i])
 		{
