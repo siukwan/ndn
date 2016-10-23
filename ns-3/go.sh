@@ -22,6 +22,8 @@ program_name="nrndn_test";
 
 program_name2="nrndn_test_20160716_backup";
 
+program_name3="nrndn_cds";
+
 #定义时间变量
 git_date=$(date)
 shell_date=$(date +%Y%m%d-%H%M%S)
@@ -46,7 +48,7 @@ sleep 4
 ./waf --run "$program_name2 --accidentNum=$dataNum --method=1" > ~/tmp/$file_name/dis_record.txt &
 #后台运行cds
 sleep 4
-./waf --run "$program_name2 --accidentNum=$dataNum --method=2" > ~/tmp/$file_name/cds_record.txt &
+./waf --run "$program_name3 --accidentNum=$dataNum --method=2" > ~/tmp/$file_name/cds_record.txt &
 
 #等待后台程序结束
 wait
