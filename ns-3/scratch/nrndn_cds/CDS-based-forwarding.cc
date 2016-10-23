@@ -190,7 +190,8 @@ void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 	{//不是支配者，直接返回
 		return;
 	}
-	//判断是否一跳邻居
+	
+	
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	Ptr<Packet> ReceivedPacket = nrPayload->Copy();
 	
@@ -200,6 +201,27 @@ void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 	//ReceivedPacket->RemoveHeader(mprheader);
 
 	uint32_t uRecId= nrheader.getSourceId();
+	
+	//判断是否一跳邻居
+	
+	vector<uint32_t> OneHopNeighborList;
+	const NeighborList& nblist=m_nb.getNb();
+	NeighborList::const_iterator nbit;
+	for(nbit=nblist.begin();nbit!=nblist.end();++nbit)
+		OneHopNeighborList.push_back(nbit->first);
+	
+	bool isOneHopNb = false;
+	for(utin32_t i = 0; i < OneHopNeighborList.size(); ++i)
+	{
+		if(uRecId == OneHopNeighborList[i])
+		{
+			isOneHopNb = true;
+			break;
+		}
+	}
+	if(!isOneHopNb)
+		return;
+	
 	const vector<string> remoteRoute= ExtractRouteFromName(interest->GetName());
 	cout<<"forwarding.cc "<<m_node->GetId() << "收到"<<uRecId<<endl;
 	for(uint32_t i = 0; i < remoteRoute.size(); ++i)
@@ -207,6 +229,7 @@ void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 		m_mapInterestLane[remoteRoute[i]] = true;
 		//cout<<remoteRoute[i]<<" ";
 	}
+	
 	/*
 	for(auto ite = m_mapInterestLane.begin(); ite != m_mapInterestLane.end(); ++ite)
 	{
