@@ -557,8 +557,8 @@ nrndnExample::LoadTraffic()
 //获取结点size
 	size = mobility->GetNodeSize();
 	std::cout<<"节点size："<<size<<std::endl;
-
-	accidentNum = size * 1;
+	if(accidentNum == 0)
+		accidentNum = size * 1;
 	std::cout<<"(main.cc)修改accidentNum为size的4倍"<<accidentNum<<std::endl;
 
 }
