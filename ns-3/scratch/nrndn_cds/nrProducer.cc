@@ -66,7 +66,7 @@ TypeId nrProducer::GetTypeId()
 
 nrProducer::nrProducer():
 		m_rand (0, std::numeric_limits<uint32_t>::max ()),
-		m_virtualPayloadSize(1024),
+		m_virtualPayloadSize(102400),
 		m_signature(0)
 {
 	//NS_LOG_FUNCTION(this);
@@ -255,7 +255,7 @@ void nrProducer::OnSendingTrafficData()
 	if (!m_active)
 		return;
 
-	Ptr<Data> data = Create<Data>(Create<Packet>(102400));//m_virtualPayloadSize
+	Ptr<Data> data = Create<Data>(Create<Packet>(m_virtualPayloadSize));
 	Ptr<Name> dataName = Create<Name>(m_prefix);
 	dataName->append(m_postfix);//m_postfix is "/", seems OK
 	data->SetName(dataName);
