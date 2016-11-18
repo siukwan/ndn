@@ -22,7 +22,7 @@ program_name="nrndn_test";
 
 program_name2="nrndn_test_20160716_backup";
 
-program_name3="nrndn_cds";
+program_name3="nrndn_cds_new20161116";
 
 #定义时间变量
 git_date=$(date)
