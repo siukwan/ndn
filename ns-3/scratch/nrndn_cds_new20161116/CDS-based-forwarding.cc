@@ -94,7 +94,7 @@ void CDSBasedForwarding::Start()
 		m_htimer.Schedule(m_offset);
 		m_nb.ScheduleTimer();
 	}
-	CreateInterestPacket();
+	//CreateInterestPacket();
 	m_runningCounter++;
 }
 
