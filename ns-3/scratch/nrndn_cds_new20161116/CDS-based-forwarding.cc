@@ -156,7 +156,7 @@ void  CDSBasedForwarding::OnInterest_application(Ptr<Interest> interest)
 	// 1.Set the payload
 	interest->SetPayload(GetNrPayload(HeaderHelper::INTEREST_NDNSIM,interest->GetPayload(),999999999));
 
-	interest->SetScope(INTEREST_MESSAGE);	// The flag indicate it is interest message
+	interest->SetScope(99999);	// The flag indicate it is hello message
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	uint32_t nodeId;
 	//uint32_t seq;
