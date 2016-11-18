@@ -433,8 +433,51 @@ CDSBasedForwarding::SendHello()
 	const double& x		= m_sensor->getX();
 	const double& y		= m_sensor->getY();
 	const string& LaneName=m_sensor->getLane();
+
+
+
+
+	m_iClearCount++;
+	if(m_iClearCount >= 3)
+	{
+		m_iClearCount = 0;
+		if (m_mapInterestLane.size() != 0)
+		{
+			m_mapInterestLane.clear();
+			cout<<"forwarding.cc 3秒清空一次"<<endl;
+			//添加自身感兴趣的道路
+			const string& LaneName=m_sensor->getLane();
+			const vector<string>& route  = m_sensor->getNavigationRoute();
+			uint32_t uSearchIdx = 0;
+			for(uSearchIdx = 0; uSearchIdx < route.size(); ++uSearchIdx )
+			{
+				if ( LaneName == route[uSearchIdx])
+					break;
+			}
+			
+			m_mapInterestLane[LaneName] = true;
+			
+			for(; uSearchIdx < route.size(); ++uSearchIdx)
+			{
+				m_mapInterestLane[route[uSearchIdx]] = true;
+			}
+		}
+	}
+	
+	const vector<string>& route  = m_sensor->getNavigationRoute();
+	uint32_t uSearchIdx = 0;
+	for(uSearchIdx = 0; uSearchIdx < route.size(); ++uSearchIdx )
+	{
+		if ( LaneName == route[uSearchIdx])
+			break;
+	}
+	
+	string sName = "/" + LaneName;
+
+
+
 	//1.setup name
-	Ptr<Name> name = ns3::Create<Name>('/'+LaneName);
+	Ptr<Name> name = ns3::Create<Name>(sName); //'/'+LaneName);
 
 	//2. setup payload
 	vector<uint32_t> OneHopNeighborList;
@@ -462,11 +505,7 @@ CDSBasedForwarding::SendHello()
 	interest->SetScope(HELLO_MESSAGE);	// The flag indicate it is hello message
 	interest->SetName(name); //interest name is lane;
 
-	if(m_node->GetId() == 1)
-	{//检查1号节点多少秒发一次心跳包
-		cout<<"1号节点心跳包"<<Simulator::Now().GetSeconds()<<endl;
-		getchar();
-	}
+
 	//4. send the hello message
 	SendInterestPacket(interest);
 
