@@ -1,0 +1,71 @@
+F:/sumo-win32-0.24.0/sumo-0.24.0/bin/netgenerate --grid-net --grid-number=4 --grid-length=1000 -L 4  --output-file=input_net.net.xml --no-internal-links true -j traffic_light -S 20
+
+F:/sumo-win32-0.24.0/sumo-0.24.0/bin/netgenerate --grid-net --grid-x-number=10 --grid-y-number=10 --grid-y-length=500 --grid-x-length=500 -L 4 -S 12 --output-file=input_net.net.xml  长宽不同
+
+F:/sumo-win32-0.24.0/sumo-0.24.0/bin/netgenerate --rand -o input_net.net.xml --rand.iterations=200
+
+
+F:/sumo-win32-0.24.0/sumo-0.24.0/tools/randomTrips.py -n input_net.net.xml -e 50 -p 0.05 生成旅行信息   //
+
+F:/sumo-win32-0.24.0/sumo-0.24.0/bin/duarouter --trip-files=trips.trips.xml --net-file=input_net.net.xml --output-file=routes.rou.xml 生成路径信息
+
+F:/sumo-win32-0.24.0/sumo-0.24.0/bin/sumo -c cfg.sumocfg --fcd-output fcdoutput.xml  生成仿真轨迹信息
+
+F:/sumo-win32-0.24.0/sumo-0.24.0/bin/sumo-gui.exe cfg.sumocfg 运行
+
+<vType accel="0.1" decel="0.1" id="CarA" length="3.0" maxSpeed="0.11" color="1,1,1"/>
+
+
+sumo --net-file input_net.net.xml --route-files routes.rou.xml --netstate-dump ex_sumo.sumo.tr --tripinfo-output tripinfo.tr
+
+
+/cygdrive/d/study/sumo/sumo-winbin-0.17.1/sumo-0.17.1/tools/bin/traceExporter.py --fcd-input fcdoutput.xml --ns2mobility-output mobility.tcl  导出NS3的工具
+
+
+/cygdrive/d/study/sumo/sumo-winbin-0.17.1/sumo-0.17.1/tools/generate-ns2.py --node 
+
+修改了traceExporter.py文件：
+删除了82.83行
+  #     if v not in chosen: chosen[v] = random()<options.penetration
+  #     if chosen[v]:
+
+ 
+
+\sumo-winbin-0.17.1\sumo-0.17.1\tools\trip\randomTrips.py -n input_net.net.xml -e 1 -p 0.005 生成旅行信息
+
+
+siukwan computer:
+
+路径\sumo-0.17.1\bin\netgenerate --grid-net --grid-number=4 --grid-length=1000 -L 4  --output-file=input_net.net.xml --no-internal-links true -j traffic_light -S 20
+
+路径\sumo-0.17.1\bin\netgenerate --grid-net --grid-x-number=10 --grid-y-number=3 --grid-y-length=200 --grid-x-length=1000 -L 4 -S 20 --output-file=input_net.net.xml  长宽不同
+
+路径\sumo-0.17.1\tools\randomTrips.py -n input_net.net.xml -e 200 -p 0.1 生成旅行信息
+
+路径\sumo-0.17.1\bin\duarouter --trip-files=trips.trips.xml --net-file=input_net.net.xml --output-file=routes.rou.xml 生成路径信息
+
+路径\sumo-0.17.1\bin\sumo -c cfg.sumocfg --fcd-output fcdoutput.xml  生成仿真轨迹信息
+
+路径\sumo-0.17.1\bin\sumo-gui.exe cfg.sumocfg 运行
+
+
+路径\sumo-msvc10Win32-0.23.0\sumo-0.23.0\tools\trip\randomTrips.py -n input_net.net.xml -e 1 -p 0.005 生成旅行信息
+
+
+路径\sumo-msvc10Win32-0.23.0\sumo-0.23.0\bin\duarouter --trip-files=trips.trips.xml --net-file=input_net.net.xml --output-file=routes.rou.xml 生成路径信息
+
+路径\sumo-msvc10Win32-0.23.0\sumo-0.23.0\bin\sumo -c cfg.sumocfg --fcd-output fcdoutput.xml  生成仿真轨迹信息
+
+路径\sumo-msvc10Win32-0.23.0\sumo-0.23.0\bin\sumo-gui.exe cfg.sumocfg 运行
+
+
+
+
+//osm文件转换成net.xml
+路径\sumo-msvc10Win32-0.23.0\sumo-0.23.0\bin\netconvert --osm-files map.osm.xml -o map.net.xml
+
+
+D:\SiukwanBackup\sumo-msvc10Win32-0.23.0\sumo-0.23.0\bin\sumo -c cfg.sumocfg --fcd-output fcdoutput.xml  生成仿真轨迹信息
+
+D:\SiukwanBackup\sumo-msvc10Win32-0.23.0\sumo-0.23.0\bin\sumo-gui.exe cfg.sumocfg 运行
+D:\SiukwanBackup\sumo-msvc10Win32-0.23.0\sumo-0.23.0\bin\sumo -c cfg.sumocfg --fcd-output fcdoutput.xml --no-internal-links=true 生成仿真轨迹信息
