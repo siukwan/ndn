@@ -60,6 +60,7 @@ public:
 	void laneChange(std::string, std::string);
 
 	void addAccident();
+	//2016.11.18 siukwan add，定时发送事件
 	void addAccident(int iType);
 
 	bool IsActive();
