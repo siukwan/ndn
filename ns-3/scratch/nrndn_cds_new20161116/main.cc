@@ -881,7 +881,7 @@ void nrndnExample::InstallTraffics()
 			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
 					nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
 			NS_ASSERT(producer);
-			producer->addAccident();
+			producer->addAccident(1);
 		}
 	}
 

@@ -60,6 +60,7 @@ public:
 	void laneChange(std::string, std::string);
 
 	void addAccident();
+	void addAccident(int iType);
 
 	bool IsActive();
 
