@@ -331,8 +331,8 @@ void nrProducer::addAccident()
 			break;
 		}
 	}
-	NS_LOG_DEBUG(m_node->GetId()<<" add accident at "<<t);
-	std::cout<<"siu:"<<m_node->GetId()<<" add accident at "<<t<<endl;
+	//NS_LOG_DEBUG(m_node->GetId()<<" add accident at "<<t);
+	//std::cout<<"siu:"<<m_node->GetId()<<" add accident at "<<t<<endl;
 
 	return;
 }
@@ -359,7 +359,7 @@ void nrProducer::addAccident(int iType)
 	for(double dTime = start + 1; dTime < end; ++dTime)
 	{
 		ScheduleAccident(dTime);
-		std::cout<<"siu:"<<m_node->GetId()<<" add accident at "<< dTime <<endl;
+		//std::cout<<"siu:"<<m_node->GetId()<<" add accident at "<< dTime <<endl;
 	}
 
 	return;
