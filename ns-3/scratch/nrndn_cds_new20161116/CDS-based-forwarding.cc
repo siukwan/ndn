@@ -60,7 +60,7 @@ TypeId CDSBasedForwarding::GetTypeId(void)
 }
 
 CDSBasedForwarding::CDSBasedForwarding():
-			HelloInterval (Seconds (1)),
+			HelloInterval (Seconds (0.5)),
 			AllowedHelloLoss (2),
 			m_htimer (Timer::CANCEL_ON_DESTROY),
 			m_CacheSize(100000),// Cache size can not change. Because if you change the size, the m_interestNonceSeen and m_dataNonceSeen also need to change. It is really unnecessary
