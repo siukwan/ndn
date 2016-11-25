@@ -870,8 +870,6 @@ void nrndnExample::InstallTraffics()
 		producer->addAccident(1);
 	}*/
 
-	for(uint32_t i=0;i<accidentNum;++i)
-	{
 		for(uint32_t index = 0; index < 15; index ++)
 		{
 			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
@@ -879,7 +877,7 @@ void nrndnExample::InstallTraffics()
 			NS_ASSERT(producer);
 			producer->addAccident(1);
 		}
-	}
+	
 	std::cout<<"插入事件：完毕"<<endl;
 	getchar();
 	/*
