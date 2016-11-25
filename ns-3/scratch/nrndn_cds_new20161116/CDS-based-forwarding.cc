@@ -224,7 +224,7 @@ void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 		return;
 	
 	const vector<string> remoteRoute= ExtractRouteFromName(interest->GetName());
-	cout<<"forwarding.cc "<<m_node->GetId() << "收到"<<uRecId<<endl;
+	//cout<<"forwarding.cc "<<m_node->GetId() << "收到"<<uRecId<<endl;
 	for(uint32_t i = 0; i < remoteRoute.size(); ++i)
 	{
 		m_mapInterestLane[remoteRoute[i]] = true;
@@ -444,7 +444,7 @@ CDSBasedForwarding::SendHello()
 		if (m_mapInterestLane.size() != 0)
 		{
 			m_mapInterestLane.clear();
-			cout<<"forwarding.cc 3秒清空一次"<<endl;
+			//cout<<"forwarding.cc 3秒清空一次"<<endl;
 			//添加自身感兴趣的道路
 			const string& LaneName=m_sensor->getLane();
 			const vector<string>& route  = m_sensor->getNavigationRoute();
@@ -609,7 +609,7 @@ void CDSBasedForwarding::CreateInterestPacket()
 		if (m_mapInterestLane.size() != 0)
 		{
 			m_mapInterestLane.clear();
-			cout<<"forwarding.cc 3秒清空一次"<<endl;
+			//cout<<"forwarding.cc 3秒清空一次"<<endl;
 			//添加自身感兴趣的道路
 			const string& LaneName=m_sensor->getLane();
 			const vector<string>& route  = m_sensor->getNavigationRoute();
