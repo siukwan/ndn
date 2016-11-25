@@ -40,7 +40,7 @@ TypeId CDSBasedForwarding::GetTypeId(void)
 	    .SetParent<ForwardingStrategy> ()
 	    .AddConstructor<CDSBasedForwarding>()
 	    .AddAttribute ("HelloInterval", "HELLO messages emission interval.",
-	            TimeValue (Seconds (1)),
+	            TimeValue (Seconds (0.5)),
 	            MakeTimeAccessor (&CDSBasedForwarding::HelloInterval),
 	            MakeTimeChecker ())
 	     .AddAttribute ("AllowedHelloLoss", "Number of hello messages which may be loss for valid link.",
