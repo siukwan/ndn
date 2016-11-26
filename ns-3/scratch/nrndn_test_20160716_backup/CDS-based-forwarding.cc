@@ -40,7 +40,7 @@ TypeId CDSBasedForwarding::GetTypeId(void)
 	    .SetParent<ForwardingStrategy> ()
 	    .AddConstructor<CDSBasedForwarding>()
 	    .AddAttribute ("HelloInterval", "HELLO messages emission interval.",
-	            TimeValue (Seconds (0.5)),
+	            TimeValue (Seconds (1)),
 	            MakeTimeAccessor (&CDSBasedForwarding::HelloInterval),
 	            MakeTimeChecker ())
 	     .AddAttribute ("AllowedHelloLoss", "Number of hello messages which may be loss for valid link.",
@@ -60,7 +60,7 @@ TypeId CDSBasedForwarding::GetTypeId(void)
 }
 
 CDSBasedForwarding::CDSBasedForwarding():
-			HelloInterval (Seconds (0.5)),
+			HelloInterval (Seconds (1)),
 			AllowedHelloLoss (2),
 			m_htimer (Timer::CANCEL_ON_DESTROY),
 			m_CacheSize(100000),// Cache size can not change. Because if you change the size, the m_interestNonceSeen and m_dataNonceSeen also need to change. It is really unnecessary
