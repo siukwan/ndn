@@ -444,6 +444,7 @@ CDSBasedForwarding::SendHello()
 		if (m_mapInterestLane.size() != 0)
 		{
 			m_mapInterestLane.clear();
+		}
 			//cout<<"forwarding.cc 3秒清空一次"<<endl;
 			//添加自身感兴趣的道路
 			const string& LaneName=m_sensor->getLane();
@@ -461,7 +462,7 @@ CDSBasedForwarding::SendHello()
 			{
 				m_mapInterestLane[route[uSearchIdx]] = true;
 			}
-		}
+		
 	}
 	
 	const vector<string>& route  = m_sensor->getNavigationRoute();
