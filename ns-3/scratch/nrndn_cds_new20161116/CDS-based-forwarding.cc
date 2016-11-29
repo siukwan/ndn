@@ -438,7 +438,7 @@ CDSBasedForwarding::SendHello()
 
 
 	m_iClearCount++;
-	if(m_iClearCount >= 6)
+	if(m_iClearCount >= 10)
 	{
 		m_iClearCount = 0;
 		if (m_mapInterestLane.size() != 0)
