@@ -57,7 +57,7 @@ wait
 cat ~/input/NR-NDN-Simulation/result.txt ~/input/Dist-Simulation/result.txt  ~/input/CDS-Simulation/result.txt > ~/tmp/$file_name/result.txt
 
 #追加，统一显示实验结果
-echo "//NDN DIST CDS" >> ~/tmp/$file_name/result.txt
+echo "//原始CDS算法：" >> ~/tmp/$file_name/result.txt
 tail -2 ~/input/NR-NDN-Simulation/result.txt >> ~/tmp/$file_name/result.txt
 tail -1 ~/input/Dist-Simulation/result.txt   >> ~/tmp/$file_name/result.txt
 tail -1 ~/input/CDS-Simulation/result.txt    >> ~/tmp/$file_name/result.txt
