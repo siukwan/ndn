@@ -28,7 +28,7 @@ program_name3="nrndn_cds_new20161116";
 git_date=$(date)
 shell_date=$(date +%Y%m%d-%H%M%S)
 vehicle_num=$(cat  ~/input/routes.rou.xml | grep "</vehicle>" | wc -l)
-file_name=$shell_date"-"$vehicle_num"nodes_"$program_name
+file_name="原始CDS算法："$shell_date"-"$vehicle_num"nodes_"$program_name
 
 #输出shell_data
 echo $file_name
@@ -42,10 +42,10 @@ cd ~/ndn/ns-3/
 ./waf --run "$program_name2 --method=3"
 
 #后台运行ndn#
-./waf --run "$program_name --accidentNum=$dataNum --method=0" > ~/tmp/$file_name/ndn_record.txt &
+#./waf --run "$program_name --accidentNum=$dataNum --method=0" > ~/tmp/$file_name/ndn_record.txt &
 #后台运行dis
 sleep 4
-./waf --run "$program_name2 --accidentNum=$dataNum --method=1" > ~/tmp/$file_name/dis_record.txt &
+#./waf --run "$program_name2 --accidentNum=$dataNum --method=1" > ~/tmp/$file_name/dis_record.txt &
 #后台运行cds
 sleep 4
 ./waf --run "$program_name2 --accidentNum=$dataNum --method=2" > ~/tmp/$file_name/cds_record.txt &
