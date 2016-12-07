@@ -6,10 +6,10 @@ F:/sumo-win32-0.24.0/sumo-0.24.0/bin/netgenerate --grid --grid.x-number=5 --grid
 F:/sumo-win32-0.24.0/sumo-0.24.0/bin/netgenerate --rand -o input_net.net.xml --rand.iterations=200
 
 生成旅行信息trips.trips.xml
-python F:/sumo-win32-0.24.0/sumo-0.24.0/tools/randomTrips.py -n input_net.net.xml -e 4 -p 0.01 
+python F:/sumo-win32-0.24.0/sumo-0.24.0/tools/randomTrips.py -n input_net.net.xml -e 12 -p 0.01 
 
 生成路径信息routes.rou.xml
-F:/sumo-win32-0.24.0/sumo-0.24.0/bin/duarouter --trip-files=trips.trips.xml --net-file=input_net.net.xml --end=12000 --output-file=routes.rou.xml 
+F:/sumo-win32-0.24.0/sumo-0.24.0/bin/duarouter --trip-files=trips.trips.xml --net-file=input_net.net.xml --begin=0 --end=12000 --output-file=routes.rou.xml 
 
 生成仿真轨迹信息fcdoutput.xml 
 F:/sumo-win32-0.24.0/sumo-0.24.0/bin/sumo -c cfg.sumocfg --fcd-output fcdoutput.xml  
@@ -17,7 +17,7 @@ F:/sumo-win32-0.24.0/sumo-0.24.0/bin/sumo -c cfg.sumocfg --fcd-output fcdoutput.
 F:/sumo-win32-0.24.0/sumo-0.24.0/bin/sumo-gui.exe cfg.sumocfg 运行
 
 <vType accel="0.1" decel="0.1" id="CarA" length="3.0" maxSpeed="0.11" color="1,1,1"/>
-
+ type="CarA"
 
 sumo --net-file input_net.net.xml --route-files routes.rou.xml --netstate-dump ex_sumo.sumo.tr --tripinfo-output tripinfo.tr
 
