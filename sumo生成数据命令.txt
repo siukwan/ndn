@@ -1,12 +1,12 @@
-F:/sumo-win32-0.24.0/sumo-0.24.0/bin/netgenerate --grid-net --grid-number=4 --grid-length=1000 -L 4  --output-file=input_net.net.xml --no-internal-links true -j traffic_light -S 20
+F:/sumo-win32-0.24.0/sumo-0.24.0/bin/netgenerate --grid-net --grid-number=5 --grid-length=1000 -L 5  --output-file=input_net.net.xml --no-internal-links true -j traffic_light -S 20
 
 F:/sumo-win32-0.24.0/sumo-0.24.0/bin/netgenerate --grid-net --grid-x-number=10 --grid-y-number=10 --grid-y-length=500 --grid-x-length=500 -L 4 -S 12 --output-file=input_net.net.xml  长宽不同
-F:/sumo-win32-0.24.0/sumo-0.24.0/bin/netgenerate --grid --grid.x-number=4 --grid.y-number=4 --grid.y-length=1000 --grid.x-length=1000 -L 4 -S 12 --output-file=input_net.net.xml  长宽不同
+F:/sumo-win32-0.24.0/sumo-0.24.0/bin/netgenerate --grid --grid.x-number=6 --grid.y-number=6 --grid.y-length=800 --grid.x-length=800 -L 4 -S 12 --output-file=input_net.net.xml
 
 F:/sumo-win32-0.24.0/sumo-0.24.0/bin/netgenerate --rand -o input_net.net.xml --rand.iterations=200
 
 生成旅行信息trips.trips.xml
-python F:/sumo-win32-0.24.0/sumo-0.24.0/tools/randomTrips.py -n input_net.net.xml -e 12 -p 0.01 
+python F:/sumo-win32-0.24.0/sumo-0.24.0/tools/randomTrips.py -n input_net.net.xml -e 10 -p 0.01 
 
 生成路径信息routes.rou.xml
 F:/sumo-win32-0.24.0/sumo-0.24.0/bin/duarouter --trip-files=trips.trips.xml --net-file=input_net.net.xml --begin=0 --end=12000 --output-file=routes.rou.xml 
