@@ -42,7 +42,7 @@ cd ~/ndn/ns-3/
 ./waf --run "$program_name2 --method=3"
 
 #后台运行ndn ./waf --run "nrndn_test --method=0"
-./waf --run "$program_name --accidentNum=$dataNum --method=0" > ~/tmp/$file_name/ndn_record.txt &
+#./waf --run "$program_name --accidentNum=$dataNum --method=0" > ~/tmp/$file_name/ndn_record.txt &
 #后台运行dis
 sleep 4
 ./waf --run "$program_name2 --accidentNum=$dataNum --method=1" > ~/tmp/$file_name/dis_record.txt &
