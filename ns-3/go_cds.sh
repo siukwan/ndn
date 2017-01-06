@@ -49,7 +49,7 @@ sleep 4
 #后台运行cds
 sleep 4
 ./waf --run "$program_name2 --accidentNum=$dataNum --method=2" > ~/tmp/$file_name/cds_record.txt &
-
+#./waf --run "nrndn_test_20160716_backup --accidentNum=0 --method=2" 
 #等待后台程序结束
 wait
 
