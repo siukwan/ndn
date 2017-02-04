@@ -466,6 +466,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//当前所在路段？使用pit的currentlane会存在问题，pit有时候在十字路口，没有把过去的路段删除，直接使用sensor的getlane
 	//string currentLane=m_nrpit->getCurrentLane();
 	string currentLane = m_sensor->getLane();
+	cout << myNodeId << "获取当前道路" << currentLane << endl;
 
 	//兴趣树没有发生变化
 	if(!changeFlag)
@@ -514,9 +515,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	
 		//SendAckPacket();
 		DropInterestePacket(interest);
+		cout << myNodeId << "DropInterestePacket" << endl;
 		return ;
 	}
 
+	cout << myNodeId << "changeFlag" << endl;
 	//evaluate whether receiver's id is in sender's priority list
 	bool idIsInPriorityList=true;
 	vector<uint32_t>::const_iterator idit;
