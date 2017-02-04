@@ -437,11 +437,13 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//找到当前路段，把当前路段作为根结点，其余的删除
 	cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除" << endl;
 	receive_tree->root = receive_tree->levelOrderDelete(tmp_curLane);
+	cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除，完成" << endl;
 	//receive_tree->levelOrder();
 	//getchar();
 	vector<vector<string>> receiveRoutes(0);
 	vector<string> tmpRoutes(0);
 	receive_tree->tree2Routes(receiveRoutes, tmpRoutes, receive_tree->root);
+	cout << myNodeId << "tree2Routes OK" << endl;
 
 
 	//cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
@@ -454,6 +456,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		flag1=(m_nrtree->MergeInterest(receive_tree->NodeId,receiveRoutes[i],m_sensor->getLane(),flag1));
 		if(flag1)changeFlag=true;
 	}
+	cout << myNodeId << "changeFlag OK" << endl;
 
 	// Update the PIT here
 	//更新PIT表
