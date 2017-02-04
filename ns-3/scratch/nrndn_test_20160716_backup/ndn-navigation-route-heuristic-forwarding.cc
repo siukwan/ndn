@@ -423,7 +423,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//getchar();
 
 	//提取兴趣树，并且还原
-	cout << "提取兴趣树，并且还原" << endl;
+	cout << myNodeId << "提取兴趣树，并且还原" << endl;
 	string receive_tree_str = nrheader.getTree();
 	Ptr<pit::nrndn::NrInterestTreeImpl> receive_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
 	//cout<<"(forwarding.cc)"<<m_node->GetId()<<"接收得到来自节点："<<nodeId<<"解序列化:"<<nrheader.getTree()<<endl;
@@ -435,7 +435,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//cout<<"(forwarding.cc)所在路段为："<<tmp_curLane<<"\ndelete后的兴趣树："<<endl;
 
 	//找到当前路段，把当前路段作为根结点，其余的删除
-	cout << "找到当前路段，把当前路段作为根结点，其余的删除" << endl;
+	cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除" << endl;
 	receive_tree->root = receive_tree->levelOrderDelete(tmp_curLane);
 	//receive_tree->levelOrder();
 	//getchar();
@@ -460,6 +460,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//m_nrpit->UpdatePitByInterestTree(receive_tree, nodeId);
 	
 	//以当前的兴趣树，更新PIT
+	cout << myNodeId << "以当前的兴趣树，更新PIT" << endl;
 	m_nrpit->UpdatePitByInterestTree2(m_nrtree);
 	
 	//当前所在路段？使用pit的currentlane会存在问题，pit有时候在十字路口，没有把过去的路段删除，直接使用sensor的getlane
