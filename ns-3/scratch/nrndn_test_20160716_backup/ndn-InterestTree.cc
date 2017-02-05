@@ -126,7 +126,7 @@ void NrInterestTreeImpl::levelOrder()
 	{
 		cout<<"(InterestTree)根结点为空"<<endl;
 		root = new InterestTreeNode();
-		//return ;
+		return ;
 	}
 	queue<InterestTreeNode*> q;
 	q.push(this->root);
