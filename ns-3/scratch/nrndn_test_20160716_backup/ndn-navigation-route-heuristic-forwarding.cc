@@ -423,7 +423,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//getchar();
 
 	//提取兴趣树，并且还原
-	cout << myNodeId << "提取兴趣树，并且还原" << endl;
+	//cout << myNodeId << "提取兴趣树，并且还原" << endl;
 	string receive_tree_str = nrheader.getTree();
 	Ptr<pit::nrndn::NrInterestTreeImpl> receive_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
 	//cout<<"(forwarding.cc)"<<m_node->GetId()<<"接收得到来自节点："<<nodeId<<"解序列化:"<<nrheader.getTree()<<endl;
@@ -435,9 +435,9 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//cout<<"(forwarding.cc)所在路段为："<<tmp_curLane<<"\ndelete后的兴趣树："<<endl;
 
 	//找到当前路段，把当前路段作为根结点，其余的删除
-	cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除" << endl;
+	//cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除" << endl;
 	receive_tree->root = receive_tree->levelOrderDelete(tmp_curLane);
-	cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除，完成" << endl;
+	//cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除，完成" << endl;
 	//receive_tree->levelOrder();
 	//getchar();
 	vector<vector<string>> receiveRoutes(0);

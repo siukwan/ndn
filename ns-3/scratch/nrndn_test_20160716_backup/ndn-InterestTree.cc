@@ -79,6 +79,7 @@ bool NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRout
 {
 	curLane=prefix+curLane;
 	//如果车辆当前所在的道路与兴趣树的root不相同
+	cout<< "如果车辆当前所在的道路与兴趣树的root不相同" << endl;
 	if(curLane!= root->lane)
 	{
 		updateNowRoot(curLane);
@@ -102,9 +103,11 @@ bool NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRout
 	if(idx == route.size())
 		return changeFlag;
 
+	cout<< "增加当前路段的兴趣节点" << endl;
 	//增加当前路段的兴趣节点
 	root->NodeId[id]=true;
 	insertInterest(id,idx+1,route,root,changeFlag);
+	cout<< "changeFlag" << endl;
 	return changeFlag;
 }
 
