@@ -83,6 +83,8 @@ bool NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRout
 	if(root == NULL)
 	{
 		cout<< "root为空" << endl;
+		root = new InterestTreeNode();
+		//return false;
 	}
 	cout << root->lane << endl;
 	if(curLane!= root->lane)
