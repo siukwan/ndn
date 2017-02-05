@@ -100,6 +100,7 @@ bool NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRout
 	}
 	bool changeFlag=false;
 	//没有共同的路段
+	cout<< "没有共同的路段" << endl;
 	if(idx == route.size())
 		return changeFlag;
 
