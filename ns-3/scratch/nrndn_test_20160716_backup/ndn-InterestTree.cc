@@ -80,6 +80,11 @@ bool NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRout
 	curLane=prefix+curLane;
 	//如果车辆当前所在的道路与兴趣树的root不相同
 	cout<< "如果车辆当前所在的道路与兴趣树的root不相同" << endl;
+	if(root == NULL)
+	{
+		cout<< "root为空" << endl;
+		return false;
+	}
 	cout << root->lane << endl;
 	if(curLane!= root->lane)
 	{
@@ -120,7 +125,8 @@ void NrInterestTreeImpl::levelOrder()
 	if(this->root == NULL)
 	{
 		cout<<"(InterestTree)根结点为空"<<endl;
-		return ;
+		root = new InterestTreeNode();
+		//return ;
 	}
 	queue<InterestTreeNode*> q;
 	q.push(this->root);
