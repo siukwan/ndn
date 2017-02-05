@@ -80,6 +80,7 @@ bool NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRout
 	curLane=prefix+curLane;
 	//如果车辆当前所在的道路与兴趣树的root不相同
 	cout<< "如果车辆当前所在的道路与兴趣树的root不相同" << endl;
+	cout << root->lane << endl;
 	if(curLane!= root->lane)
 	{
 		updateNowRoot(curLane);
@@ -91,6 +92,7 @@ bool NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRout
 	{
 		route[i]=uriConvertToString(oldRoute[i]);
 	}
+	cout<< "把%5d等等转换成[]" << endl;
 	unsigned int idx=0;
 	for(idx=0;idx<route.size();++idx)
 	{
