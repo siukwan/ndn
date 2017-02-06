@@ -453,7 +453,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	{
 		bool flag1 = false;
 		//cout<<"(forwarding.cc)合并的节点："<<receiveNode[i]<<endl;
-		flag1=(m_nrtree->MergeInterest(receive_tree->NodeId,receiveRoutes[i],m_sensor->getLane(),flag1));
+		receive_tree->NodeId = nodeId;
+		flag1=(m_nrtree->MergeInterest(nodeId,receiveRoutes[i],m_sensor->getLane(),flag1));
 		if(flag1)changeFlag=true;
 	}
 	cout << myNodeId << "changeFlag OK" << endl;
