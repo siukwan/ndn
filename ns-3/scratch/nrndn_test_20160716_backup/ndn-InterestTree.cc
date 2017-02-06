@@ -115,6 +115,7 @@ bool NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRout
 	cout<< "增加当前路段的兴趣节点" << endl;
 	//增加当前路段的兴趣节点
 	root->NodeId[id]=true;
+	cout<< "root->NodeId[id]=true" << endl;
 	insertInterest(id,idx+1,route,root,changeFlag);
 	cout<< "changeFlag" << endl;
 	return changeFlag;
