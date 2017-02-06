@@ -84,6 +84,7 @@ bool NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRout
 	{
 		cout<< "root为空" << endl;
 		root = new InterestTreeNode();
+		root->lane = curLane;
 		//return false;
 	}
 	cout << root->lane << endl;
@@ -117,6 +118,8 @@ bool NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRout
 	{
 		cout<< "root为空" << endl;
 		root = new InterestTreeNode();
+		root->lane = curLane;
+		cout << curLane <<endl;
 		//return false;
 	}
 	//增加当前路段的兴趣节点
