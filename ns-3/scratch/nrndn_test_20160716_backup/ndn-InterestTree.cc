@@ -112,7 +112,7 @@ bool NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRout
 	if(idx == route.size())
 		return changeFlag;
 
-	cout<< "增加当前路段的兴趣节点" << endl;
+	cout<< "增加当前路段的兴趣节点" << id << endl;
 	//增加当前路段的兴趣节点
 	root->NodeId[id]=true;
 	cout<< "root->NodeId[id]=true" << endl;
