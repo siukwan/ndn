@@ -464,6 +464,11 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//m_nrpit->UpdatePitByInterestTree(receive_tree, nodeId);
 	
 	//以当前的兴趣树，更新PIT
+	if(myNodeId == 506)
+	{
+		cout << myNodeId << "m_nrtree->levelOrder()" << endl;
+		m_nrtree->levelOrder();
+	}
 	cout << myNodeId << "以当前的兴趣树，更新PIT" << endl;
 	m_nrpit->UpdatePitByInterestTree2(m_nrtree);
 	

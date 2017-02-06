@@ -98,7 +98,7 @@ bool NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRout
 	{
 		route[i]=uriConvertToString(oldRoute[i]);
 	}
-	cout<< "把%5d等等转换成[]" << endl;
+	//cout<< "把%5d等等转换成[]" << endl;
 	unsigned int idx=0;
 	for(idx=0;idx<route.size();++idx)
 	{
@@ -108,11 +108,11 @@ bool NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRout
 	}
 	bool changeFlag=false;
 	//没有共同的路段
-	cout<< "没有共同的路段" << endl;
+	//cout<< "没有共同的路段" << endl;
 	if(idx == route.size())
 		return changeFlag;
 
-	cout<< "增加当前路段的兴趣节点" << id << endl;
+	//cout<< "增加当前路段的兴趣节点" << id << endl;
 	if(root == NULL)
 	{
 		cout<< "root为空" << endl;
@@ -121,9 +121,9 @@ bool NrInterestTreeImpl::MergeInterest(uint32_t&id,const vector<string>& oldRout
 	}
 	//增加当前路段的兴趣节点
 	root->NodeId[id]=true;
-	cout<< "root->NodeId[id]=true" << endl;
+	//cout<< "root->NodeId[id]=true" << endl;
 	insertInterest(id,idx+1,route,root,changeFlag);
-	cout<< "changeFlag" << endl;
+	//cout<< "changeFlag" << endl;
 	return changeFlag;
 }
 
