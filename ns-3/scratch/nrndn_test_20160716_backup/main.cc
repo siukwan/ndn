@@ -323,7 +323,7 @@ nrndnExample::RunNrndnSim ()
 
 	std::cout << "Starting simulation for " << totalTime << " s ...\n";
 
-	Simulator::Stop(Seconds(totalTime));
+	Simulator::Stop(Seconds(totalTime - 30));
 	std::cout << "开始运行：\n";
 	Simulator::Run();
 
