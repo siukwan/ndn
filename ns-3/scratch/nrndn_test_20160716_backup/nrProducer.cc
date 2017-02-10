@@ -276,6 +276,9 @@ void nrProducer::OnSendingTrafficData()
 	FwHopCountTag hopCountTag;
 	data->GetPayload()->AddPacketTag(hopCountTag);
 	std::cout<<"nrProducer.cc:hopCountTag"<<std::endl;
+	std::cout<<"nrProducer.cc:GetNode()->GetId()"<<GetNode()->GetId()<<std::endl;
+	std::cout<<"nrProducer.cc:data->GetSignature()"<<data->GetSignature()<<std::endl;
+	std::cout<<"nrProducer.cc: m_prefix.get(0).toUri()"<< m_prefix.get(0).toUri()<<std::endl;
 	//找出当前时刻，感兴趣节点的总数
 	std::pair<uint32_t, uint32_t> size_InterestSize =
 				nrUtils::GetNodeSizeAndInterestNodeSize(GetNode()->GetId(),
