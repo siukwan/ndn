@@ -54,15 +54,18 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 	{
 		Ptr<Application> app=(*it)->GetApplication(appIndex["ns3::ndn::nrndn::nrProducer"]);
 		Ptr<nrndn::nrProducer> producer = DynamicCast<nrndn::nrProducer>(app);
+		cout << "producer " << endl;
 		NS_ASSERT(producer);
 		if(producer->IsActive())
 			++nodeSize;
+		cout << "IsInterestLane " << endl;
 		if(producer->IsInterestLane(lane))
 		{	
 			++interestSize;
 			cout<<idx<<" ";
 		}
 		idx++;
+		cout << "idx++ " << endl;
 	}
 	cout<<"utils:统计结束"<<endl;
 	//getchar();
