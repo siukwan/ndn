@@ -253,25 +253,25 @@ bool NrPitImpl::UpdatePitByInterestTree2(Ptr<pit::nrndn::NrInterestTreeImpl>&rec
 			
 			Ptr<Name> name = ns3::Create<Name>(head->lane);
 			Ptr<Interest> interest=ns3::Create<Interest> ();
-			cout<< "interest->SetName" <<endl;
+			//cout<< "interest->SetName" <<endl;
 			interest->SetName				(name);
 			interest->SetInterestLifetime	(Time::Max());//never expire
-			cout<< "interest->SetName ok" <<endl;
+			//cout<< "interest->SetName ok" <<endl;
 			//Create a fake FIB entry(if not ,L3Protocol::RemoveFace will have problem when using pitEntry->GetFibEntry)
 			Ptr<fib::Entry> fibEntry=ns3::Create<fib::Entry>(Ptr<Fib>(0),Ptr<Name>(0));
 			Ptr<Entry> entry = ns3::Create<EntryNrImpl>(*this,interest,fibEntry,m_cleanInterval) ;
 			m_pitContainer.push_back(entry);
 			
-			cout<< "m_pitContainer.push_back" <<endl;
+			//cout<< "m_pitContainer.push_back" <<endl;
 			Ptr<EntryNrImpl> pitEntry_siu = DynamicCast<EntryNrImpl>(m_pitContainer.back());
 			
-			cout<< "pitEntry_siu" <<endl;
+			//cout<< "pitEntry_siu" <<endl;
 			for(auto ite = head->NodeId.begin(); ite != head->NodeId.end(); ite++)
 			{
 				pitEntry_siu->AddIncomingNeighbors(ite->first);
 			}
 			
-			cout<< "AddIncomingNeighbors" <<endl;
+			//cout<< "AddIncomingNeighbors" <<endl;
 			map<string, InterestTreeNode* >::iterator ite = head->child.begin();
 			for(;ite!=head->child.end();ite++)
 			{
