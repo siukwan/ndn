@@ -382,14 +382,18 @@ bool nrProducer::IsInterestLane(const std::string& lane)
 {
 	std::vector<std::string> result;
 	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
+	cout << "this->GetNode()->GetObject<NodeSensor>()" << endl;
 	const std::string& currentLane = sensor->getLane();
+	cout << "sensor->getLane()" << endl;
 	std::vector<std::string>::const_iterator it;
 	std::vector<std::string>::const_iterator it2;
 	const std::vector<std::string>& route = sensor->getNavigationRoute();
+	cout << "sensor->getNavigationRoute()" << endl;
 
 	it =std::find(route.begin(),route.end(),currentLane);
 
 	it2=std::find(it,route.end(),lane);
+	cout << "return (it2!=route.end());" << endl;
 
 	return (it2!=route.end());
 }

@@ -49,12 +49,12 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 	NodeContainer c =NodeContainer::GetGlobal();
 	NodeContainer::Iterator it;
 	int idx = 0;
-	cout<<"感兴趣的节点：";
+	//cout<<"感兴趣的节点：";
 	for(it=c.Begin();it!=c.End();++it)
 	{
 		Ptr<Application> app=(*it)->GetApplication(appIndex["ns3::ndn::nrndn::nrProducer"]);
 		Ptr<nrndn::nrProducer> producer = DynamicCast<nrndn::nrProducer>(app);
-		cout << "producer " << endl;
+		//cout << "producer " << endl;
 		NS_ASSERT(producer);
 		if(producer->IsActive())
 			++nodeSize;
@@ -65,7 +65,7 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 			cout<<idx<<" ";
 		}
 		idx++;
-		cout << "idx++ " << endl;
+		//cout << "idx++ " << endl;
 	}
 	cout<<"utils:统计结束"<<endl;
 	//getchar();
