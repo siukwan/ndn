@@ -383,6 +383,11 @@ bool nrProducer::IsInterestLane(const std::string& lane)
 	std::vector<std::string> result;
 	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
 	cout << "this->GetNode()->GetObject<NodeSensor>()" << endl;
+	if(sensor == NULL)
+	{
+		cout << "sensor NULL" <<endl;
+		return false;
+	}
 	const std::string& currentLane = sensor->getLane();
 	cout << "sensor->getLane()" << endl;
 	std::vector<std::string>::const_iterator it;
