@@ -130,16 +130,23 @@ const std::string& SumoNodeSensor::getType()
 const std::string& SumoNodeSensor::getLane()
 {
 	NodeSensor::getLane();
+	cout << "NodeSensor::getLane();" << endl;
 	Ptr<MobilityModel> mobility=this->GetObject<MobilityModel>();
+	cout << "Ptr<MobilityModel> mobility=this->GetObject<MobilityModel>();" << endl;
 	Vector pos = mobility->GetPosition();
+	cout << "pos" << endl;
 	Ptr<Node> node = this->GetObject<Node>();
+	cout << "node" << endl;
 	uint32_t id = node->GetId();
+	cout << "id" << endl;
 	if(&(m_sumodata->GetTrace(id,pos))==NULL)
         m_lane.Set(emptyLane);
     else
     	m_lane.Set(m_sumodata->GetTrace(id,pos).lane);
+	cout << "GetTraceid" << endl;
 	//std::cout<<"id's current lane "<<m_lane<<std::endl;
 	m_sumoLane = m_lane.Get();
+	cout << "m_sumoLane" << endl;
     return m_sumoLane;
 }
 
