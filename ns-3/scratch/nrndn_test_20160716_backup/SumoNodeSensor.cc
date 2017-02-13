@@ -138,7 +138,7 @@ const std::string& SumoNodeSensor::getLane()
 	Ptr<Node> node = this->GetObject<Node>();
 	//cout << "node" << endl;
 	uint32_t id = node->GetId();
-	//cout << "id" << endl;
+	cout << "id" << endl;
 
 	if(m_sumodata == NULL)
 	{
