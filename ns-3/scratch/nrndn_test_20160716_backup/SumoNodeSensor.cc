@@ -139,6 +139,16 @@ const std::string& SumoNodeSensor::getLane()
 	cout << "node" << endl;
 	uint32_t id = node->GetId();
 	cout << "id" << endl;
+
+	if(m_sumodata == NULL)
+	{
+		cout << "m_sumodata == NULL" <<endl;
+        m_lane.Set(emptyLane);
+		m_sumoLane = m_lane.Get();
+		cout << "m_sumoLane" << endl;
+		return m_sumoLane;
+	}
+
 	if(&(m_sumodata->GetTrace(id,pos))==NULL)
         m_lane.Set(emptyLane);
     else
