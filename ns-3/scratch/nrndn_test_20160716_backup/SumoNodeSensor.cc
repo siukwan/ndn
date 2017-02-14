@@ -153,6 +153,7 @@ const std::string& SumoNodeSensor::getLane()
 	if(&(m_sumodata->GetTrace(id,pos))==NULL)
 	{
 		cout << "m_lane.Set(emptyLane);" <<endl;
+		cout<<"Time now: "<<Simulator::Now().GetSeconds()<<endl;
         m_lane.Set(emptyLane);
 		cout << "m_lane.Set(emptyLane);" <<endl;
 	}
