@@ -58,6 +58,11 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 		NS_ASSERT(producer);
 		if(producer->IsActive())
 			++nodeSize;
+		else
+		{//非活跃节点直接跳过，避免段错误
+			idx++;
+			continue;
+		}
 		cout << "IsInterestLane " << endl;
 		if(producer->IsInterestLane(lane))
 		{	
