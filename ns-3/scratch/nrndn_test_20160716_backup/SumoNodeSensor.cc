@@ -154,6 +154,14 @@ const std::string& SumoNodeSensor::getLane()
 		cout << "id" <<id << " pos x" << pos.x <<" pos y" << pos.y <<" pos z" << pos.z << endl;
 		cout << "m_lane.Set(emptyLane);" <<endl;
 		cout<<"Time now: "<<Simulator::Now().GetSeconds()<<endl;
+		if(int(pos.x) == 10000 || int(pos.x) == -10000)
+		{
+			cout << "10000 or -10000" << endl;
+			m_sumoLane = emptyLane; //NodeSensor.cc const std::string NodeSensor::emptyLane("UNKNOWN_LANE");
+			cout << m_sumoLane << endl;
+			return emptyLane;
+		}
+
         m_lane.Set(emptyLane);
 		cout << "m_lane.Set(emptyLane);" <<endl;
 	}
@@ -166,7 +174,7 @@ const std::string& SumoNodeSensor::getLane()
 	//cout << "GetTraceid" << endl;
 	//std::cout<<"id's current lane "<<m_lane<<std::endl;
 	m_sumoLane = m_lane.Get();
-	//cout << "m_sumoLane" << endl;
+	cout << m_sumoLane << endl;
     return m_sumoLane;
 }
 
