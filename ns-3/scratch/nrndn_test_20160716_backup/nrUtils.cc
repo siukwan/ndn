@@ -61,6 +61,7 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 		else
 		{//非活跃节点直接跳过，避免段错误
 			idx++;
+			cout << "no active" << endl;
 			continue;
 		}
 		cout << "IsInterestLane " << endl;
