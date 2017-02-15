@@ -174,7 +174,7 @@ const std::string& SumoNodeSensor::getLane()
 	//cout << "GetTraceid" << endl;
 	//std::cout<<"id's current lane "<<m_lane<<std::endl;
 	m_sumoLane = m_lane.Get();
-	cout << m_sumoLane << endl;
+	//cout << m_sumoLane << endl;
     return m_sumoLane;
 }
 
