@@ -239,6 +239,8 @@ void nrProducer::NotifyNewAggregate()
 
 void nrProducer::OnSendingTrafficData()
 {
+	if (!m_active)
+		return;
 	//std::cout<<"siu:"<<GetNode()->GetId()<<" OnSendingTrafficData"<<endl;
 	//Before sending traffic Data, reflash the current lane first!!
 	//If not, Let's assume vehicle A is just into lane_2 and previous lane is lane_1,
@@ -252,8 +254,6 @@ void nrProducer::OnSendingTrafficData()
 	NS_LOG_FUNCTION(this << "Sending Traffic Data:"<<m_prefix.toUri());
 	//siukwan add 2015.8.28
 	//std::cout<<"siu:"<<GetNode()->GetId()<<"Sending Traffic Data:"<<m_prefix.toUri()<<std::endl;
-	if (!m_active)
-		return;
 
 	Ptr<Data> data = Create<Data>(Create<Packet>(m_virtualPayloadSize));
 	Ptr<Name> dataName = Create<Name>(m_prefix);
