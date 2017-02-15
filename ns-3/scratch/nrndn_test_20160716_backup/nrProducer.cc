@@ -239,6 +239,7 @@ void nrProducer::NotifyNewAggregate()
 
 void nrProducer::OnSendingTrafficData()
 {
+	//20170215调整到getLane前面，避免非活跃节点getLane();
 	if (!m_active)
 		return;
 	//std::cout<<"siu:"<<GetNode()->GetId()<<" OnSendingTrafficData"<<endl;
