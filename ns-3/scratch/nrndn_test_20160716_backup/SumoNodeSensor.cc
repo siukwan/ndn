@@ -138,7 +138,7 @@ const std::string& SumoNodeSensor::getLane()
 	Ptr<Node> node = this->GetObject<Node>();
 	//cout << "node" << endl;
 	uint32_t id = node->GetId();
-	cout << "id" << endl;
+	//cout << "id" << endl;
 
 	if(m_sumodata == NULL)
 	{
@@ -149,9 +149,9 @@ const std::string& SumoNodeSensor::getLane()
 		return m_sumoLane;
 	}
 
-	cout << "id" <<id << " pos x" << pos.x <<" pos y" << pos.y <<" pos z" << pos.z << endl;
 	if(&(m_sumodata->GetTrace(id,pos))==NULL)
 	{
+		cout << "id" <<id << " pos x" << pos.x <<" pos y" << pos.y <<" pos z" << pos.z << endl;
 		cout << "m_lane.Set(emptyLane);" <<endl;
 		cout<<"Time now: "<<Simulator::Now().GetSeconds()<<endl;
         m_lane.Set(emptyLane);
@@ -159,14 +159,14 @@ const std::string& SumoNodeSensor::getLane()
 	}
     else
 	{
-		cout << "m_lane.Set(m_sumodata->GetTrace(id,pos).lane):" <<m_sumodata->GetTrace(id,pos).lane << endl;
+		//cout << "m_lane.Set(m_sumodata->GetTrace(id,pos).lane):" <<m_sumodata->GetTrace(id,pos).lane << endl;
     	m_lane.Set(m_sumodata->GetTrace(id,pos).lane);
-		cout << "m_lane.Set(m_sumodata->GetTrace(id,pos).lane);" <<endl;
+		//cout << "m_lane.Set(m_sumodata->GetTrace(id,pos).lane);" <<endl;
 	}
 	//cout << "GetTraceid" << endl;
 	//std::cout<<"id's current lane "<<m_lane<<std::endl;
 	m_sumoLane = m_lane.Get();
-	cout << "m_sumoLane" << endl;
+	//cout << "m_sumoLane" << endl;
     return m_sumoLane;
 }
 
