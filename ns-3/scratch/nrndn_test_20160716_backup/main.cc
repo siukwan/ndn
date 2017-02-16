@@ -870,7 +870,7 @@ void nrndnExample::InstallTraffics()
 		producer->addAccident(1);
 	}*/
 
-		for(uint32_t index = 0; index < 35; index ++)
+		for(uint32_t index = 0; index < 20; index ++)
 		{
 
 			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
