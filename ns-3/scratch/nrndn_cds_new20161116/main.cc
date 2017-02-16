@@ -875,7 +875,7 @@ void nrndnExample::InstallTraffics()
 
 	
 
-		for(uint32_t index = 0; index < 30; index ++)
+		for(uint32_t index = 0; index < 35; index ++)
 		{
 			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
 					nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
