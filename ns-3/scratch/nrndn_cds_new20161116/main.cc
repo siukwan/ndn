@@ -875,7 +875,7 @@ void nrndnExample::InstallTraffics()
 
 	
 
-		for(uint32_t index = 0; index < 25; index ++)
+		for(uint32_t index = 0; index < 15; index ++)
 		{
 			if(index == 22)
 				continue;
