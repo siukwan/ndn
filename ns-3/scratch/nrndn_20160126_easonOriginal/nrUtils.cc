@@ -55,6 +55,10 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 		NS_ASSERT(producer);
 		if(producer->IsActive())
 			++nodeSize;
+		else
+		{
+			continue;
+		}
 		if(producer->IsInterestLane(lane))
 			++interestSize;
 	}
