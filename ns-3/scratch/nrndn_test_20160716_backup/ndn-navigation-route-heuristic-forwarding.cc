@@ -285,17 +285,19 @@ void  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 }
 void  NavigationRouteHeuristic::OnInterest_ackProcess(Ptr<Interest> interest)
 {
-			//cout<<"收到ACK包"<<endl;
+			cout<<"收到ACK包"<<endl;
 			Ptr<const Packet> nrPayload	= interest->GetPayload();
 			uint32_t nodeId;
 			uint32_t seq;
 			ndn::nrndn::nrHeader nrheader;
+			cout<<"PeekHeader"<<endl;
 			nrPayload->PeekHeader( nrheader);
 			//获取发送兴趣包节点的ID
 			nodeId=nrheader.getSourceId();
 			//获取兴趣的随机编码
 			seq=interest->GetNonce();
 			//如果重复
+			cout<<"如果重复"<<endl;
 			if(isDuplicatedInterest(nodeId,seq))
 			{
 				NS_LOG_DEBUG("Get ack packet from front or other direction and it is old packet");
@@ -309,14 +311,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//NS_LOG_UNCOND("Here is NavigationRouteHeuristic dealing with OnInterest");
 	//NS_LOG_FUNCTION (this);
 	if(!m_running) return;
-	cout << "来自应用层" <<endl;
+	//cout << "来自应用层" <<endl;
 	if(Face::APPLICATION==face->GetFlags())
 	{
 		OnInterest_application( interest);
 		return;
 	}
 
-	cout << "心跳包" <<endl;
+	//cout << "心跳包" <<endl;
 	//如果它是个心跳包
 	if(HELLO_MESSAGE==interest->GetScope())
 	{//处理心跳
@@ -324,7 +326,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
-	cout << "处理ack包" <<endl;
+	//cout << "处理ack包" <<endl;
 	//处理ack包
 	if(FORWARD_ACK == interest->GetScope())
 	{
