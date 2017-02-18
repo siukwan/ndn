@@ -309,13 +309,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	//NS_LOG_UNCOND("Here is NavigationRouteHeuristic dealing with OnInterest");
 	//NS_LOG_FUNCTION (this);
 	if(!m_running) return;
-
+	cout << "来自应用层" <<endl;
 	if(Face::APPLICATION==face->GetFlags())
 	{
 		OnInterest_application( interest);
 		return;
 	}
 
+	cout << "心跳包" <<endl;
 	//如果它是个心跳包
 	if(HELLO_MESSAGE==interest->GetScope())
 	{//处理心跳
@@ -323,6 +324,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
+	cout << "处理ack包" <<endl;
 	//处理ack包
 	if(FORWARD_ACK == interest->GetScope())
 	{
@@ -330,12 +332,14 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		return;
 	}
 
+	cout << "GetPayload" <<endl;
 	//Payload是什么，payload是假负载
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader( nrheader);
 	//获取发送兴趣包节点的ID
 	uint32_t nodeId = nrheader.getSourceId();
+	cout <<nodeId<< "GetPayload" <<endl;
 	//获取兴趣的随机编码
 	uint32_t seq = interest->GetNonce();
 	//获取当前节点的id
@@ -419,25 +423,25 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	NS_LOG_DEBUG("Get interest packet from nodes behind");
 	const vector<string> remoteRoute= ExtractRouteFromName(interest->GetName());
 
-	cout<<"forwarding.cc"<<myNodeId<<"准备转发兴趣包"<<nodeId<<endl;
+	//cout<<"forwarding.cc"<<myNodeId<<"准备转发兴趣包"<<nodeId<<endl;
 	//getchar();
 
 	//提取兴趣树，并且还原
-	cout << myNodeId << "提取兴趣树，并且还原" << endl;
+	//cout << myNodeId << "提取兴趣树，并且还原" << endl;
 	string receive_tree_str = nrheader.getTree();
 	Ptr<pit::nrndn::NrInterestTreeImpl> receive_tree = ns3::Create<pit::nrndn::NrInterestTreeImpl> ();
 	//cout<<"(forwarding.cc)"<<m_node->GetId()<<"接收得到来自节点："<<nodeId<<"解序列化:"<<nrheader.getTree()<<endl;
 	receive_tree->root = receive_tree->deserialize_noId(receive_tree_str);
 	receive_tree->NodeId = nodeId;
-	cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
+	//cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
 	//receive_tree->levelOrder();
 	string tmp_curLane = receive_tree->prefix+m_sensor->getLane();
-	cout<<"(forwarding.cc)所在路段为："<<tmp_curLane<<"\ndelete后的兴趣树："<<endl;
+	//cout<<"(forwarding.cc)所在路段为："<<tmp_curLane<<"\ndelete后的兴趣树："<<endl;
 
 	//找到当前路段，把当前路段作为根结点，其余的删除
 	//cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除" << endl;
 	receive_tree->root = receive_tree->levelOrderDelete(tmp_curLane);
-	cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除，完成" << endl;
+	//cout << myNodeId << "找到当前路段，把当前路段作为根结点，其余的删除，完成" << endl;
 	//receive_tree->levelOrder();
 	//getchar();
 	vector<vector<string>> receiveRoutes(0);
