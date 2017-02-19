@@ -288,8 +288,9 @@ void CDSBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 			cout<<ite->first<<" ";
 		}
 		cout<<endl;
-		
-		uint32_t forwardId = nrheader.getSourceId();
+		Ptr<Packet> payload = Create<Packet>(*data->GetPayload());
+		ndn::nrndn::nrHeader nrheader;
+		uint32_t forwardId = nrheader.getForwardId();
 		uint32_t sourceId  = nrheader.getSourceId();
 		cout << "forwardId:" << forwardId << " sourceId:" << sourceId << endl;
 		//感兴趣才转发
