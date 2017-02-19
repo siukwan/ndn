@@ -510,11 +510,13 @@ CDSBasedForwarding::SendHello()
 	interest->SetScope(HELLO_MESSAGE);	// The flag indicate it is hello message
 	interest->SetName(name); //interest name is lane;
 
+	/*
 	if(m_node->GetId() == 1)
 	{//检查1号节点多少秒发一次心跳包
 		cout<<"1号节点心跳包"<<Simulator::Now().GetSeconds()<<endl;
 		getchar();
 	}
+	*/
 	//4. send the hello message
 	SendInterestPacket(interest);
 
