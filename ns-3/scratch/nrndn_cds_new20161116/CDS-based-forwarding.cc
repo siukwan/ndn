@@ -289,8 +289,11 @@ void CDSBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 		}
 		cout<<endl;
 		
+		uint32_t forwardId = nrheader.getSourceId();
+		uint32_t sourceId  = nrheader.getSourceId();
+		cout << "forwardId:" << forwardId << " sourceId:" << sourceId << endl;
 		//感兴趣才转发
-		if( m_mapInterestLane[sOriginalName] || 1)
+		if( m_mapInterestLane[sOriginalName])
 		{
 				cout<<"对这个路感兴趣"<<endl;
 		//getchar();
