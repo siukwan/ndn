@@ -304,6 +304,7 @@ void  NavigationRouteHeuristic::OnInterest_ackProcess(Ptr<Interest> interest)
 				cout<<"forwarding.cc收到同样的ACK包,不再发送!"<<endl;
 				ExpireInterestPacketTimer(nodeId,seq);
 			}
+			cout<<"如果重复,完成"<<endl;
 }
 void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		Ptr<Interest> interest)
