@@ -877,14 +877,12 @@ void nrndnExample::InstallTraffics()
 	}*/
 
 
-		for(uint32_t index = 0; index < 25; index ++)
+		for(uint32_t index = 0; index < 20; index ++)
 		{
-			if(index == 22)
-				continue;
 			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
 					nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
 			NS_ASSERT(producer);
-			producer->addAccident(1);
+			producer->addAccident(10);
 		}
 	
 	std::cout<<"插入事件：完毕"<<endl;
