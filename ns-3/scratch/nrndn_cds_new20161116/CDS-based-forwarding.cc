@@ -290,7 +290,7 @@ void CDSBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 		cout<<endl;
 		
 		//感兴趣才转发
-		if( m_mapInterestLane[sOriginalName] )
+		if( m_mapInterestLane[sOriginalName] || 1)
 		{
 				cout<<"对这个路感兴趣"<<endl;
 		//getchar();
