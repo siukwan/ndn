@@ -773,7 +773,7 @@ void nrndnExample::Look_at_clock()
 			dominatorCount += producer->getForwardStrategy().getDominate();
 		}
 	
-	cout << "支配者数量：" << dominator <<end;
+	cout << "支配者数量：" << dominatorCount <<end;
 	getchar();
 
 	Simulator::Schedule(Seconds(clockInterval),&nrndnExample::Look_at_clock,this);
