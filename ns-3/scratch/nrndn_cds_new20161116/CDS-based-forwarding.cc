@@ -84,6 +84,15 @@ CDSBasedForwarding::~CDSBasedForwarding()
 	// TODO Auto-generated destructor stub
 }
 
+	bool CDSBasedForwarding::getDominate()
+	{
+		if( m_state != dominator )
+		{//不是支配者，直接返回
+			return false;
+		}
+		else return true;
+	};
+	
 void CDSBasedForwarding::Start()
 {
 	NS_LOG_FUNCTION (this);
