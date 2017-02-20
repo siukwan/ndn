@@ -228,12 +228,14 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 
 	std::pair<std::string, double> remoteInfo =
 			convertCoordinateToLanePos(x,y);
-
+	cout << "convertCoordinateToLanePos" <<endl;
 	const string& remoteLane = remoteInfo.first;
 	const double& remotePos  = remoteInfo.second;
 
 	localLaneIterator  = std::find (route.begin(), route.end(), localLane);
 	remoteLaneIterator = std::find (route.begin(), route.end(), remoteLane);
+	cout << "localLane " << localLane << endl;
+	cout << "remoteLane " << remoteLane << endl;
 
 	if(remoteLaneIterator==route.end()||
 			localLaneIterator==route.end())
@@ -241,12 +243,14 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 		Vector 	localPos = GetObject<MobilityModel>()->GetPosition();
 		localPos.z=0;//Just in case
 		Vector remotePos(x,y,0);
+		cout << "CalculateDistance " << endl;
 		return std::pair<bool, double>(false,CalculateDistance(localPos,remotePos));
 	}
 
 	uint32_t localIndex = distance(route.begin(),localLaneIterator);
 	uint32_t remoteIndex= distance(route.begin(),remoteLaneIterator);
 
+		cout << "localIndex==remoteIndex " << endl;
 	if(localIndex==remoteIndex)
 		return pair<bool, double>(true, remotePos-localPos);
 
@@ -256,6 +260,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 	std::map<std::string,vanetmobility::sumomobility::Edge>::const_iterator eit;
 	if(localIndex>remoteIndex)
 	{
+		cout << "localIndex>remoteIndex " << endl;
 		//From behind
 		eit = edges.find(uriConvertToString(route.at(remoteIndex)));
 		NS_ASSERT_MSG(eit!=edges.end(),"No edge info for "<<remoteLane);
@@ -270,10 +275,12 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 			NS_ASSERT_MSG(eit!=edges.end(),"No edge info for "<<uriConvertToString(route.at(i)));
 			middleLen+=eit->second.lane.length;
 		}
+		cout << "(beginLen+middleLen+localPos)" << endl;
 		distance = -(beginLen+middleLen+localPos);
 	}
 	else
 	{
+		cout << "else" << endl;
 		//From front
 		eit = edges.find(uriConvertToString(route.at(localIndex)));
 		NS_ASSERT_MSG(eit!=edges.end(),"No edge info for "<<remoteLane);
@@ -288,9 +295,11 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 			NS_ASSERT_MSG(eit!=edges.end(),"No edge info for "<<uriConvertToString(route.at(i)));
 			middleLen+=eit->second.lane.length;
 		}
+		cout << " beginLen+middleLen+remotePos" << endl;
 		distance = beginLen+middleLen+remotePos;
 
 	}
+		cout << "return" << endl;
 	return std::pair<bool, double>(true,distance);
 
 }
