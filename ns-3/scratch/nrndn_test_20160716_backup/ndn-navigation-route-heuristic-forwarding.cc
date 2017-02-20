@@ -524,12 +524,13 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			index = distance(pri.begin(), idit);
 		else//不在优先级列表中时,也要设置等待时间
 			index = pri.size()+1;
-	
+		
+		/*
 		double random = m_uniformRandomVariable->GetInteger(0, 20);
 		Time sendInterval(MilliSeconds(random) + index * m_timeSlot);
 		m_sendingInterestEvent[nodeId][seq] = Simulator::Schedule(sendInterval,
 					&NavigationRouteHeuristic::SendAckPacket, this);
-	
+		*/
 		//SendAckPacket();
 		DropInterestePacket(interest);
 		cout << myNodeId << "DropInterestePacket" << endl;
