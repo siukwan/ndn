@@ -393,6 +393,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		ExpireInterestPacketTimer(nodeId,seq);
 		return;
 	}
+	cout<<"forwarding.cc"<<myNodeId<<"packetFromDirection"<<nodeId<<endl;
 
 	//If it is not a stop message, prepare to forward:
 	pair<bool, double> msgdirection = packetFromDirection(interest);
@@ -412,6 +413,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		}
 		return ;
 	}
+	cout<<"forwarding.cc"<<myNodeId<<"兴趣包来自后方"<<nodeId<<endl;
 	
 	//兴趣包来自后方
 	// it is from nodes behind
@@ -425,6 +427,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		ExpireInterestPacketTimer(nodeId,seq);
 		return;
 	}
+	cout<<"forwarding.cc"<<myNodeId<<"如果重复"<<nodeId<<endl;
 
 	NS_LOG_DEBUG("Get interest packet from nodes behind");
 	const vector<string> remoteRoute= ExtractRouteFromName(interest->GetName());
