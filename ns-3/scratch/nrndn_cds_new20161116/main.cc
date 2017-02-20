@@ -764,6 +764,18 @@ void nrndnExample::Look_at_clock()
 
 	cout<<"\n(main.cc) Time now: "<<Simulator::Now().GetSeconds()<<endl;
 
+	uint32_t dominatorCount = 0;	
+		for(uint32_t index = 0; index < 20; index ++)
+		{
+			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
+					nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
+			NS_ASSERT(producer);
+			dominatorCount += producer->getForwardStrategy().getDominate();
+		}
+	
+	cout << "支配者数量：" << dominator <<end;
+	getchar();
+
 	Simulator::Schedule(Seconds(clockInterval),&nrndnExample::Look_at_clock,this);
 }
 
