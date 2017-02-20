@@ -770,7 +770,8 @@ void nrndnExample::Look_at_clock()
 			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
 					nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
 			NS_ASSERT(producer);
-			dominatorCount += producer->getForwardStrategy().getDominate();
+			if(producer->IsActive())
+				dominatorCount += producer->getForwardStrategy()->getDominate();
 		}
 	
 	cout << "支配者数量：" << dominatorCount <<endl;
