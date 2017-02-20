@@ -72,7 +72,7 @@ public:
 
 	void ScheduleAccident(double Time);
 
-	void getForwardStrategy()
+	Ptr<fw::nrndn::NavigationRouteHeuristic> getForwardStrategy()
 	{
 		return m_forwardingStrategy;
 	}
