@@ -337,9 +337,9 @@ void nrProducer::addAccident()
 	return;
 }
 
-void nrProducer::addAccident(int iType)
+void nrProducer::addAccident(double iType)
 {
-	if(iType == 0)
+	if(iType <= 0.00001)
 	{//产生随机事件
 		addAccident();
 		return;

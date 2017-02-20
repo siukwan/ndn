@@ -61,7 +61,7 @@ public:
 
 	void addAccident();
 	//2016.11.18 siukwan add，定时发送事件
-	void addAccident(int iType);
+	void addAccident(double iType);
 
 	bool IsActive();
 
