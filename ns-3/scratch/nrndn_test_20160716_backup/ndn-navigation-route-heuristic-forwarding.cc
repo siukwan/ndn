@@ -909,6 +909,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 
 	pair<bool, double> result =
 			m_sensor->getDistanceWith(nrheader.getX(),nrheader.getY(),route);
+	cout << "result" << route.size() <<endl;
 
 	return result;
 }
