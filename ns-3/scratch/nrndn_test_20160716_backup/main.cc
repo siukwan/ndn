@@ -651,7 +651,7 @@ nrndnExample::InstallNrNdnStack()
 	TTLMaxStr<<TTLMax;
 	std::ostringstream pitCleanIntervalStr;
 	//uint32_t pitCleanInterval = 1.0 / interestFrequency * 3.0;
-	uint32_t pitCleanInterval = 1.0 / 1 * 3.0;//有什么作用？
+	uint32_t pitCleanInterval = 1.0 / interestFrequency;//有什么作用？
 		pitCleanIntervalStr<<pitCleanInterval;
 	cout<<"pitInterval="<<pitCleanIntervalStr.str()<<endl;
 	ndnHelper.SetForwardingStrategy ("ns3::ndn::fw::nrndn::NavigationRouteHeuristic","HelloLogEnable",str,"NoFwStop",noFwStopStr,"TTLMax",TTLMaxStr.str());
