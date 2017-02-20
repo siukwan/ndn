@@ -92,7 +92,7 @@ CDSBasedForwarding::~CDSBasedForwarding()
 		}
 		else return true;
 	};
-	
+
 void CDSBasedForwarding::Start()
 {
 	NS_LOG_FUNCTION (this);
@@ -302,7 +302,7 @@ void CDSBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 		uint32_t forwardId = nrheader.getForwardId();
 		uint32_t sourceId  = nrheader.getSourceId();
 		cout << "forwardId:" << forwardId << " sourceId:" << sourceId << endl;
-		getchar();
+		//getchar();
 		//感兴趣才转发
 		if( m_mapInterestLane[sOriginalName])
 		{
