@@ -72,9 +72,9 @@ public:
 
 	void ScheduleAccident(double Time);
 
-	Ptr<fw::nrndn::NavigationRouteHeuristic> getForwardStrategy()
+	Ptr<fw::nrndn::CDSBasedForwarding> getForwardStrategy()
 	{
-		return m_forwardingStrategy;
+		return m_CDSBasedForwarding;
 	}
 
 protected:
