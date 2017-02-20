@@ -302,6 +302,7 @@ void  NavigationRouteHeuristic::OnInterest_ackProcess(Ptr<Interest> interest)
 			{
 				NS_LOG_DEBUG("Get ack packet from front or other direction and it is old packet");
 				cout<<"forwarding.cc收到同样的ACK包,不再发送!"<<endl;
+				getchar();
 				ExpireInterestPacketTimer(nodeId,seq);
 			}
 			cout<<"如果重复,完成"<<endl;
