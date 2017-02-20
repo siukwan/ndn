@@ -120,7 +120,7 @@ public:
 	virtual void
 	RemoveFace(Ptr<Face> face);
 
-	bool getDominate()
+	virtual bool getDominate()
 	{
 		return false;
 	};
