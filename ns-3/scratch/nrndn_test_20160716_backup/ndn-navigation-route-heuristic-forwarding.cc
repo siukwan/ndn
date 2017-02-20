@@ -397,6 +397,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 	//If it is not a stop message, prepare to forward:
 	pair<bool, double> msgdirection = packetFromDirection(interest);
+	cout<<"forwarding.cc"<<myNodeId<<"packetFromDirection OK"<<nodeId<<endl;
 	if(!msgdirection.first || // from other direction
 			msgdirection.second > 0)// or from front
 	{
