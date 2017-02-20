@@ -119,7 +119,10 @@ public:
 	 */
 	virtual void
 	RemoveFace(Ptr<Face> face);
-
+	bool getDominate()
+	{
+		return false;
+	}
 	//uint32_t GetCacheSize() const { return m_CacheSize;	}
 	//void SetCacheSize(uint32_t cacheSize);
 

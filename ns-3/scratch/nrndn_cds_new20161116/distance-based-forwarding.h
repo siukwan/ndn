@@ -93,7 +93,10 @@ public:
 	 */
 	virtual void
 	RemoveFace(Ptr<Face> face);
-
+	bool getDominate()
+	{
+		return false;
+	}
 	// If the interest packet is hello message, its scope will be set as HELLO_MESSAGE = 2;
 	enum
 	{

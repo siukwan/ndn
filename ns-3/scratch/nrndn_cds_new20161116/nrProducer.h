@@ -72,6 +72,11 @@ public:
 
 	void ScheduleAccident(double Time);
 
+	void getForwardStrategy()
+	{
+		return m_forwardingStrategy;
+	}
+
 protected:
 	// inherited from Application base class.
 	virtual void

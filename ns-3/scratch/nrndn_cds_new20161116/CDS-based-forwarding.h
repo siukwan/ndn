@@ -101,6 +101,15 @@ public:
 	virtual void
 	RemoveFace(Ptr<Face> face);
 
+	bool getDominate()
+	{
+		if( m_state != dominator )
+		{//不是支配者，直接返回
+			return false;
+		}
+		else return true;
+	}
+
 	// If the interest packet is hello message, its scope will be set as HELLO_MESSAGE = 2;
 	enum
 	{
