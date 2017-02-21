@@ -486,6 +486,7 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 	if(it == m_pitContainer.end())
 	{
 		cout << "pit container is NULL" << endl;
+		return ;
 	}
 
 	cout << (*it)->GetInterest()->GetName().get(0).toUri() << endl;
@@ -494,7 +495,7 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 
 	if(!IsOldLaneAtPitBegin)
 	{
-		std::cout<< "ndn-nr-pit-impl.cc:"<<"旧路段不在头部:"<<"oldLane:"<<(oldLane)<<" newLane:"<<uriConvertToString((*it)->GetInterest()->GetName().get(0).toUri())<<std::endl;
+		//std::cout<< "ndn-nr-pit-impl.cc:"<<"旧路段不在头部:"<<"oldLane:"<<(oldLane)<<" newLane:"<<uriConvertToString((*it)->GetInterest()->GetName().get(0).toUri())<<std::endl;
 
 
 		//遍历整个Pit
