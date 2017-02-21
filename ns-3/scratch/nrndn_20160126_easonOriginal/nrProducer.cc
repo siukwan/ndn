@@ -326,6 +326,35 @@ void nrProducer::addAccident()
 
 	return;
 }
+
+void nrProducer::addAccident(double iType)
+{
+	if(iType <= 0.00001)
+	{//产生随机事件
+		addAccident();
+		return;
+	}
+
+	//产生定时事件
+	/*else if(iType == 1)
+	{
+
+	}*/
+
+	std::cout<<"siu:"<<GetNode()->GetId()<<"addAccident"<<endl;
+	double start= m_startTime.GetSeconds();
+	double end	= m_stopTime.GetSeconds();
+
+
+	for(double dTime = start + 100; dTime < end - 50; dTime += iType)
+	{
+		ScheduleAccident(dTime);
+		std::cout<<"siu:"<<m_node->GetId()<<" add accident at "<< dTime <<endl;
+	}
+
+	return;
+}
+
 bool nrProducer::IsActive()
 {
 	return m_active;

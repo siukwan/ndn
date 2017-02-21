@@ -649,8 +649,8 @@ nrndnExample::InstallNrNdnStack()
 	std::ostringstream TTLMaxStr;
 	TTLMaxStr<<TTLMax;
 	std::ostringstream pitCleanIntervalStr;
-	//uint32_t pitCleanInterval = 1.0 / interestFrequency * 3.0;
-	uint32_t pitCleanInterval = 1.0 / 1 * 3.0;//有什么作用？
+	uint32_t pitCleanInterval = 1.0 / interestFrequency;
+	//uint32_t pitCleanInterval = 1.0 / 1 * 3.0;//有什么作用？
 		pitCleanIntervalStr<<pitCleanInterval;
 	cout<<"pitInterval="<<pitCleanIntervalStr.str()<<endl;
 	ndnHelper.SetForwardingStrategy ("ns3::ndn::fw::nrndn::NavigationRouteHeuristic","HelloLogEnable",str,"NoFwStop",noFwStopStr,"TTLMax",TTLMaxStr.str());
@@ -859,6 +859,7 @@ void nrndnExample::InstallTraffics()
 	SeedManager::SetSeed(1234);
 	UniformVariable rnd(0,nodes.GetN());
 	std::cout<<"插入事件："<<accidentNum<<endl;
+	/*
 	for(uint32_t i=0;i<accidentNum;++i)
 	{
 		uint32_t index=rnd.GetValue();
@@ -867,6 +868,15 @@ void nrndnExample::InstallTraffics()
 		NS_ASSERT(producer);
 		producer->addAccident();
 	}
+	*/
+			for(uint32_t index = 0; index < 20; index ++)
+		{
+
+			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
+					nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
+			NS_ASSERT(producer);
+			producer->addAccident(15);
+		}
 	std::cout<<"插入事件：完毕"<<endl;
 
 	/*
