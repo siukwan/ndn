@@ -1318,7 +1318,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 		{//
 			m_nbChange_mode=0;
 			//printf("%d收到hello信息来自前方，且邻居发生变化%d\n",m_node->GetId(),m_nbChange_mode);
-			notifyUpperOnInterest(m_node->GetId());
+			//notifyUpperOnInterest(m_node->GetId());
 		}
 
 
