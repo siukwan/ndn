@@ -95,7 +95,8 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_HelloLogEnable(true),
 	m_gap(20),
 	m_TTLMax(10),
-	NoFwStop(false)
+	NoFwStop(false),
+	resendInterestTime(-1)
 {
 	m_firstSendInterest=true;
 	m_nbChange_mode=0;
@@ -1330,6 +1331,18 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 //利用face通知上层应用调用OnInterest
 void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t type)
 {//把type存放到interest中，以此来区分不同的notify类型
+	//增加一个时间限制，超过1s才进行转发
+	double interval = Simulator::Now().GetSeconds() - resendInterestTime;
+	if( interval >= 1)
+	{
+		cout << "允许发送兴趣包 间隔：" <<interval << endl;
+	}
+	else
+	{
+
+		cout << "禁止发送兴趣包 间隔：" <<interval << endl;
+		return;
+	}
 	vector<Ptr<Face> >::iterator fit;
 	Ptr<Interest> interest = Create<Interest> ();
 	interest->SetNonce(type);
