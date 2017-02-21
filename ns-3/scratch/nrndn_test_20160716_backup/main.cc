@@ -976,7 +976,7 @@ nrndnExample::getStatistic()
 
 	disinterestRate=nrUtils::GetAverageDisinterestedRate();
 
-	SumForwardTimes = AverageDataForwardPair.first;// + AverageInterestForwardPair.first;
+	SumForwardTimes = AverageDataForwardPair.first + AverageInterestForwardPair.first;
 }
 
 
