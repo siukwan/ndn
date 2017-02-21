@@ -362,7 +362,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		//cout<<endl;
 	}
 
-	cout << "m_interestNonceSeen" << endl;
+	//cout << "m_interestNonceSeen" << endl;
 
 	//如果兴趣包已经被发送了，不再处理兴趣包，使用LRUcache结构
 	//If the interest packet has already been sent, do not proceed the packet
@@ -382,7 +382,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	}
 
 
-	cout << "获取优先列表" << endl;
+	//cout << "获取优先列表" << endl;
 	//获取优先列表
 	const std::vector<uint32_t>& pri=nrheader.getPriorityList();
 
@@ -393,7 +393,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		ExpireInterestPacketTimer(nodeId,seq);
 		return;
 	}
-	cout<<"forwarding.cc"<<myNodeId<<"packetFromDirection"<<nodeId<<endl;
+	//cout<<"forwarding.cc"<<myNodeId<<"packetFromDirection"<<nodeId<<endl;
 
 	//If it is not a stop message, prepare to forward:
 	pair<bool, double> msgdirection = packetFromDirection(interest);
@@ -414,7 +414,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		}
 		return ;
 	}
-	cout<<"forwarding.cc"<<myNodeId<<"兴趣包来自后方"<<nodeId<<endl;
+	//cout<<"forwarding.cc"<<myNodeId<<"兴趣包来自后方"<<nodeId<<endl;
 	
 	//兴趣包来自后方
 	// it is from nodes behind
@@ -428,12 +428,12 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		ExpireInterestPacketTimer(nodeId,seq);
 		return;
 	}
-	cout<<"forwarding.cc"<<myNodeId<<"如果重复"<<nodeId<<endl;
+	//cout<<"forwarding.cc"<<myNodeId<<"如果重复"<<nodeId<<endl;
 
 	NS_LOG_DEBUG("Get interest packet from nodes behind");
 	const vector<string> remoteRoute= ExtractRouteFromName(interest->GetName());
 
-	cout<<"forwarding.cc"<<myNodeId<<"准备转发兴趣包"<<nodeId<<endl;
+	//cout<<"forwarding.cc"<<myNodeId<<"准备转发兴趣包"<<nodeId<<endl;
 	//getchar();
 
 	//提取兴趣树，并且还原
@@ -457,7 +457,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	vector<vector<string>> receiveRoutes(0);
 	vector<string> tmpRoutes(0);
 	receive_tree->tree2Routes(receiveRoutes, tmpRoutes, receive_tree->root);
-	cout << myNodeId << "tree2Routes OK" << endl;
+	//cout << myNodeId << "tree2Routes OK" << endl;
 
 
 	//cout<<"\n(forwarding.cc)\n"<<m_node->GetId()<<"接收得到来自节点"<<nodeId<<"的兴趣树"<<endl;
@@ -471,7 +471,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		flag1=(m_nrtree->MergeInterest(nodeId,receiveRoutes[i],m_sensor->getLane(),flag1));
 		if(flag1)changeFlag=true;
 	}
-	cout << myNodeId << "changeFlag OK" << endl;
+	//cout << myNodeId << "changeFlag OK" << endl;
 
 	// Update the PIT here
 	//更新PIT表
@@ -483,13 +483,13 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		cout << myNodeId << "m_nrtree->levelOrder()" << endl;
 		m_nrtree->levelOrder();
 	}
-	cout << myNodeId << "以当前的兴趣树，更新PIT" << endl;
+	//cout << myNodeId << "以当前的兴趣树，更新PIT" << endl;
 	m_nrpit->UpdatePitByInterestTree2(m_nrtree);
 	
 	//当前所在路段？使用pit的currentlane会存在问题，pit有时候在十字路口，没有把过去的路段删除，直接使用sensor的getlane
 	//string currentLane=m_nrpit->getCurrentLane();
 	string currentLane = m_sensor->getLane();
-	cout << myNodeId << "获取当前道路" << currentLane << endl;
+	//cout << myNodeId << "获取当前道路" << currentLane << endl;
 
 	//兴趣树没有发生变化
 	if(!changeFlag)
@@ -553,8 +553,8 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	cout<<"forwarding.cc优先级列表为:";
 	for(size_t ii=0;ii<pri.size();++ii)
 		cout<<pri[ii]<< " ";
-	cout<<endl;
-	cout<<"Forwarding.cc 优先级列表判断为"<<idIsInPriorityList<<endl;
+	//cout<<endl;
+	//cout<<"Forwarding.cc 优先级列表判断为"<<idIsInPriorityList<<endl;
 	//evaluate end
 	idIsInPriorityList=true;
 		
@@ -903,13 +903,13 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	Ptr<const Packet> nrPayload	= interest->GetPayload();
 	ndn::nrndn::nrHeader nrheader;
 	nrPayload->PeekHeader( nrheader);
-	cout << nrheader.getX() << " " << nrheader.getY() <<endl;
+	//cout << nrheader.getX() << " " << nrheader.getY() <<endl;
 	const vector<string> route	= ExtractRouteFromName(interest->GetName());
-	cout << m_running << " route.size:" << route.size() <<endl;
+	//cout << m_running << " route.size:" << route.size() <<endl;
 
 	pair<bool, double> result =
 			m_sensor->getDistanceWith(nrheader.getX(),nrheader.getY(),route);
-	cout << "result" << route.size() <<endl;
+	//cout << "result" << route.size() <<endl;
 
 	return result;
 }

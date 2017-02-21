@@ -279,23 +279,23 @@ void nrProducer::OnSendingTrafficData()
 	//std::cout<<"nrProducer.cc:hopCountTag"<<std::endl;
 	//std::cout<<"nrProducer.cc:GetNode()->GetId()"<<GetNode()->GetId()<<std::endl;
 	//std::cout<<"nrProducer.cc:data->GetSignature()"<<data->GetSignature()<<std::endl;
-	std::cout<<"nrProducer.cc: m_prefix.get(0).toUri()"<< m_prefix.get(0).toUri()<<std::endl;
+	//std::cout<<"nrProducer.cc: m_prefix.get(0).toUri()"<< m_prefix.get(0).toUri()<<std::endl;
 	//找出当前时刻，感兴趣节点的总数
 	std::pair<uint32_t, uint32_t> size_InterestSize =
 				nrUtils::GetNodeSizeAndInterestNodeSize(GetNode()->GetId(),
 						data->GetSignature(), m_prefix.get(0).toUri());
 						
-	std::cout<<"nrProducer.cc:size_InterestSize"<<std::endl;
+	//std::cout<<"nrProducer.cc:size_InterestSize"<<std::endl;
 	//设置节点数量，感兴趣的节点总数
 	nrUtils::SetNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.first);
-	std::cout<<"nrProducer.cc:SetNodeSize"<<std::endl;
+	//std::cout<<"nrProducer.cc:SetNodeSize"<<std::endl;
 	nrUtils::SetInterestedNodeSize(GetNode()->GetId(),data->GetSignature(),size_InterestSize.second);
 
-	std::cout<<"nrProducer.cc:SetInterestedNodeSize"<<std::endl;
+	//std::cout<<"nrProducer.cc:SetInterestedNodeSize"<<std::endl;
 	m_face->ReceiveData(data);
-	std::cout<<"nrProducer.cc:ReceiveData"<<std::endl;
+	//std::cout<<"nrProducer.cc:ReceiveData"<<std::endl;
 	m_transmittedDatas(data, this, m_face);
-	std::cout<<"nrProducer.cc:m_transmittedDatas"<<std::endl;
+	//std::cout<<"nrProducer.cc:m_transmittedDatas"<<std::endl;
 
 }
 
