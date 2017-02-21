@@ -5,6 +5,8 @@ dataNum=0
 usage()
 {
 	echo "Usage: `basename $0` -d [dataNum]"
+	echo "Usage: `basename $0` -d 999 为定点发"
+	echo "Usage: `basename $0` -d xx xx不是999，则随机发"
 }
 
 while getopts :qd:l: OPTION
