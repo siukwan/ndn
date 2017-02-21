@@ -1307,7 +1307,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 
 	if(lostForwardNeighbor)
 	{
-		cout<<"forwarding.cc:"<<" 负责转发的邻居丢失了,需要重发兴趣包"<< m_nbChange_mode << endl;
+		cout<<"forwarding.cc: "<<m_node->GetId()" 负责转发的邻居丢失了,需要重发兴趣包"<< m_nbChange_mode << endl;
 		//getchar();
 	}
 
