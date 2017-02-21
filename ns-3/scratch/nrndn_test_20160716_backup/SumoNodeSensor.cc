@@ -130,15 +130,15 @@ const std::string& SumoNodeSensor::getType()
 const std::string& SumoNodeSensor::getLane()
 {
 	NodeSensor::getLane();
-	cout << "NodeSensor::getLane();" << endl;
+	//cout << "NodeSensor::getLane();" << endl;
 	Ptr<MobilityModel> mobility=this->GetObject<MobilityModel>();
-	cout << "Ptr<MobilityModel> mobility=this->GetObject<MobilityModel>();" << endl;
+	//cout << "Ptr<MobilityModel> mobility=this->GetObject<MobilityModel>();" << endl;
 	Vector pos = mobility->GetPosition();
-	cout << "pos" << endl;
+	//cout << "pos" << endl;
 	Ptr<Node> node = this->GetObject<Node>();
-	cout << "node" << endl;
+	//cout << "node" << endl;
 	uint32_t id = node->GetId();
-	cout << "id" << endl;
+	cout << "id" << id << endl;
 
 	if(m_sumodata == NULL)
 	{
@@ -167,9 +167,9 @@ const std::string& SumoNodeSensor::getLane()
 	}
     else
 	{
-		//cout << "m_lane.Set(m_sumodata->GetTrace(id,pos).lane):" <<m_sumodata->GetTrace(id,pos).lane << endl;
+		cout << "m_lane.Set(m_sumodata->GetTrace(id,pos).lane):" <<m_sumodata->GetTrace(id,pos).lane << endl;
     	m_lane.Set(m_sumodata->GetTrace(id,pos).lane);
-		//cout << "m_lane.Set(m_sumodata->GetTrace(id,pos).lane);" <<endl;
+		cout << "m_lane.Set(m_sumodata->GetTrace(id,pos).lane);" <<endl;
 	}
 	//cout << "GetTraceid" << endl;
 	//std::cout<<"id's current lane "<<m_lane<<std::endl;
