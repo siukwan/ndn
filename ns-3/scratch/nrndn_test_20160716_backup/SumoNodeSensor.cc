@@ -220,8 +220,11 @@ std::string SumoNodeSensor::uriConvertToString(std::string str)
 
 std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route)
 {
+		cout << "getDistanceWith " << endl;
 	const string& localLane = getLane();
-	const double& localPos  = getPos();
+		cout << "getLane " << endl;
+	const double& localPos  = getPos(); // 当前位置
+		cout << "getPos " << endl;
 
 	vector<string>::const_iterator localLaneIterator;
 	vector<string>::const_iterator remoteLaneIterator;
@@ -230,7 +233,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 			convertCoordinateToLanePos(x,y);
 	cout << "convertCoordinateToLanePos" <<endl;
 	const string& remoteLane = remoteInfo.first;
-	const double& remotePos  = remoteInfo.second;
+	const double& remotePos  = remoteInfo.second; //另一节点的位置
 
 	localLaneIterator  = std::find (route.begin(), route.end(), localLane);
 	remoteLaneIterator = std::find (route.begin(), route.end(), remoteLane);
@@ -251,7 +254,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 	uint32_t remoteIndex= distance(route.begin(),remoteLaneIterator);
 
 		cout << "localIndex==remoteIndex " << endl;
-	if(localIndex==remoteIndex)
+	if(localIndex==remoteIndex)//在同一条路上
 		return pair<bool, double>(true, remotePos-localPos);
 
 	double distance,beginLen, middleLen;
