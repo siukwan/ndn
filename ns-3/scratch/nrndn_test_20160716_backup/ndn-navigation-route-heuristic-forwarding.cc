@@ -539,7 +539,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		*/
 		//SendAckPacket();
 		DropInterestePacket(interest);
-		cout << myNodeId << "DropInterestePacket" << endl;
+		//cout << "forwarding.cc" << myNodeId << "DropInterestePacket" << endl;
 		return ;
 	}
 
@@ -1307,7 +1307,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 
 	if(lostForwardNeighbor)
 	{
-		cout<<"负责转发的邻居丢失了,需要重发兴趣包"<<endl;
+		cout<<"forwarding.cc:"<<" 负责转发的邻居丢失了,需要重发兴趣包"<< m_nbChange_mode << endl;
 		//getchar();
 	}
 
