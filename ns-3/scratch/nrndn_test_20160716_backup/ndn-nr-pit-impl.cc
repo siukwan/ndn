@@ -478,6 +478,7 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 					&& ndn::nrndn::NodeSensor::emptyLane != newLane))
 		return;
 	NS_LOG_INFO ("Deleting old lane pit entry of "<<oldLane);
+	cout << "ndn-nr-pit-impl.cc:" << "Deleting old lane pit entry of "<<oldLane <<endl;
 
 	std::vector<Ptr<Entry> >::iterator it;
 	it =m_pitContainer.begin();
