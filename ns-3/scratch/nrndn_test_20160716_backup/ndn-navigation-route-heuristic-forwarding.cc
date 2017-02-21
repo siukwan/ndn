@@ -666,10 +666,10 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		uint32_t nodeId=nrheader.getSourceId();
 		uint32_t signature=data->GetSignature();
 		
-		ofstream ofile;
-		ofile.open("../packetfiles/dat"+int2Str(signature),ios::app);
-		ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 原始发包"<<endl;
-		ofile.close();
+		//ofstream ofile;
+		//ofile.open("../packetfiles/dat"+int2Str(signature),ios::app);
+		//ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<" 原始发包"<<endl;
+		//ofile.close();
 		
 		// 2. record the Data Packet(only record the forwarded packet)
 		m_dataSignatureSeen.Put(data->GetSignature(),true);
@@ -696,10 +696,10 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 	
 
 
-	ofstream ofile;
-	ofile.open("../packetfiles/dat"+int2Str(signature),ios::app);
-	ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<endl;
-	ofile.close();
+	//ofstream ofile;
+	//ofile.open("../packetfiles/dat"+int2Str(signature),ios::app);
+	//ofile<<Simulator::Now().GetSeconds()<<" "<<nodeId<<endl;
+	//ofile.close();
 
 	/*
 	if(isDuplicatedData(nodeId,signature))
@@ -761,7 +761,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 		//					or 2) and it is from location in front of it along the navigation route
 	{
 		//cout<<"forward.cc 数据包在的道路header："<<nrheader.getLane()<<" 当前节点所在道路："<<m_sensor->getLane()<<endl;
-		if(isDuplicatedData(nodeId,signature) && nrheader.getLane() == m_sensor->getLane())
+		if(isDuplicatedData(nodeId,signature) )//&& nrheader.getLane() == m_sensor->getLane())
 		{
 			//cout<<"重复丢弃"<<endl;
 			//getchar();
