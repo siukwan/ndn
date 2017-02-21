@@ -54,7 +54,7 @@ sleep 4
 wait
 
 #把结果合并输出到result.txt
-cat  ~/input/CDS-Simulation/result.txt > ~/tmp/$file_name/result.txt
+cat ~/input/name.txt  ~/input/CDS-Simulation/result.txt > ~/tmp/$file_name/result.txt
 
 #追加，统一显示实验结果
 echo "//原始CDS算法：" >> ~/tmp/$file_name/result.txt
