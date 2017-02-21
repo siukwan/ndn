@@ -482,7 +482,7 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 
 	std::vector<Ptr<Entry> >::iterator it;
 	it =m_pitContainer.begin();
-
+	cout << (*it)->GetInterest()->GetName().get(0).toUri() << endl;
 	bool IsOldLaneAtPitBegin =(  uriConvertToString((*it)->GetInterest()->GetName().get(0).toUri())==(oldLane));
 	cout << "ndn-nr-pit-impl.cc:" << "IsOldLaneAtPitBegin" <<endl;
 
