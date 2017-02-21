@@ -241,6 +241,18 @@ std::vector<uint32_t> NavigationRouteHeuristic::GetPriorityList(
 
 void  NavigationRouteHeuristic::OnInterest_application(Ptr<Interest> interest)
 {
+	double interval = Simulator::Now().GetSeconds() - m_resendInterestTime;
+	m_resendInterestTime =  Simulator::Now().GetSeconds();
+	if( interval >= 1)
+	{
+		cout << "id"<<m_node->GetId() << "允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
+	}
+	else
+	{
+
+		//cout <<"id"<<m_node->GetId()<< "禁止发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() <<endl;
+		return;
+	}
 	//else cout<<"(forwarding.cc)"<<m_node->GetId()<<"邻居发生变化，发送兴趣包"<<endl;
 	//consumer产生兴趣包，在路由层进行转发
 	NS_LOG_DEBUG("Get interest packet from APPLICATION");
@@ -1319,6 +1331,8 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 			m_nbChange_mode=0;
 			//printf("%d收到hello信息来自前方，且邻居发生变化%d\n",m_node->GetId(),m_nbChange_mode);
 			//notifyUpperOnInterest(m_node->GetId());
+			Ptr<Interest> interest = Create<Interest> ();
+			OnInterest_application(interest);
 		}
 
 
