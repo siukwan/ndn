@@ -66,7 +66,9 @@ NodeSensor::LaneChangeEvent(std::string oldLane, std::string newLane)
 {
 
 	NS_LOG_DEBUG("Lane Change Event: oldLane="<<oldLane<<"\tNewLane="<<newLane);
+	cout << "NodeSensor.cc: Lane Change Event: oldLane="<<oldLane<<"\tNewLane="<<newLane << endl;
 	m_laneChangeCallback(oldLane,newLane);
+	cout << "NodeSensor.cc: Lane Change Event OK" << endl;
 }
 
 

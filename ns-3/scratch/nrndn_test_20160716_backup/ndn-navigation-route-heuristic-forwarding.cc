@@ -905,7 +905,7 @@ NavigationRouteHeuristic::packetFromDirection(Ptr<Interest> interest)
 	nrPayload->PeekHeader( nrheader);
 	cout << nrheader.getX() << " " << nrheader.getY() <<endl;
 	const vector<string> route	= ExtractRouteFromName(interest->GetName());
-	cout << "route.size:" << route.size() <<endl;
+	cout << m_running << " route.size:" << route.size() <<endl;
 
 	pair<bool, double> result =
 			m_sensor->getDistanceWith(nrheader.getX(),nrheader.getY(),route);
