@@ -418,6 +418,10 @@ nrndnExample::Report ()
 	timeOut=localtime(&startTime);
 	cout<<"(main.cc)开始时间：";
 	cout<<timeOut->tm_year+1900<<"-"<<timeOut->tm_mon+1<<"-"<<timeOut->tm_mday<<" "<<timeOut->tm_hour<<":"<<timeOut->tm_min<<":"<<timeOut->tm_sec<<endl;
+	
+	if(method == 0)
+		os << endl;
+
 	os<<"(main.cc)开始时间：";
 	os<<timeOut->tm_year+1900<<"-"<<timeOut->tm_mon+1<<"-"<<timeOut->tm_mday<<" "<<timeOut->tm_hour<<":"<<timeOut->tm_min<<":"<<timeOut->tm_sec<<endl;
 	timeOut=localtime(&endTime);
