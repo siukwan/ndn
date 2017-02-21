@@ -1335,12 +1335,12 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t type)
 	double interval = Simulator::Now().GetSeconds() - resendInterestTime;
 	if( interval >= 1)
 	{
-		cout << "允许发送兴趣包 间隔：" <<interval << endl;
+		cout << "id"<<m_node->GetId() << "允许发送兴趣包 间隔：" <<interval << endl;
 	}
 	else
 	{
 
-		cout << "禁止发送兴趣包 间隔：" <<interval << endl;
+		cout <<"id"<<m_node->GetId()<< "禁止发送兴趣包 间隔：" <<interval << endl;
 		return;
 	}
 	vector<Ptr<Face> >::iterator fit;
