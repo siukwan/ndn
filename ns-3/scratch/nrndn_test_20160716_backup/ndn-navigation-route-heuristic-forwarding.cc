@@ -1333,7 +1333,7 @@ void NavigationRouteHeuristic::notifyUpperOnInterest(uint32_t type)
 	m_resendInterestTime =  Simulator::Now().GetSeconds();
 	if( interval >= 1)
 	{
-		cout << "id"<<m_node->GetId() << "允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
+		//cout << "id"<<m_node->GetId() << "允许发送兴趣包 间隔：" <<interval << " time："<<Simulator::Now().GetSeconds() << endl;
 	}
 	else
 	{
