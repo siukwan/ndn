@@ -86,5 +86,6 @@ echo "开始时间："$git_date
 end_date=$(date)
 echo "结束时间："$end_date 
 
+tail -1 ~/input/name.txt
 tail -4 ~/ndc-ns3-result/$file_name/result.txt
 exit
