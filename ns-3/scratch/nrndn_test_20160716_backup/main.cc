@@ -70,6 +70,7 @@ public:
 private:
   ///\name parameters
   //\{
+  int random_accident;
   /// Number of nodes
   uint32_t size;
   /// Simulation time, seconds
@@ -196,6 +197,7 @@ int main (int argc, char **argv)
 //-----------------------------------------------------------------------------
 //构造函数
 nrndnExample::nrndnExample () :
+  random_accident(0),//默认不随机
   size (3),
   totalTime (36000),
   readTotalTime(0),
@@ -425,6 +427,7 @@ nrndnExample::Report ()
 	getStatistic();
 	os<<"(main.cc)method:"<<method_cout<<endl;
 
+	os<<"(main.cc)random_accident:"<<random_accident<<endl;
 	os<<"(main.cc)accidentNum:"<<accidentNum<<endl;
 	os<<"(main.cc)transRange:"<<transRange<<endl;
 	os<<"(main.cc)noFwStop:"<<noFwStop<<endl;
@@ -434,6 +437,7 @@ nrndnExample::Report ()
 	os<<"(main.cc)simulationTime:"<<totalTime<<endl;
 	os<<"(main.cc)runningTime:"<<(int)(TimeUse/1000)/60<<"m"<<((int)(TimeUse/1000))%60<<"s"<<endl;
 
+	cout<<"(main.cc)random_accident:"<<random_accident<<endl;
 	cout<<"(main.cc)accidentNum:"<<accidentNum<<endl;
 	cout<<"(main.cc)transRange:"<<transRange<<endl;
 	cout<<"(main.cc)noFwStop:"<<noFwStop<<endl;
@@ -556,8 +560,12 @@ nrndnExample::LoadTraffic()
 	size = mobility->GetNodeSize();
 	std::cout<<"节点size："<<size<<std::endl;
 
-	if(accidentNum == 0)
+	if(accidentNum == 0 || accidentNum == 999)
+	{
+		if(accidentNum != 999) //999表示非随机
+		random_accident = 1;//如果没有输入事件数量，则使用定点发
 		accidentNum = size * 1;
+	}
 	std::cout<<"(main.cc)修改accidentNum为size的4倍"<<accidentNum<<std::endl;
 
 }
@@ -860,7 +868,6 @@ void nrndnExample::InstallTraffics()
 	SeedManager::SetSeed(1234);
 	UniformVariable rnd(0,nodes.GetN());
 	std::cout<<"插入事件："<<accidentNum<<endl;
-	int random_accident = 1;
 	if(random_accident)
 	{
 		for(uint32_t i=0;i<accidentNum;++i)
