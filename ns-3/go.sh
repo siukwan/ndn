@@ -30,6 +30,8 @@ program_name3="nrndn_cds_new20161116";
 
 #定义时间变量
 git_date=$(date)
+git_date=$git_date" "$(tail -1 ~/input/name.txt)
+echo $git_date
 shell_date=$(date +%Y%m%d-%H%M%S)
 vehicle_num=$(cat  ~/input/routes.rou.xml | grep "</vehicle>" | wc -l)
 file_name=$shell_date"-"$vehicle_num"nodes_"$program_name
