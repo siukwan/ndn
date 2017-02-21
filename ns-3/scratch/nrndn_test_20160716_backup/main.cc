@@ -70,6 +70,8 @@ public:
 private:
   ///\name parameters
   //\{
+  int certain_count; //定点数量
+  double certain_interval;//定点事件间隔
   int random_accident;
   /// Number of nodes
   uint32_t size;
@@ -197,6 +199,9 @@ int main (int argc, char **argv)
 //-----------------------------------------------------------------------------
 //构造函数
 nrndnExample::nrndnExample () :
+
+  certain_count(20), //定点数量
+  certain_interval(15),//定点事件间隔
   random_accident(0),//默认不随机
   size (3),
   totalTime (36000),
@@ -427,6 +432,8 @@ nrndnExample::Report ()
 	getStatistic();
 	os<<"(main.cc)method:"<<method_cout<<endl;
 
+	os<<"(main.cc)certain_count定点数量:"<<certain_count<<endl;
+	os<<"(main.cc)certain_interval定点间隔:"<<certain_interval<<endl;
 	os<<"(main.cc)random_accident:"<<random_accident<<endl;
 	os<<"(main.cc)accidentNum:"<<accidentNum<<endl;
 	os<<"(main.cc)transRange:"<<transRange<<endl;
@@ -437,6 +444,8 @@ nrndnExample::Report ()
 	os<<"(main.cc)simulationTime:"<<totalTime<<endl;
 	os<<"(main.cc)runningTime:"<<(int)(TimeUse/1000)/60<<"m"<<((int)(TimeUse/1000))%60<<"s"<<endl;
 
+	cout<<"(main.cc)certain_count定点数量:"<<certain_count<<endl;
+	cout<<"(main.cc)certain_interval定点间隔:"<<certain_interval<<endl;
 	cout<<"(main.cc)random_accident:"<<random_accident<<endl;
 	cout<<"(main.cc)accidentNum:"<<accidentNum<<endl;
 	cout<<"(main.cc)transRange:"<<transRange<<endl;
@@ -887,13 +896,13 @@ void nrndnExample::InstallTraffics()
 	else
 	{
 
-		for(uint32_t index = 0; index < 20; index ++)
+		for(uint32_t index = 0; index < certain_count; index ++)
 		{
 
 			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
 					nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
 			NS_ASSERT(producer);
-			producer->addAccident(15);
+			producer->addAccident(certain_interval);
 		}
 	}
 	
