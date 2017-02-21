@@ -564,7 +564,12 @@ nrndnExample::LoadTraffic()
 	if(accidentNum == 0 || accidentNum == 999)
 	{
 		if(accidentNum != 999) //999表示非随机
+		{
 			random_accident = 1;//如果没有输入事件数量，则使用定点发
+			cout << "定点发数据" << endl;
+		}
+		else
+			cout << "随机" << endl;
 		accidentNum = size * 1;
 	}
 	std::cout<<"(main.cc)修改accidentNum为size的4倍"<<accidentNum<<std::endl;
