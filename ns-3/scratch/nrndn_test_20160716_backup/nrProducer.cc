@@ -384,7 +384,7 @@ bool nrProducer::IsInterestLane(const std::string& lane)
 	std::vector<std::string> result;
 	Ptr<NodeSensor> sensor = this->GetNode()->GetObject<NodeSensor>();
 	//cout << "is active:" << IsActive() << endl;
-	cout<<"Time now: "<<Simulator::Now().GetSeconds()<<endl;
+	//cout<<"nrProducer.cc Time now: "<<Simulator::Now().GetSeconds()<<endl;
 	//cout << "this->GetNode()->GetObject<NodeSensor>()" << endl;
 	if(sensor == NULL)
 	{

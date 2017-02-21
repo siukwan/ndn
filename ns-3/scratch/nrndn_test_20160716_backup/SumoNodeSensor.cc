@@ -158,7 +158,7 @@ const std::string& SumoNodeSensor::getLane()
 		{
 			//cout << "SumoNodeSensor.cc: " << "10000 or -10000" << endl;
 			m_sumoLane = emptyLane; //NodeSensor.cc const std::string NodeSensor::emptyLane("UNKNOWN_LANE");
-			cout << m_sumoLane << endl;
+			//cout << m_sumoLane << endl;
 			return emptyLane;
 		}
 

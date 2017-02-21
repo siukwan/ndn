@@ -343,7 +343,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 	nrPayload->PeekHeader( nrheader);
 	//获取发送兴趣包节点的ID
 	uint32_t nodeId = nrheader.getSourceId();
-	cout <<nodeId<< "GetPayload" <<endl;
+	//cout <<"forwarding.cc " << nodeId<< " GetPayload" <<endl;
 	//获取兴趣的随机编码
 	uint32_t seq = interest->GetNonce();
 	//获取当前节点的id
@@ -397,7 +397,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 
 	//If it is not a stop message, prepare to forward:
 	pair<bool, double> msgdirection = packetFromDirection(interest);
-	cout<<"forwarding.cc"<<myNodeId<<"packetFromDirection OK"<<nodeId<<endl;
+	//cout<<"forwarding.cc"<<myNodeId<<"packetFromDirection OK"<<nodeId<<endl;
 	if(!msgdirection.first || // from other direction
 			msgdirection.second > 0)// or from front
 	{
