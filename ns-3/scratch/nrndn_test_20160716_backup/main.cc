@@ -860,15 +860,20 @@ void nrndnExample::InstallTraffics()
 	SeedManager::SetSeed(1234);
 	UniformVariable rnd(0,nodes.GetN());
 	std::cout<<"插入事件："<<accidentNum<<endl;
-	/*
-	for(uint32_t i=0;i<accidentNum;++i)
+	int random_accident = 1;
+	if(random_accident)
 	{
-		uint32_t index=rnd.GetValue();
-		Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
-				nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
-		NS_ASSERT(producer);
-		producer->addAccident(1);
-	}*/
+		for(uint32_t i=0;i<accidentNum;++i)
+		{
+			uint32_t index=rnd.GetValue();
+			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
+					nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
+			NS_ASSERT(producer);
+			producer->addAccident(1);
+		}
+	}
+	else
+	{
 
 		for(uint32_t index = 0; index < 20; index ++)
 		{
@@ -878,6 +883,7 @@ void nrndnExample::InstallTraffics()
 			NS_ASSERT(producer);
 			producer->addAccident(15);
 		}
+	}
 	
 	std::cout<<"插入事件：完毕"<<endl;
 	getchar();
