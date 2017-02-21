@@ -510,7 +510,7 @@ private:
 
 	bool NoFwStop;// \brief When the PIT covers the nodes behind, no broadcast stop message
 
-	double resendInterestTime;
+	double m_resendInterestTime;
 };
 } /* namespace nrndn */
 } /* namespace fw */
