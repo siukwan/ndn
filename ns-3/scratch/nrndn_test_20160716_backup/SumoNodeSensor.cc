@@ -142,34 +142,34 @@ const std::string& SumoNodeSensor::getLane()
 
 	if(m_sumodata == NULL)
 	{
-		cout << "SumoNodeSensor.cc: " << "m_sumodata == NULL" <<endl;
+		//cout << "SumoNodeSensor.cc: " << "m_sumodata == NULL" <<endl;
         m_lane.Set(emptyLane);
 		m_sumoLane = m_lane.Get();
-		cout << "SumoNodeSensor.cc: " << "m_sumoLane" << endl;
+		//cout << "SumoNodeSensor.cc: " << "m_sumoLane" << endl;
 		return m_sumoLane;
 	}
 
 	if(&(m_sumodata->GetTrace(id,pos))==NULL)
 	{
-		cout << "SumoNodeSensor.cc: " << "id" <<id << " pos x" << pos.x <<" pos y" << pos.y <<" pos z" << pos.z << endl;
+		//cout << "SumoNodeSensor.cc: " << "id" <<id << " pos x" << pos.x <<" pos y" << pos.y <<" pos z" << pos.z << endl;
 		//cout << "SumoNodeSensor.cc: " << "m_lane.Set(emptyLane);" <<endl;
-		cout<<"SumoNodeSensor.cc: " << "Time now: "<<Simulator::Now().GetSeconds()<<endl;
+		//cout<<"SumoNodeSensor.cc: " << "Time now: "<<Simulator::Now().GetSeconds()<<endl;
 		if(int(pos.x) == 10000 || int(pos.x) == -10000)
 		{
-			cout << "SumoNodeSensor.cc: " << "10000 or -10000" << endl;
+			//cout << "SumoNodeSensor.cc: " << "10000 or -10000" << endl;
 			m_sumoLane = emptyLane; //NodeSensor.cc const std::string NodeSensor::emptyLane("UNKNOWN_LANE");
 			cout << m_sumoLane << endl;
 			return emptyLane;
 		}
 
         m_lane.Set(emptyLane);
-		cout <<"SumoNodeSensor.cc: " << "m_lane.Set(emptyLane);" <<endl;
+		//cout <<"SumoNodeSensor.cc: " << "m_lane.Set(emptyLane);" <<endl;
 	}
     else
 	{
-		cout << "SumoNodeSensor.cc: " << "m_lane.Set(m_sumodata->GetTrace(id,pos).lane):" <<m_sumodata->GetTrace(id,pos).lane << endl;
+		//cout << "SumoNodeSensor.cc: " << "m_lane.Set(m_sumodata->GetTrace(id,pos).lane):" <<m_sumodata->GetTrace(id,pos).lane << endl;
     	m_lane.Set(m_sumodata->GetTrace(id,pos).lane);
-		cout << "SumoNodeSensor.cc: " << "m_lane.Set(m_sumodata->GetTrace(id,pos).lane);" <<endl;
+		//cout << "SumoNodeSensor.cc: " << "m_lane.Set(m_sumodata->GetTrace(id,pos).lane);" <<endl;
 	}
 	//cout << "GetTraceid" << endl;
 	//std::cout<<"id's current lane "<<m_lane<<std::endl;
@@ -220,11 +220,11 @@ std::string SumoNodeSensor::uriConvertToString(std::string str)
 
 std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const double& y,const std::vector<std::string>& route)
 {
-		cout << "SumoNodeSensor.cc: " << "getDistanceWith " << endl;
+	//	cout << "SumoNodeSensor.cc: " << "getDistanceWith " << endl;
 	const string& localLane = getLane();
-		cout << "SumoNodeSensor.cc: " << "getLane " << endl;
+	//	cout << "SumoNodeSensor.cc: " << "getLane " << endl;
 	const double& localPos  = getPos(); // 当前位置
-		cout << "SumoNodeSensor.cc: " << "getPos " << endl;
+	//	cout << "SumoNodeSensor.cc: " << "getPos " << endl;
 
 	vector<string>::const_iterator localLaneIterator;
 	vector<string>::const_iterator remoteLaneIterator;

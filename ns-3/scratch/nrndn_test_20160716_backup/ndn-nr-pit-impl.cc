@@ -478,20 +478,21 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 					&& ndn::nrndn::NodeSensor::emptyLane != newLane))
 		return;
 	NS_LOG_INFO ("Deleting old lane pit entry of "<<oldLane);
-	cout << "ndn-nr-pit-impl.cc:" << "Deleting old lane pit entry of "<<oldLane <<endl;
+	//cout << "ndn-nr-pit-impl.cc:" << "Deleting old lane pit entry of "<<oldLane <<endl;
 
 	std::vector<Ptr<Entry> >::iterator it;
 	it =m_pitContainer.begin();
 
 	if(it == m_pitContainer.end())
 	{
+		//已经为空，不用删除
 		cout << "pit container is NULL" << endl;
 		return ;
 	}
 
 	cout << (*it)->GetInterest()->GetName().get(0).toUri() << endl;
 	bool IsOldLaneAtPitBegin =(  uriConvertToString((*it)->GetInterest()->GetName().get(0).toUri())==(oldLane));
-	cout << "ndn-nr-pit-impl.cc:" << "IsOldLaneAtPitBegin" <<endl;
+	//cout << "ndn-nr-pit-impl.cc:" << "IsOldLaneAtPitBegin" <<endl;
 
 	if(!IsOldLaneAtPitBegin)
 	{
@@ -513,7 +514,7 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 		}
 		if(findOldLane)
 		{
-			cout << "ndn-nr-pit-impl.cc:" << "findOldLane" <<endl;
+			//cout << "ndn-nr-pit-impl.cc:" << "findOldLane" <<endl;
 			//就路段不在头部，但是在后面
 			needtoUpdateroot=1;
 			it =m_pitContainer.begin();
@@ -538,19 +539,19 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 			}
 			else
 			{
-				std::cout<<"删除完毕：迭代器为空\n";
+				//std::cout<<"删除完毕：迭代器为空\n";
 			}
 
 		}
 		else
 		{
-			std::cout<<"没找到...\n";
+			//std::cout<<"没找到...\n";
 		}
 	}
 	else
 	{//旧路段在pit头部才进行删除
 
-		cout << "ndn-nr-pit-impl.cc:" << "旧路段在pit头部才进行删除" <<endl;
+		//cout << "ndn-nr-pit-impl.cc:" << "旧路段在pit头部才进行删除" <<endl;
 			//报错？
 		//NS_ASSERT_MSG(IsOldLaneAtPitBegin,"The old lane should at the beginning of the pitContainer. Please Check~");
 		//1. Befor erase it, cancel all the counting Timer fore the neighbor to expire
@@ -565,7 +566,7 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 	}
 	if(needtoUpdateroot)
 	{
-		cout<<"\n(ndn-nr-pit-impl)needtoUpdateroot新路段："<<newLane<<"  "<<needtoUpdateroot<<endl;
+		//cout<<"\n(ndn-nr-pit-impl)needtoUpdateroot新路段："<<newLane<<"  "<<needtoUpdateroot<<endl;
    	m_nrtree->levelOrder();
 		m_nrtree->updateNowRoot(m_nrtree->prefix+newLane);
 		m_nrtree->levelOrder();
