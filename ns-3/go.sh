@@ -18,6 +18,7 @@ do
 done
 echo $dataNum
 usage
+tail -1 ~/input/name.txt
 
 program_name="nrndn_test";
 
