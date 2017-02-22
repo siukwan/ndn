@@ -30,8 +30,11 @@ SumoMobility::SumoMobility(std::string netxmlpath,std::string routexmlpath,std::
 		netxmlpath(netxmlpath),routexmlpath(routexmlpath),fcdxmlpath(fcdxmlpath),readTotalTime(0)
 {
 	// TODO Auto-generated constructor stub
+	cout << "src\vanetmobility\model\SumoMobility.cc: " << "LoadTraffic" << endl;
 	LoadTraffic();
+	cout << "src\vanetmobility\model\SumoMobility.cc: " << "LoadTraffic OK" << endl;
 	InitializeCoordinateToLane();
+	cout << "src\vanetmobility\model\SumoMobility.cc: " << "InitializeCoordinateToLane OK" << endl;
 }
 
 SumoMobility::~SumoMobility()
