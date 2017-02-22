@@ -112,7 +112,7 @@ echo $file_name
 mkdir ~/tmp
 mkdir ~/tmp/$file_name
 
-$dataNum=999
+dataNum=999
 cd ~/ndn/ns-3/
 #先进行编译
 ./waf --run "$program_name --method=3"
