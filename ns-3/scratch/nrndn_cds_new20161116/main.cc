@@ -433,11 +433,16 @@ nrndnExample::Report ()
 	std::cout<<"(main.cc)运行方法是："<<method_cout<<endl;
 	//1. get statistic first
 	getStatistic();
+
+	string random_accident_str = "定点";
+	if(random_accident == 1)
+		random_accident_str = "随机";
+
 	os<<"(main.cc)method:"<<method_cout<<endl;
 	
 	os<<"(main.cc)certain_count定点数量:"<<certain_count<<endl;
 	os<<"(main.cc)certain_interval定点间隔:"<<certain_interval<<endl;
-	os<<"(main.cc)random_accident:"<<random_accident<<endl;
+	os<<"(main.cc)random_accident:"<<random_accident<<random_accident_str<<endl;
 	os<<"(main.cc)accidentNum:"<<accidentNum<<endl;
 	os<<"(main.cc)transRange:"<<transRange<<endl;
 	os<<"(main.cc)noFwStop:"<<noFwStop<<endl;
@@ -449,7 +454,7 @@ nrndnExample::Report ()
 
 	cout<<"(main.cc)certain_count定点数量:"<<certain_count<<endl;
 	cout<<"(main.cc)certain_interval定点间隔:"<<certain_interval<<endl;
-	cout<<"(main.cc)random_accident:"<<random_accident<<endl;
+	cout<<"(main.cc)random_accident:"<<random_accident<<random_accident_str<<endl;
 	cout<<"(main.cc)accidentNum:"<<accidentNum<<endl;
 	cout<<"(main.cc)transRange:"<<transRange<<endl;
 	cout<<"(main.cc)noFwStop:"<<noFwStop<<endl;
