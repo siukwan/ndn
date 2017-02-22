@@ -209,6 +209,11 @@ std::string SumoNodeSensor::uriConvertToString(std::string str)
 				ret+="]";
 				i=i+2;
 			}
+			else if(str[i]=='%'&&str[i+1]=='2'&&str[i+2]=='3')
+			{
+				ret+="#";
+				i=i+2;
+			}
 			else
 				ret+=str[i];
 		}
@@ -286,7 +291,7 @@ std::pair<bool, double> SumoNodeSensor::getDistanceWith(const double& x,const do
 		//cout << "else" << endl;
 		//From front
 		eit = edges.find(uriConvertToString(route.at(localIndex)));
-		NS_ASSERT_MSG(eit!=edges.end(),"No edge info for "<<remoteLane);
+		NS_ASSERT_MSG(eit!=edges.end(),"No edge info for "<<remoteLane << "注意查看uriConvertToString转码是否缺少情况");
 		//=======.=======|=========|========|===============.=============
 		//       local(3)	(4)			(5)				remote(6)
 		//       |-------|------------------|---------------|
