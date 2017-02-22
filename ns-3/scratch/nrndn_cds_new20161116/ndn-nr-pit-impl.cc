@@ -454,6 +454,11 @@ std::string NrPitImpl::uriConvertToString(std::string str)
 				ret+="]";
 				i=i+2;
 			}
+			else if(str[i]=='%'&&str[i+1]=='2'&&str[i+2]=='3')
+			{
+				ret+="#";
+				i=i+2;
+			}
 			else
 				ret+=str[i];
 		}
