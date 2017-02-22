@@ -20,7 +20,7 @@ echo $dataNum
 usage
 tail -1 ~/input/name.txt
 echo " "
-
+unzip ~/input/fcdoutput.zip -d ~/input
 program_name="nrndn_test";
 
 
