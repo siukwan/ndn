@@ -30,11 +30,11 @@ SumoMobility::SumoMobility(std::string netxmlpath,std::string routexmlpath,std::
 		netxmlpath(netxmlpath),routexmlpath(routexmlpath),fcdxmlpath(fcdxmlpath),readTotalTime(0)
 {
 	// TODO Auto-generated constructor stub
-	cout << "src\vanetmobility\model\SumoMobility.cc: " << "LoadTraffic" << endl;
+	cout << "src/vanetmobility/model/SumoMobility.cc: " << "LoadTraffic" << endl;
 	LoadTraffic();
-	cout << "src\vanetmobility\model\SumoMobility.cc: " << "LoadTraffic OK" << endl;
+	cout << "src/vanetmobility/model/SumoMobility.cc: " << "LoadTraffic OK" << endl;
 	InitializeCoordinateToLane();
-	cout << "src\vanetmobility\model\SumoMobility.cc: " << "InitializeCoordinateToLane OK" << endl;
+	cout << "src/vanetmobility/model/SumoMobility.cc: " << "InitializeCoordinateToLane OK" << endl;
 }
 
 SumoMobility::~SumoMobility()
@@ -52,8 +52,11 @@ TypeId SumoMobility::GetTypeId()
 
 void SumoMobility::LoadTraffic()
 {
+	cout << "src/vanetmobility/model/SumoMobility.cc: " << "LoadNetXMLFile" << endl;
 	roadmap.LoadNetXMLFile(netxmlpath.data());
+	cout << "src/vanetmobility/model/SumoMobility.cc: " << "LoadRouteXML" << endl;
 	vl.LoadRouteXML(routexmlpath.data());
+	cout << "src/vanetmobility/model/SumoMobility.cc: " << "LoadFCDOutputXML" << endl;
 	vl.LoadFCDOutputXML(fcdxmlpath.data());
 }
 
