@@ -30,7 +30,7 @@ else
   random="定点"
 fi
 
-unzip ~/input/fcdoutput.zip -d ~/input
+unzip -f ~/input/fcdoutput.zip -d ~/input
 program_name="nrndn_test";
 
 
