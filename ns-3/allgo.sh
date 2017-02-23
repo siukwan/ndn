@@ -22,12 +22,6 @@ tail -1 ~/input/name.txt
 echo " "
 
 random="随机"
-if [$dataNum –eq 999]
-then
-  random="定点"
-else
-  random="随机"
-fi
 
 unzip -f ~/input/fcdoutput.zip -d ~/input
 program_name="nrndn_test";
@@ -106,13 +100,7 @@ tail -4 ~/ndc-ns3-result/$file_name/result.txt
 #exit
 
 dataNum=999
-random="随机"
-if [$dataNum –eq 999]
-then
-  random="定点"
-else
-  random="随机"
-fi
+random="定点"
 
 #定义时间变量
 git_date=$(date)
