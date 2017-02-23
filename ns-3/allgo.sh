@@ -22,12 +22,11 @@ tail -1 ~/input/name.txt
 echo " "
 
 random="随机"
-
-if [$dataNum -ne 999]
+if [$dataNum = 999]
 then
-  random="随机"
-else
   random="定点"
+else
+  random="随机"
 fi
 
 unzip -f ~/input/fcdoutput.zip -d ~/input
@@ -108,12 +107,11 @@ tail -4 ~/ndc-ns3-result/$file_name/result.txt
 
 dataNum=999
 random="随机"
-
-if [$dataNum -ne 999]
+if [$dataNum = 999]
 then
-  random="随机"
-else
   random="定点"
+else
+  random="随机"
 fi
 
 #定义时间变量
