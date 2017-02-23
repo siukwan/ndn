@@ -20,6 +20,16 @@ echo $dataNum
 usage
 tail -1 ~/input/name.txt
 echo " "
+
+random="随机"
+
+if [$dataNum -ne 999]
+then
+  random="随机"
+else
+  random="定点"
+fi
+
 unzip ~/input/fcdoutput.zip -d ~/input
 program_name="nrndn_test";
 
@@ -30,11 +40,11 @@ program_name3="nrndn_cds_new20161116";
 
 #定义时间变量
 git_date=$(date)
-git_date=$git_date" "$(tail -1 ~/input/name.txt)
+git_date=$git_date" "$(tail -1 ~/input/name.txt)$random
 echo $git_date
 shell_date=$(date +%Y%m%d-%H%M%S)
 vehicle_num=$(cat  ~/input/routes.rou.xml | grep "</vehicle>" | wc -l)
-file_name=$shell_date"-"$vehicle_num"nodes_"$program_name"-"$(tail -1 ~/input/name.txt)
+file_name=$shell_date"-"$vehicle_num"nodes_"$program_name"-"$(tail -1 ~/input/name.txt)$random
 
 #输出shell_data
 echo $file_name
@@ -96,15 +106,23 @@ echo " "
 tail -4 ~/ndc-ns3-result/$file_name/result.txt
 #exit
 
+dataNum=999
+random="随机"
 
+if [$dataNum -ne 999]
+then
+  random="随机"
+else
+  random="定点"
+fi
 
 #定义时间变量
 git_date=$(date)
-git_date=$git_date" "$(tail -1 ~/input/name.txt)
+git_date=$git_date" "$(tail -1 ~/input/name.txt)$random
 echo $git_date
 shell_date=$(date +%Y%m%d-%H%M%S)
 vehicle_num=$(cat  ~/input/routes.rou.xml | grep "</vehicle>" | wc -l)
-file_name=$shell_date"-"$vehicle_num"nodes_"$program_name"-"$(tail -1 ~/input/name.txt)
+file_name=$shell_date"-"$vehicle_num"nodes_"$program_name"-"$(tail -1 ~/input/name.txt)$random
 
 #输出shell_data
 echo $file_name
@@ -112,7 +130,6 @@ echo $file_name
 mkdir ~/tmp
 mkdir ~/tmp/$file_name
 
-dataNum=999
 cd ~/ndn/ns-3/
 #先进行编译
 ./waf --run "$program_name --method=3"
