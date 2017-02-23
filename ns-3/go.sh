@@ -18,6 +18,7 @@ do
 done
 
 
+random="随机"
 if [$dataNum -ne 999]
 then
   random="随机"
@@ -32,7 +33,6 @@ echo " "
 unzip -f ~/input/fcdoutput.zip -d ~/input
 
 
-random="随机"
 
 
 program_name="nrndn_test";
