@@ -892,6 +892,21 @@ void nrndnExample::InstallTraffics()
 	std::cout<<"插入事件："<<accidentNum<<endl;
 	if(random_accident)
 	{
+		map<uint32_t, bool> randomNode;
+		for(uint32_t idx = 0; idx < certain_count; idx ++)
+		{
+			uint32_t index=rnd.GetValue();
+			while(randomNode[index])
+			{
+				index=rnd.GetValue();
+			}
+			randomNode[index] = true;
+			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
+					nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
+			NS_ASSERT(producer);
+			producer->addAccident(certain_interval);
+		}
+		/*
 		for(uint32_t i=0;i<accidentNum;++i)
 		{
 			uint32_t index=rnd.GetValue();
@@ -899,11 +914,10 @@ void nrndnExample::InstallTraffics()
 					nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
 			NS_ASSERT(producer);
 			producer->addAccident(1);
-		}
+		}*/
 	}
 	else
 	{
-
 		for(uint32_t index = 0; index < certain_count; index ++)
 		{
 
