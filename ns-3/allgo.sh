@@ -22,7 +22,7 @@ tail -1 ~/input/name.txt
 echo " "
 
 random="随机"
-if [$dataNum = 999]
+if [$dataNum –eq 999]
 then
   random="定点"
 else
@@ -107,7 +107,7 @@ tail -4 ~/ndc-ns3-result/$file_name/result.txt
 
 dataNum=999
 random="随机"
-if [$dataNum = 999]
+if [$dataNum –eq 999]
 then
   random="定点"
 else
