@@ -70,6 +70,8 @@ public:
 private:
   ///\name parameters
   //\{
+  map<uint32_t, bool> randomNode;
+  int random_seed;
   int certain_count; //定点数量
   double certain_interval;//定点事件间隔
   int random_accident;
@@ -199,7 +201,7 @@ int main (int argc, char **argv)
 //-----------------------------------------------------------------------------
 //构造函数
 nrndnExample::nrndnExample () :
-
+  random_seed(54321),
   certain_count(20), //定点数量
   certain_interval(15),//定点事件间隔
   random_accident(0),//默认不随机
@@ -440,6 +442,14 @@ nrndnExample::Report ()
 	if(random_accident == 1)
 		random_accident_str = "随机";
 
+	os<<"(main.cc)seed"<<random_seed<<" 节点:";
+
+	map<string,int>::iterator map_ite;
+	for(map_ite = randomNode.begin(); map_ite != randomNode.end(); map_ite ++)
+	{
+		os<<map_ite->first << " ";
+	}
+	os << endl;
 	os<<"(main.cc)certain_count定点数量:"<<certain_count<<endl;
 	os<<"(main.cc)certain_interval定点间隔:"<<certain_interval<<endl;
 	os<<"(main.cc)random_accident:"<<random_accident<<random_accident_str<<endl;
@@ -452,6 +462,14 @@ nrndnExample::Report ()
 	os<<"(main.cc)simulationTime:"<<totalTime<<endl;
 	os<<"(main.cc)runningTime:"<<(int)(TimeUse/1000)/60<<"m"<<((int)(TimeUse/1000))%60<<"s"<<endl;
 
+
+
+    cout<<"(main.cc)seed"<<random_seed<<" 节点:";
+	for(map_ite = randomNode.begin(); map_ite != randomNode.end(); map_ite ++)
+	{
+		cout<<map_ite->first << " ";
+	}
+	cout << endl;
 	cout<<"(main.cc)certain_count定点数量:"<<certain_count<<endl;
 	cout<<"(main.cc)certain_interval定点间隔:"<<certain_interval<<endl;
 	cout<<"(main.cc)random_accident:"<<random_accident<<random_accident_str<<endl;
@@ -887,12 +905,12 @@ void nrndnExample::InstallTestApplications()
 
 void nrndnExample::InstallTraffics()
 {
-	SeedManager::SetSeed(4321);
+	SeedManager::SetSeed(random_seed);
 	UniformVariable rnd(0,nodes.GetN());
 	std::cout<<"插入事件："<<accidentNum<<endl;
 	if(random_accident)
 	{
-		map<uint32_t, bool> randomNode;
+		
 		for(uint32_t idx = 0; idx < certain_count; idx ++)
 		{
 			uint32_t index=rnd.GetValue();
