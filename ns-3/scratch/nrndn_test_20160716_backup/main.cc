@@ -442,7 +442,7 @@ nrndnExample::Report ()
 	if(random_accident == 1)
 		random_accident_str = "随机";
 
-	os<<"(main.cc)seed"<<random_seed<<" 节点:";
+	os<<"(main.cc)seed:"<<random_seed<<" 节点:";
 
 	map<uint32_t, bool>::iterator map_ite;
 	for(map_ite = randomNode.begin(); map_ite != randomNode.end(); map_ite ++)
@@ -464,7 +464,7 @@ nrndnExample::Report ()
 
 
 
-    cout<<"(main.cc)seed"<<random_seed<<" 节点:";
+    cout<<"(main.cc)seed:"<<random_seed<<" 节点:";
 	for(map_ite = randomNode.begin(); map_ite != randomNode.end(); map_ite ++)
 	{
 		cout<<map_ite->first << " ";
