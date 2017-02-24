@@ -19,12 +19,6 @@ done
 
 
 random="随机"
-if [$dataNum = 999]
-then
-  random="定点"
-else
-  random="随机"
-fi
 
 echo $dataNum" "$random
 usage
