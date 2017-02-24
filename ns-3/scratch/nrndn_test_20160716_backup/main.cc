@@ -72,7 +72,7 @@ private:
   //\{
   map<uint32_t, bool> randomNode;
   int random_seed;
-  int certain_count; //定点数量
+  uint32_t certain_count; //定点数量
   double certain_interval;//定点事件间隔
   int random_accident;
   /// Number of nodes
@@ -444,7 +444,7 @@ nrndnExample::Report ()
 
 	os<<"(main.cc)seed"<<random_seed<<" 节点:";
 
-	map<string,int>::iterator map_ite;
+	map<uint32_t, bool>::iterator map_ite;
 	for(map_ite = randomNode.begin(); map_ite != randomNode.end(); map_ite ++)
 	{
 		os<<map_ite->first << " ";
@@ -939,6 +939,7 @@ void nrndnExample::InstallTraffics()
 		for(uint32_t index = 0; index < certain_count; index ++)
 		{
 
+			randomNode[index] = true;
 			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
 					nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
 			NS_ASSERT(producer);
