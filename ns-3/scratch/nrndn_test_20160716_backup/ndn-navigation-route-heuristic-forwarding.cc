@@ -590,6 +590,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 			//如果重复
 			if(isDuplicatedInterest(nodeId, seq))
 			{
+				cout << "forwarding.cc重复" << endl;
 				ExpireInterestPacketTimer(nodeId, seq);
 				return;
 			}
