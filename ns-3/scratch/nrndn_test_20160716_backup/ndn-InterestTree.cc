@@ -183,7 +183,7 @@ void NrInterestTreeImpl::updateNowRoot(string currentLane)
 	if( root != NULL)
 	{
 		cout<<"(ndn-InterestTree)更新当前节点，路段为："<<root->lane<<endl;
-		getchar();
+		//getchar();
 	}
 }
 
