@@ -64,11 +64,11 @@ std::pair<uint32_t, uint32_t> nrUtils::GetNodeSizeAndInterestNodeSize(
 			cout << "no active" << endl;
 			continue;
 		}
-		cout << "IsInterestLane " << endl;
+		//cout << "IsInterestLane " << endl;
 		if(producer->IsInterestLane(lane))
 		{	
 			++interestSize;
-			cout<<idx<<" ";
+			//cout<<idx<<" ";
 		}
 		idx++;
 		//cout << "idx++ " << endl;
