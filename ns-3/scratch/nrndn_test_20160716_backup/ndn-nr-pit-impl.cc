@@ -476,7 +476,7 @@ std::string NrPitImpl::uriConvertToString(std::string str)
 }
 void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 {
-	cout << "ndn-nr-pit-impl.cc:" << "lanechange" <<endl;
+	//cout << "ndn-nr-pit-impl.cc:" << "lanechange" <<endl;
 	int needtoUpdateroot=0;
 	if (oldLane.empty()
 			|| (ndn::nrndn::NodeSensor::emptyLane == oldLane
@@ -495,7 +495,7 @@ void NrPitImpl::laneChange(std::string oldLane, std::string newLane)
 		return ;
 	}
 
-	cout << (*it)->GetInterest()->GetName().get(0).toUri() << endl;
+	//cout << (*it)->GetInterest()->GetName().get(0).toUri() << endl;
 	bool IsOldLaneAtPitBegin =(  uriConvertToString((*it)->GetInterest()->GetName().get(0).toUri())==(oldLane));
 	//cout << "ndn-nr-pit-impl.cc:" << "IsOldLaneAtPitBegin" <<endl;
 
