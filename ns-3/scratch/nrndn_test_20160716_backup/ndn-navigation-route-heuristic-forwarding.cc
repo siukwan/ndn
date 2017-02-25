@@ -1577,7 +1577,7 @@ void NavigationRouteHeuristic::ForwardDataPacket(Ptr<Data> src,std::vector<uint3
 	double y= m_sensor->getY();
 	sourceId = nrheader.getSourceId();
 	signature = src->GetSignature();
-	cout << "forward.cc " <<  sourceId << " " << signature << endl;
+	cout << "forward.cc转发数据包" <<m_node->GetId() << " "<< sourceId << " " << signature << endl;
 	getchar();
 	// 	2.1 setup nrheader, source id do not change
 	nrheader.setX(x);
