@@ -179,7 +179,11 @@ void DistanceBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 	FwHopCountTag hopCountTag;
 	nrPayload->PeekPacketTag(hopCountTag);
 	bool isTTLReachMax = (hopCountTag.Get() > m_TTLMax);
-	cout << m_node->GetId() << " " << hopCountTag.Get() << " " << m_TTLMax << endl;
+	if(hopCountTag.Get() > 3)
+	{
+		cout << m_node->GetId() << " " << hopCountTag.Get() << " " << m_TTLMax << endl;
+		getchar();
+	}
 	if (isTTLReachMax)
 	{
 		NS_LOG_DEBUG(
