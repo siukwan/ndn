@@ -373,7 +373,7 @@ void NavigationRouteHeuristic::OnInterest(Ptr<Face> face,
 		{
 			if(Simulator::Now().GetSeconds()-m_myInterest[interest->GetNonce()]<10)
 			{//10秒之内W
-					cout<<"(forwarding.cc)"<<m_node->GetId()<<"收到自己("<<nodeId<<")发的兴趣包"<<nrheader.getForwardId()<<"："<<interest->GetNonce()<<"   "<<m_myInterest[interest->GetNonce()]<<endl;
+					cout<<"(forwarding.cc)"<<m_node->GetId()<<"10s内收到自己("<<nodeId<<")发的兴趣包"<<nrheader.getForwardId()<<"："<<interest->GetNonce()<<"   "<<m_myInterest[interest->GetNonce()]<<endl;
 					//getchar();
 			}
 		}
