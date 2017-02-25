@@ -63,7 +63,7 @@ DistanceBasedForwarding::DistanceBasedForwarding():
 		m_htimer (Timer::CANCEL_ON_DESTROY),
 		m_CacheSize(5000),// Cache size can not change. Because if you change the size, the m_interestNonceSeen and m_dataNonceSeen also need to change. It is really unnecessary
 		m_dataSignatureSeen(m_CacheSize),
-		m_TTLMax(5),
+		m_TTLMax(10),
 		m_nb (HelloInterval),
 		m_running(false),
 		m_runningCounter(0)
