@@ -804,7 +804,7 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					FwHopCountTag hopCountTag;
 					data->GetPayload()->PeekPacketTag(hopCountTag);
 					isTTLReachMax = (hopCountTag.Get() > m_TTLMax);
-					cout << m_sensor->GetId() << " TTL:" <<  hopCountTag.Get() << endl;
+					cout << m_node->GetId() << " TTL:" <<  hopCountTag.Get() << endl;
 					if (isTTLReachMax)
 					{
 						DropDataPacket(data);
