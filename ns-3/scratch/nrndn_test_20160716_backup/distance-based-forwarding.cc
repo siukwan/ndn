@@ -168,12 +168,13 @@ void DistanceBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 	uint32_t nodeId=nrheader.getSourceId();
 	uint32_t signature=data->GetSignature();
 
+/*
 	if(isDuplicatedData(nodeId,signature))
 	{
 		ExpireDataPacketTimer(nodeId,signature);
 		return;
 	}
-
+*/
 	NotifyUpperLayer(data);
 
 	FwHopCountTag hopCountTag;
