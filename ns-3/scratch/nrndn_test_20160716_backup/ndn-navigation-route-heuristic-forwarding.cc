@@ -806,6 +806,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					getchar();
 					if (isTTLReachMax)
 					{
+						cout << "isTTLReachMax:" <<  hopCountTag.Get() << endl;
+						getchar();
 						DropDataPacket(data);
 						return;
 					}
