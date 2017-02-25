@@ -803,7 +803,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 					FwHopCountTag hopCountTag;
 					data->GetPayload()->PeekPacketTag(hopCountTag);
 					isTTLReachMax = (hopCountTag.Get() > m_TTLMax);
-					cout << m_node->GetId() << " TTL:" <<  hopCountTag.Get() << endl;
+					cout << m_node->GetId() << " TTL:" <<  hopCountTag.Get() 
+						<< " nodeId:" << nodeId << " sig:" << signature << " fwdID:" << forwardId << endl;
 					getchar();
 					if (isTTLReachMax)
 					{
@@ -1307,7 +1308,7 @@ NavigationRouteHeuristic::ProcessHello(Ptr<Interest> interest)
 
 	if(lostForwardNeighbor)
 	{
-		cout<<"forwarding.cc: id"<<m_node->GetId() << " time:" << Simulator::Now().GetSeconds() <<" 负责转发的邻居丢失了,需要重发兴趣包"<< m_nbChange_mode << endl;
+		//cout<<"forwarding.cc: id"<<m_node->GetId() << " time:" << Simulator::Now().GetSeconds() <<" 负责转发的邻居丢失了,需要重发兴趣包"<< m_nbChange_mode << endl;
 		//getchar();
 	}
 
