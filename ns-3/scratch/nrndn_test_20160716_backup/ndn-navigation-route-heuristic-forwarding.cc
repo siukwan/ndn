@@ -94,7 +94,7 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	m_runningCounter(0),
 	m_HelloLogEnable(true),
 	m_gap(20),
-	m_TTLMax(10),
+	m_TTLMax(3),
 	NoFwStop(false),
 	m_resendInterestTime(-1)
 {
