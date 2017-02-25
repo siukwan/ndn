@@ -789,6 +789,8 @@ void NavigationRouteHeuristic::OnData(Ptr<Face> face, Ptr<Data> data)
 				}
 				else
 				{
+						DropDataPacket(data);
+						return;
 					bool isTTLReachMax;
 					/*
 					 * 		When a data is received by disinterested node,
