@@ -130,13 +130,14 @@ void CDSBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 	if(!m_running) return;
 	NS_LOG_FUNCTION(this);
 	//If the data packet has already been sent, do not proceed the packet
+	/*
 	if (m_dataSignatureSeen.Get(data->GetSignature()))
 	{
 		NS_LOG_DEBUG(
 				"The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
 		return;
 	}
-
+*/
 	if ((Face::APPLICATION & face->GetFlags())
 			|| dominator == m_state)
 	{
