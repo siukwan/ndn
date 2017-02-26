@@ -139,6 +139,7 @@ void DistanceBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 		nrheader.setSourceId(m_node->GetId());
 		payload->AddHeader(nrheader);
 		data->SetPayload(payload);
+		nrheader.setTree("LaneName + LaneName + LaneName + LaneName + LaneName");
 
 		// 2. record the Data Packet(only record the forwarded packet)
 		m_dataSignatureSeen.Put(data->GetSignature(),true);
@@ -375,7 +376,6 @@ void DistanceBasedForwarding::SendHello()
 	nrheader.setY(y);
 	nrheader.setSourceId(m_node->GetId());
 	newPayload->AddHeader(nrheader);
-
 	//3. setup interest packet
 	Ptr<Interest> interest	= Create<Interest> (newPayload);
 	interest->SetScope(HELLO_MESSAGE);	// The flag indicate it is hello message
