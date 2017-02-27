@@ -232,7 +232,7 @@ nrndnExample::nrndnExample () :
   SumForwardTimes(0),
   noFwStop(true),
   TTLMax(10),
-  virtualPayloadSize(1800)
+  virtualPayloadSize(1024)
 {
 	//os =  std::cout;
 	string home         = getenv("HOME");
@@ -779,7 +779,7 @@ nrndnExample::InstallNrndnApplications ()
 */
 	ndn::AppHelper producerHelper ("ns3::ndn::nrndn::nrProducer");
 	//producerHelper.SetPrefix ("/");
-	producerHelper.SetAttribute ("PayloadSize", UintegerValue (1024));
+	producerHelper.SetAttribute ("PayloadSize", UintegerValue (virtualPayloadSize));
 	//producerHelper.Install (nodes.Get (0));
 	producerHelper.Install(nodes);
 	nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]=1;

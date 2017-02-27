@@ -39,7 +39,7 @@ TypeId tradConsumer::GetTypeId()
 		    .SetParent<App> ()
 		    .AddConstructor<tradConsumer> ()
 		    .AddAttribute ("PayloadSize", "Virtual payload size for traffic Content packets",
-		                    UintegerValue (1800),
+		                    UintegerValue (1024),
 		                    MakeUintegerAccessor (&tradConsumer::m_virtualPayloadSize),
 		                    MakeUintegerChecker<uint32_t> ())
 		   ;
