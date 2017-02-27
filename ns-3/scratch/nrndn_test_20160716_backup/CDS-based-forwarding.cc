@@ -305,11 +305,13 @@ CDSBasedForwarding::SendHello()
 	ndn::nrndn::nrHeader mprHeader;
 	mprHeader.setPriorityList(m_mpr);
 	newPayload->AddHeader(mprHeader);
+	newPayload->AddHeader(mprHeader);
 
 	ndn::nrndn::nrHeader nrheader;
 	nrheader.setX(x);
 	nrheader.setY(y);
 	nrheader.setSourceId(m_node->GetId());
+	nrheader.setForwardId(m_node->GetId());
 	nrheader.setPriorityList(OneHopNeighborList);
 	newPayload->AddHeader(nrheader);
 
