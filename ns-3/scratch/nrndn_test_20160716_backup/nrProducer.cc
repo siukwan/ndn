@@ -44,7 +44,7 @@ TypeId nrProducer::GetTypeId()
 			                    MakeNameAccessor (&nrProducer::m_postfix),
 			                    MakeNameChecker ())
 			    .AddAttribute ("PayloadSize", "Virtual payload size for traffic Content packets",
-			                    UintegerValue (1024),
+			                    UintegerValue (1800),
 			                    MakeUintegerAccessor (&nrProducer::m_virtualPayloadSize),
 			                    MakeUintegerChecker<uint32_t> ())
 			    .AddAttribute ("Freshness", "Freshness of data packets, if 0, then unlimited freshness",
@@ -66,7 +66,7 @@ TypeId nrProducer::GetTypeId()
 
 nrProducer::nrProducer():
 		m_rand (0, std::numeric_limits<uint32_t>::max ()),
-		m_virtualPayloadSize(1024),
+		m_virtualPayloadSize(1800),
 		m_signature(0)
 {
 	//NS_LOG_FUNCTION(this);
