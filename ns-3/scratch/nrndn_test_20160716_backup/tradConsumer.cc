@@ -80,7 +80,7 @@ void tradConsumer::OnData(Ptr<const Data> data)
 			<<signature);
 	NS_LOG_DEBUG("payload Size:"<<packetPayloadSize);
 
-	NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize,"packetPayloadSize is not equal to "<<m_virtualPayloadSize);
+	NS_ASSERT_MSG(packetPayloadSize == m_virtualPayloadSize,"packetPayloadSize is not equal to "<<m_virtualPayloadSize << " payload Size:" << packetPayloadSize);
 
 
 	double delay = Simulator::Now().GetSeconds() - data->GetTimestamp().GetSeconds();
