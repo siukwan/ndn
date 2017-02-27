@@ -330,6 +330,9 @@ void nrUtils::AggrateDataPacketSize(Ptr<const Data> data)
 	uint32_t size = packet->GetSize();
 	ByteSent += size;
 	DataByteSent+= size;
+	cout << "nrUtils.cc data size" << size << endl;
+	getchar();
+
 }
 
 void nrUtils::AggrateInterestPacketSize(Ptr<const Interest> interest)
@@ -338,9 +341,16 @@ void nrUtils::AggrateInterestPacketSize(Ptr<const Interest> interest)
 	uint32_t size = packet->GetSize();
 	ByteSent += size;
 	if(2==interest->GetScope())//Hello message
+	{
 		HelloByteSent += size;
+		cout << "nrUtils.cc Hello size" << size << endl;
+	}
 	else
+	{
 		InterestByteSent += size;
+		cout << "nrUtils.cc Interest size" << size << endl;
+	}
+	getchar();
 }
 
 } /* namespace nrndn */
