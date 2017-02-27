@@ -203,7 +203,7 @@ int main (int argc, char **argv)
 nrndnExample::nrndnExample () :
   random_seed(54321),
   certain_count(20), //定点数量
-  certain_interval(20),//定点事件间隔
+  certain_interval(10),//定点事件间隔
   random_accident(0),//默认不随机
   size (3),
   totalTime (36000),
@@ -232,7 +232,7 @@ nrndnExample::nrndnExample () :
   SumForwardTimes(0),
   noFwStop(true),
   TTLMax(10),
-  virtualPayloadSize(1024)
+  virtualPayloadSize(10240)
 {
 	//os =  std::cout;
 	string home         = getenv("HOME");
