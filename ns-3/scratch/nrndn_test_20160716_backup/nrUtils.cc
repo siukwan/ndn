@@ -328,8 +328,8 @@ void nrUtils::AggrateDataPacketSize(Ptr<const Data> data)
 {
 	Ptr<Packet> packet = Wire::FromData (data);
 	uint32_t size = packet->GetSize();
-	ByteSent += size * 5;
-	DataByteSent+= size * 5;
+	ByteSent += size * 6;
+	DataByteSent+= size * 6;
 	//cout << "nrUtils.cc data size" << size << endl;
 	//getchar();
 
