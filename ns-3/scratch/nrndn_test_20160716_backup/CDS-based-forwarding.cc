@@ -128,9 +128,11 @@ void CDSBasedForwarding::OnInterest(Ptr<Face> face, Ptr<Interest> interest)
 void CDSBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 {
 	if(!m_running) return;
+	UniformVariable rnd(0,10);
+	bool tmp = rnd.GetValue() > 8; 
 	NS_LOG_FUNCTION(this);
 	//If the data packet has already been sent, do not proceed the packet
-	if (m_dataSignatureSeen.Get(data->GetSignature()))
+	if (m_dataSignatureSeen.Get(data->GetSignature()) && tmp)
 	{
 		NS_LOG_DEBUG(
 				"The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
