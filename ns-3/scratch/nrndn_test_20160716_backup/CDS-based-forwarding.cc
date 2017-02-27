@@ -63,7 +63,7 @@ CDSBasedForwarding::CDSBasedForwarding():
 			HelloInterval (Seconds (1)),
 			AllowedHelloLoss (2),
 			m_htimer (Timer::CANCEL_ON_DESTROY),
-			m_CacheSize(100000),// Cache size can not change. Because if you change the size, the m_interestNonceSeen and m_dataNonceSeen also need to change. It is really unnecessary
+			m_CacheSize(100),// Cache size can not change. Because if you change the size, the m_interestNonceSeen and m_dataNonceSeen also need to change. It is really unnecessary
 			m_dataSignatureSeen(m_CacheSize),
 			m_nb (HelloInterval),
 			m_running(false),
@@ -132,7 +132,7 @@ void CDSBasedForwarding::OnData(Ptr<Face> face, Ptr<Data> data)
 	bool tmp = rnd.GetValue() > 8; 
 	NS_LOG_FUNCTION(this);
 	//If the data packet has already been sent, do not proceed the packet
-	if (m_dataSignatureSeen.Get(data->GetSignature()) && tmp)
+	if (m_dataSignatureSeen.Get(data->GetSignature()))// && tmp)
 	{
 		NS_LOG_DEBUG(
 				"The Data packet has already been sent, do not proceed the packet of "<<data->GetSignature());
