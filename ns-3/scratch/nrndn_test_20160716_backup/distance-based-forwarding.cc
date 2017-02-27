@@ -308,7 +308,6 @@ void DistanceBasedForwarding::SendDataPacket(Ptr<Data> data)
 	{
 		(*fit)->SendData(data);
 		ndn::nrndn::nrUtils::AggrateDataPacketSize(data);
-		ndn::nrndn::nrUtils::AggrateDataPacketSize(data);
 	}
 }
 
