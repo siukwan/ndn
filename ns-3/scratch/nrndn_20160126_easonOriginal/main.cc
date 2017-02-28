@@ -70,6 +70,11 @@ public:
 private:
   ///\name parameters
   //\{
+  map<uint32_t, bool> randomNode;
+  int random_seed;
+  uint32_t certain_count; //定点数量
+  double certain_interval;//定点事件间隔
+  int random_accident;
   /// Number of nodes
   uint32_t size;
   /// Simulation time, seconds
@@ -196,6 +201,10 @@ int main (int argc, char **argv)
 //-----------------------------------------------------------------------------
 //构造函数
 nrndnExample::nrndnExample () :
+  random_seed(54321),
+  certain_count(20), //定点数量
+  certain_interval(10),//定点事件间隔
+  random_accident(0),//默认不随机
   size (3),
   totalTime (36000),
   readTotalTime(0),
@@ -411,6 +420,10 @@ nrndnExample::Report ()
 	timeOut=localtime(&startTime);
 	cout<<"(main.cc)开始时间：";
 	cout<<timeOut->tm_year+1900<<"-"<<timeOut->tm_mon+1<<"-"<<timeOut->tm_mday<<" "<<timeOut->tm_hour<<":"<<timeOut->tm_min<<":"<<timeOut->tm_sec<<endl;
+	
+	if(method == 0)
+		os << endl;
+
 	os<<"(main.cc)开始时间：";
 	os<<timeOut->tm_year+1900<<"-"<<timeOut->tm_mon+1<<"-"<<timeOut->tm_mday<<" "<<timeOut->tm_hour<<":"<<timeOut->tm_min<<":"<<timeOut->tm_sec<<endl;
 	timeOut=localtime(&endTime);
@@ -425,6 +438,21 @@ nrndnExample::Report ()
 	getStatistic();
 	os<<"(main.cc)method:"<<method_cout<<endl;
 
+	string random_accident_str = "定点";
+	if(random_accident == 1)
+		random_accident_str = "随机";
+
+	os<<"(main.cc)seed:"<<random_seed<<" 节点:";
+
+	map<uint32_t, bool>::iterator map_ite;
+	for(map_ite = randomNode.begin(); map_ite != randomNode.end(); map_ite ++)
+	{
+		os<<map_ite->first << " ";
+	}
+	os << endl;
+	os<<"(main.cc)certain_count定点数量:"<<certain_count<<endl;
+	os<<"(main.cc)certain_interval定点间隔:"<<certain_interval<<endl;
+	os<<"(main.cc)random_accident:"<<random_accident<<random_accident_str<<endl;
 	os<<"(main.cc)accidentNum:"<<accidentNum<<endl;
 	os<<"(main.cc)transRange:"<<transRange<<endl;
 	os<<"(main.cc)noFwStop:"<<noFwStop<<endl;
@@ -434,6 +462,17 @@ nrndnExample::Report ()
 	os<<"(main.cc)simulationTime:"<<totalTime<<endl;
 	os<<"(main.cc)runningTime:"<<(int)(TimeUse/1000)/60<<"m"<<((int)(TimeUse/1000))%60<<"s"<<endl;
 
+
+
+    cout<<"(main.cc)seed:"<<random_seed<<" 节点:";
+	for(map_ite = randomNode.begin(); map_ite != randomNode.end(); map_ite ++)
+	{
+		cout<<map_ite->first << " ";
+	}
+	cout << endl;
+	cout<<"(main.cc)certain_count定点数量:"<<certain_count<<endl;
+	cout<<"(main.cc)certain_interval定点间隔:"<<certain_interval<<endl;
+	cout<<"(main.cc)random_accident:"<<random_accident<<random_accident_str<<endl;
 	cout<<"(main.cc)accidentNum:"<<accidentNum<<endl;
 	cout<<"(main.cc)transRange:"<<transRange<<endl;
 	cout<<"(main.cc)noFwStop:"<<noFwStop<<endl;
@@ -556,7 +595,17 @@ nrndnExample::LoadTraffic()
 	size = mobility->GetNodeSize();
 	std::cout<<"节点size："<<size<<std::endl;
 
-	accidentNum=size*4;
+	if(accidentNum == 0 || accidentNum == 999)
+	{
+		if(accidentNum != 999) //999表示非随机
+		{
+			random_accident = 1;//如果没有输入事件数量，则使用定点发
+			cout << "定点发数据" << endl;
+		}
+		else
+			cout << "随机" << endl;
+		accidentNum = size * 1;
+	}
 	std::cout<<"(main.cc)修改accidentNum为size的4倍"<<accidentNum<<std::endl;
 
 }
@@ -856,37 +905,47 @@ void nrndnExample::InstallTestApplications()
 
 void nrndnExample::InstallTraffics()
 {
-	SeedManager::SetSeed(1234);
+	SeedManager::SetSeed(random_seed);
 	UniformVariable rnd(0,nodes.GetN());
 	std::cout<<"插入事件："<<accidentNum<<endl;
-	/*
-	for(uint32_t i=0;i<accidentNum;++i)
+	if(random_accident)
 	{
-		uint32_t index=rnd.GetValue();
-		Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
-				nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
-		NS_ASSERT(producer);
-		producer->addAccident();
-	}
-	*/
-			for(uint32_t index = 0; index < 20; index ++)
+		
+		for(uint32_t idx = 0; idx < certain_count; idx ++)
 		{
-
+			uint32_t index=rnd.GetValue();
+			while(randomNode[index])
+			{
+				index=rnd.GetValue();
+			}
+			randomNode[index] = true;
+			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
+					nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
+			NS_ASSERT(producer);
+			producer->addAccident(certain_interval);
+		}
+		/*
+		for(uint32_t i=0;i<accidentNum;++i)
+		{
+			uint32_t index=rnd.GetValue();
 			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
 					nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
 			NS_ASSERT(producer);
 			producer->addAccident(1);
-		}
-	std::cout<<"插入事件：完毕"<<endl;
+		}*/
+	}
+	else
+	{
+		for(uint32_t index = 0; index < certain_count; index ++)
+		{
 
-	/*
-	uint32_t InsertIndex=10;//for debug only
-	Ptr<ns3::ndn::nrndn::nrProducer> p= DynamicCast<ns3::ndn::nrndn::nrProducer>(
-					nodes.Get(InsertIndex)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
-	p->ScheduleAccident(10);
-	p->ScheduleAccident(13);
-	p->ScheduleAccident(15);
-	*/
+			randomNode[index] = true;
+			Ptr<ns3::ndn::nrndn::nrProducer> producer= DynamicCast<ns3::ndn::nrndn::nrProducer>(
+					nodes.Get(index)->GetApplication(nrUtils::appIndex["ns3::ndn::nrndn::nrProducer"]));
+			NS_ASSERT(producer);
+			producer->addAccident(certain_interval);
+		}
+	}
 }
 
 
