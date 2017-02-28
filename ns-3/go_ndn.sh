@@ -86,6 +86,7 @@ git pull
 mv ~/tmp/$file_name ~/ndc-ns3-result/$file_name
 
 cd ~/ndc-ns3-result
+
 #git add $file_name/ndn_record.txt
 #git add $file_name/dis_record.txt
 #git add $file_name/cds_record.txt
