@@ -68,7 +68,7 @@ cd ~/ndn/ns-3/
 wait
 
 #把结果合并输出到result.txt
-cat ~/input/name.txt ~/input/NR-NDN-Simulation/result.txt ~/input/Dist-Simulation/result.txt  ~/input/CDS-Simulation/result.txt > ~/tmp/$file_name/result.txt
+cat ~/input/name.txt ~/input/NR-NDN-Simulation/result.txt > ~/tmp/$file_name/result.txt
 
 #追加，统一显示实验结果
 echo "//原始NDN算法：" >> ~/tmp/$file_name/result.txt
