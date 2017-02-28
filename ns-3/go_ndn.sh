@@ -42,7 +42,7 @@ git_date=$git_date" "$(tail -1 ~/input/name.txt)$random
 echo $git_date
 shell_date=$(date +%Y%m%d-%H%M%S)
 vehicle_num=$(cat  ~/input/routes.rou.xml | grep "</vehicle>" | wc -l)
-file_name=$shell_date"-"$vehicle_num"nodes_"$program_name"-"$(tail -1 ~/input/name.txt)$random
+file_name="原始NDN算法："$shell_date"-"$vehicle_num"nodes_"$program_name"-"$(tail -1 ~/input/name.txt)$random
 
 #输出shell_data
 echo $file_name
@@ -53,16 +53,16 @@ mkdir ~/tmp/$file_name
 cd ~/ndn/ns-3/
 #先进行编译
 ./waf --run "$program_name --method=3"
-./waf --run "$program_name2 --method=3"
+#./waf --run "$program_name2 --method=3"
 
 #后台运行ndn ./waf --run "nrndn_test --method=0"
 ./waf --run "$program_name --accidentNum=$dataNum --method=0" > ~/tmp/$file_name/ndn_record.txt &
 #后台运行dis
-sleep 4
-./waf --run "$program_name2 --accidentNum=$dataNum --method=1" > ~/tmp/$file_name/dis_record.txt &
+#sleep 4
+#./waf --run "$program_name2 --accidentNum=$dataNum --method=1" > ~/tmp/$file_name/dis_record.txt &
 #后台运行cds
-sleep 4
-./waf --run "$program_name2 --accidentNum=$dataNum --method=2" > ~/tmp/$file_name/cds_record.txt &
+#sleep 4
+#./waf --run "$program_name2 --accidentNum=$dataNum --method=2" > ~/tmp/$file_name/cds_record.txt &
 
 #等待后台程序结束
 wait
@@ -71,9 +71,9 @@ wait
 cat ~/input/name.txt ~/input/NR-NDN-Simulation/result.txt ~/input/Dist-Simulation/result.txt  ~/input/CDS-Simulation/result.txt > ~/tmp/$file_name/result.txt
 
 #追加，统一显示实验结果
-echo "//NDN DIST CDS" >> ~/tmp/$file_name/result.txt
-tail -2 ~/input/NR-NDN-Simulation/result.txt >> ~/tmp/$file_name/result.txt
-tail -1 ~/input/Dist-Simulation/result.txt   >> ~/tmp/$file_name/result.txt
+echo "//原始NDN算法：" >> ~/tmp/$file_name/result.txt
+#tail -2 ~/input/NR-NDN-Simulation/result.txt >> ~/tmp/$file_name/result.txt
+#tail -1 ~/input/Dist-Simulation/result.txt   >> ~/tmp/$file_name/result.txt
 tail -1 ~/input/CDS-Simulation/result.txt    >> ~/tmp/$file_name/result.txt
 
 cp ~/tmp/$file_name/result.txt ~/tmp/$file_name/README.md
