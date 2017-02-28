@@ -54,6 +54,7 @@ example:
     
     ./waf --run=nrndn_test
 	./waf --run "nrndn_test_20160716_backup --method=0" < csma-multicast-1-0.pcap
+	./waf --run "nrndn_20160126_easonOriginal --method=0" < csma-multicast-1-0.pcap
 
 #4.Notes for Commands
 
