@@ -946,6 +946,8 @@ void nrndnExample::InstallTraffics()
 			producer->addAccident(certain_interval);
 		}
 	}
+	std::cout<<"插入事件：完毕"<<endl;
+	getchar();
 }
 
 
