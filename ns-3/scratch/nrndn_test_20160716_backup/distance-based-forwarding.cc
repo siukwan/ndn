@@ -61,7 +61,7 @@ DistanceBasedForwarding::DistanceBasedForwarding():
 		HelloInterval (Seconds (1)),
 		AllowedHelloLoss (2),
 		m_htimer (Timer::CANCEL_ON_DESTROY),
-		m_CacheSize(10),// Cache size can not change. Because if you change the size, the m_interestNonceSeen and m_dataNonceSeen also need to change. It is really unnecessary
+		m_CacheSize(5000),// Cache size can not change. Because if you change the size, the m_interestNonceSeen and m_dataNonceSeen also need to change. It is really unnecessary
 		m_dataSignatureSeen(m_CacheSize),
 		m_TTLMax(10),
 		m_nb (HelloInterval),
