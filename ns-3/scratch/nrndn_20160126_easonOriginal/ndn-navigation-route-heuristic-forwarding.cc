@@ -84,7 +84,7 @@ NavigationRouteHeuristic::NavigationRouteHeuristic():
 	HelloInterval (Seconds (1)),
 	AllowedHelloLoss (2),
 	m_htimer (Timer::CANCEL_ON_DESTROY),
-	m_timeSlot(Seconds (0.05)),
+	m_timeSlot(Seconds (0.005)),
 	m_CacheSize(5000),// Cache size can not change. Because if you change the size, the m_interestNonceSeen and m_dataNonceSeen also need to change. It is really unnecessary
 	m_interestNonceSeen(m_CacheSize),
 	m_dataSignatureSeen(m_CacheSize),
